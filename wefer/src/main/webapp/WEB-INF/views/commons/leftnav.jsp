@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- 부트스트랩 css 사용 -->
-<link rel="stylesheet" href="./resources/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/leftnav.css">
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -27,14 +26,14 @@
 			</div>
 
 			<hr>
-			<c:if test="true">
-				<c:forEach var="vo" items="" varStatus="status">
+				<!-- 	<c:if test="true">
+						<c:forEach var="vo" items="" varStatus="status">
 					<td align="center"></td>
 					<tr>
 						<td align="center"></td>
 					</tr>
 				</c:forEach>
-			</c:if>
+			</c:if> -->
 		</div>
 	</nav>
 	<!--  부트스트랩 js 사용 -->

@@ -6,25 +6,15 @@
 <meta charset="UTF-8">
 <!-- 부트스트랩 css 사용 -->
 <link rel="stylesheet" href="./resources/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="./resources/css/header.css">
+<link rel="stylesheet" type="text/css" href="./resources/css/style.css">
+<script type="text/javascript" src="./resources/js/bootstrap.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="./resources/js/wefer.js"></script>
 
 <title>Insert title here</title>
 
-<script type="text/javascript">
-	var change = function() {
-		var elem = document.getElementById("work");
-		if (elem.value == "출근") {
-			alert("출근 확인되었습니다.");
-			elem.value = "퇴근";
-		} else {
-			var conf = confirm("퇴근하시겠습니까 현재시간은 TO_CHAR(SYSDATE, 'HH:MI:SS') 입니다.");
-			if (conf)
-				elem.value = "출근";
-			else
-				elem.value = "퇴근";
-		}
-	}
-</script>
+
 </head>
 <body>
 <header>
@@ -47,7 +37,7 @@
 		</div>
 	</header>
 	<!--  부트스트랩 js 사용 -->
-<script type="text/javascript" src="./resources/js/bootstrap.js"></script>
+
 	
 </body>
 </html>

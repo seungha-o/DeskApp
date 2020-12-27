@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/* header */
 header {
 	background-color: #4575C2;
 	width: 100%;
@@ -8,14 +9,14 @@ header {
 	position: fixed;
 	z-index: 1;
 	top: 0;
-	left: 300px;
+	left: 0;
 	overflow-y: hidden;
 	padding-top: 20px;
 }
 
 header>#logo_wrap {
 	height: 60px;
-	width: 300px;
+	width: 200px;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -36,7 +37,7 @@ header>#work_wrap {
 header>#work_wrap>form {
 	float: left;
 	margin-right: 30px;
-	margin-left: 30px;
+
 }
 
 header>span {
@@ -59,4 +60,55 @@ header>span>form {
 
 header>span>form>#work {
 	font-size: 20px;
+}
+
+
+/* leftSidebar */
+
+.sidenav {
+	height: 100%;
+	width: 200px;
+	position: fixed;
+	z-index: 1;
+	top: 60px;
+	left: 0;
+	background-color: #bdbdbd;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
+
+.sidenav .nav_list #logo {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	color: black;
+	display: block;
+	text-align: center;
+	font-size: 400%;
+}
+
+.sidenav .nav_list  #gotomypage {
+	padding: 6px 8px 6px 16px;
+	text-align: center;
+}
+
+.sidenav .nav_list  #gotomypage img {
+	width: 80px;
+	height: 80px;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.sidenav #member_pic {
+	width: 150px;
+	height: 150px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+}
+
+.sidenav .now_member {
+	text-align: center;
+	font-size: 150%;
 }
