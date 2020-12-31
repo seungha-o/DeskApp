@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
 	<div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo"><img src="./resources/vendors/images/deskapp-logo.svg" alt=""></div>
@@ -230,15 +230,11 @@
 						<div class="sidebar-small-cap">주소록</div>
 					</li>
 					<li>
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-edit-2"></span><span class="mtext">Documentation</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="introduction.html">Introduction</a></li>
-							<li><a href="getting-started.html">Getting Started</a></li>
-							<li><a href="color-settings.html">Color Settings</a></li>
-							<li><a href="third-party-plugins.html">Third Party Plugins</a></li>
-						</ul>
+						<c:forEach var="vo" items="${list}" varStatus="status">
+						<tr>
+							<td align="center">${vo.name}</td>
+						</tr>
+						</c:forEach>
 					</li>
 				</ul>
 			</div>
