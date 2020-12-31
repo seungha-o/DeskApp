@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull"  value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
+	</typeAliases>
+	<mappers> <!-- 쿼리문이 있는 xml등록 -->
+		<mapper resource="mapper/member-mapper.xml"/>
+	</mappers>
+</configuration>
