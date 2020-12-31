@@ -92,7 +92,7 @@
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">결재이빈다</li>
+									<li class="breadcrumb-item active" aria-current="page">결재</li>
 								</ol>
 							</nav>
 						</div>
@@ -142,7 +142,7 @@
 										<tr><td></td>
 											<td>김땡떙</td>
 											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/testweb/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
+											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
 											<td>29-10-2020</td>
 										</tr>
 										<tr><td></td>
@@ -182,7 +182,7 @@
 										<tr><td></td>
 											<td>김땡떙</td>
 											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/testweb/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
+											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
 											<td>29-10-2020</td>
 										</tr>
 										<tr><td></td>
@@ -227,7 +227,7 @@
 										<tr><td></td>
 											<td>김땡떙</td>
 											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/testweb/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
+											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
 											<td>29-10-2020</td>
 										</tr>
 										<tr><td></td>

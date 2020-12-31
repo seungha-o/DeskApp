@@ -43,6 +43,15 @@
 
 	gtag('config', 'UA-119386393-1');
 </script>
+<script>
+function check(){
+	 if($('.conf').css('display') == 'none'){
+	      $('.conf').show();
+	    }else{
+	      $('.conf').hide();
+	    }
+}
+</script>
 </head>
 <style>
 .chat-box .chat-desc ul, .pd-ltr-20 {
@@ -57,6 +66,20 @@
 	box-sizing: border-box;
 	width: 100%;
 	border: 0;
+}
+
+.check {
+    float: right;
+	width: 100px;
+	padding: 10px !important;
+}
+
+.name {
+	text-align: center;
+	padding: inherit;
+}
+.conf{
+display: none; text-align: center;
 }
 </style>
 <body>
@@ -83,6 +106,24 @@
 				<div class="pd-20 card-box mb-30">
 					<div>
 						<ul class="list-group list-group-flush">
+							<li class="list-group-item pt-20 pb-20">
+								<div class="card card-box check">
+									<div class="card-header name">김땡땡</div>
+									<div class="card-body" id="check" onclick="check()">
+										<div class="conf">
+											<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+										</div>
+									</div>
+								</div>
+								<div class="card card-box check">
+									<div class="card-header name">김땡땡</div>
+									<div class="card-body" id="check" onclick="check()">
+										<div class="conf">
+											<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+										</div>
+									</div>
+								</div>
+							</li>
 							<li class="list-group-item pt-20 pb-20">
 							<div class="container">
 								<h6 class="weight-400 d-flex">
