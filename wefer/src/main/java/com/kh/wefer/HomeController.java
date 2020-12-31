@@ -33,7 +33,46 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "index";
 	}
+	@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
+	public String apprlist(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "approval/apprlist";
+	}
+		@RequestMapping(value = "/apprForm.do", method = RequestMethod.GET)
+	public String apprform(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "approval/apprform";
+	}
+		@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
+		public String apprdetail(Locale locale, Model model) {
+			logger.info("Welcome home! The client locale is {}.", locale);
+			
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			
+			String formattedDate = dateFormat.format(date);
+			
+			model.addAttribute("serverTime", formattedDate );
+			
+			return "approval/apprdetail";
+		}
 	
 }
