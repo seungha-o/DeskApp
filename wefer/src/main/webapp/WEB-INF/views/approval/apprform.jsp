@@ -168,7 +168,7 @@
 				</div>
 			</div>
 		</div>
-			<button type="button" class="pd-20 btn btn-primary btn-lg"  style = "float: right; "onclick="location.href='/testweb/approval.do' ">결재작성</button>
+			<button type="button" class="pd-20 btn btn-primary btn-lg"  style = "float: right; "onclick="location.href='/wefer/approval.do' ">결재작성</button>
 	</div>
 	<script src="./resources/vendors/scripts/core.js"></script>
 	<script src="./resources/vendors/scripts/script.min.js"></script>
