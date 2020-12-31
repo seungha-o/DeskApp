@@ -205,7 +205,7 @@
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
+							<span class="micon dw dw-edit2"></span><span class="mtext">전자결재</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="form-basic.html">Form Basic</a></li>
@@ -219,7 +219,7 @@
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Tables</span>
+							<span class="micon dw dw-library"></span><span class="mtext">근태관리</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="basic-table.html">Basic Tables</a></li>
