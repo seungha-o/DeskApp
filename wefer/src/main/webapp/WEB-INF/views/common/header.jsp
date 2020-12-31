@@ -196,7 +196,7 @@
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+							<span class="micon dw dw-house-1"></span><span class="mtext">My Page</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="index.html">Dashboard style 1</a></li>
