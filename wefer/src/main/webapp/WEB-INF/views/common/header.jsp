@@ -199,8 +199,12 @@
 							<span class="micon dw dw-house-1"></span><span class="mtext">My Page</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="index.html">Dashboard style 1</a></li>
-							<li><a href="index2.html">Dashboard style 2</a></li>
+							<li><a href="#" onclick="location.href='/wefer/profile.do'" class="dropdown-toggle">
+							<span class="mtext">내 정보 조회</span>
+								</a>
+							</li>
+							<li><a href="index1.html">내 일정관리</a></li>
+							<li><a href="index2.html">내 근태조회</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
