@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Project">
+
+<!-- //	PROJECT_ID       NOT NULL VARCHAR2(2000) 
+//	PROJECT_TITLE    NOT NULL VARCHAR2(2000) 
+//	PROJECT_STD_DATE NOT NULL DATE           
+//	PROJECT_END_DATE NOT NULL DATE           
+//	PROJECT_STATUS   NOT NULL VARCHAR2(2000)  -->
+	<resultMap type="Project" id="resultProject">
+		<id property="project_id" column="project_id"/>
+		<result property="project_title" column="project_title"/>
+		<result property="project_std_date" column="project_std_date"/>
+		<result property="project_end_date" column="project_end_date"/>
+		<result property="project_status" column="project_status"/>
+	</resultMap>
+</mapper>

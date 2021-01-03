@@ -6,6 +6,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
+		<typeAlias type ="com.kh.wefer.project.model.domain.Project" alias="Project"/>
 	</typeAliases>
 	<mappers> <!-- 쿼리문이 있는 xml등록 -->
 		<mapper resource="mapper/member-mapper.xml"/>
