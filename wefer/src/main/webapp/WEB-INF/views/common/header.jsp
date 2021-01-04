@@ -251,3 +251,20 @@
 		</div>
 	</div>
 	<div class="mobile-menu-overlay"></div>
+	<script type="text/javascript">
+	   $.ajax({
+      url : "${pageContext.request.contextPath}/memeberList",
+      type : "POST",
+      contentType : "application/json; charset=utf-8;",
+      dataType : "json",
+      success : function(data) {
+        
+         for (var i = 0; i < data.length; i++) {
+        	 $('.submenu').append('<li><a href="#" class="active">' + data[i].name + '</a></li>')
+         }
+      },
+      error : function() {
+         alert("restController err");  
+      }
+   });
+   </script>
