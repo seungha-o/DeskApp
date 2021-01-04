@@ -260,7 +260,7 @@
       success : function(data) {
         
          for (var i = 0; i < data.length; i++) {
-        	 $('.submenu').append('<li><a href="#" class="active">' + data[i].name + '</a></li>')
+        	 $('.result').append('<li><a href="#" class="active">' + data[i].name + '</a></li>')
          }
       },
       error : function() {
