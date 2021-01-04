@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>approval Form</title>
-
+<!-- Jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
 	href="./resources/vendors/images/apple-touch-icon.png">

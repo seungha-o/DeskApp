@@ -7,7 +7,8 @@
 <!-- Basic Page Info -->
 <meta charset="utf-8">
 <title>approval</title>
-
+<!-- Jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
 	href="./resources/vendors/images/apple-touch-icon.png">
