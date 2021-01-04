@@ -1,7 +1,10 @@
 package com.kh.wefer.member.model.domain;
 
-import java.sql.Date;
 
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 @Component
 public class Member implements java.io.Serializable {
@@ -18,9 +21,14 @@ public class Member implements java.io.Serializable {
 	private String signiture;
 	private String employ_date;
 	private String dept_no;
+	@DateTimeFormat(pattern = "yyyymmdd")
 	private Date birth;
 	private int manage;
-	
+
+	public Member() {
+
+	}
+
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", phone=" + phone + ", email="
@@ -47,9 +55,7 @@ public class Member implements java.io.Serializable {
 		this.birth = birth;
 		this.manage = manage;
 	}
-	public Member() {
-		
-	}
+
 	public String getId() {
 		return id;
 	}

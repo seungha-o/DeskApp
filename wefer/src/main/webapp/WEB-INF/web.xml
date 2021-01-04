@@ -33,10 +33,10 @@
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<inin-param>
+		<init-param>
 		<param-name>encoding</param-name>
-		<param-class>UTF-8</param-class>
-		</inin-param>
+		<param-value>UTF-8</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 	

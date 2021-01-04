@@ -14,6 +14,19 @@ public class MemberDao {
 	private SqlSession sqlSession;
 	
 	public List<Member> memberList() {
-		return sqlSession.selectList("MemberMapper.memberList");
+		return sqlSession.selectList("Member.memberList");
+	}
+
+	public int insertMember(Member m) {
+		return sqlSession.insert("Member.insertMember", m);
+	}
+
+	public Member  login(Member m) {
+		if(sqlSession.selectOne("Member.login",m) == null || sqlSession.selectOne("Member.login",m).equals("")) {
+			return null;
+		}else {
+			return sqlSession.selectOne("Member.login",m) ;
+			
+		}
 	}
 }

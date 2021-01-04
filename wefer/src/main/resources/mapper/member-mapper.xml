@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="MemberMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+<mapper namespace="Member"> <!-- DAO에서 접근할때 사용되는 이름임 -->
 	<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
 		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
 		<id property="id" column="id"></id>
@@ -23,5 +23,43 @@
 	<select id="memberList" resultType="arraylist"
 		resultMap="resultMember">
 		select name from member
+	</select>
+	
+	<insert id="insertMember"  parameterType="Member"  statementType="PREPARED">
+		insert into member(
+			id,
+			password,
+			name,
+			birth,
+			phone,
+			email,
+			position,
+			profile,
+			status,
+			annual,
+			signiture,
+			dept_no,
+			manage,
+			employ_date)
+    	values(
+    		#{id},
+    		#{password},
+    		#{name},
+    		#{birth},
+    		#{phone},
+    		#{email},
+    		#{position},
+    		#{profile},
+    		'퇴근',
+    		'12',
+    		'a',
+    		#{dept_no},
+    		#{manage},
+    		SYSDATE)
+	</insert>
+	
+	<select id="login" resultType="Member"
+		resultMap="resultMember">
+		select * from member where id=#{id} and password=#{password}
 	</select>
 </mapper>
