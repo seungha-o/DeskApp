@@ -24,8 +24,7 @@ import com.kh.wefer.member.model.service.MemberService;
  */
 @Controller
 public class HomeController {
-	@Autowired
-	private MemberService mService; // impl에있는 service호출
+
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -38,20 +37,6 @@ public class HomeController {
 		mv.setViewName("index");
 		return mv;
 	}
-	@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
-	public String apprlist(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		return "approval/apprlist";
-	}
-		@RequestMapping(value = "/apprForm.do", method = RequestMethod.GET)
-	public String apprform(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		return "approval/apprform";
-	}
-		@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
-		public String apprdetail(Locale locale, Model model) {
-			logger.info("Welcome home! The client locale is {}.", locale);
-			return "approval/apprdetail";
-		}
+	
 	
 }

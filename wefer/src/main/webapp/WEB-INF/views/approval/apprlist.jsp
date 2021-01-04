@@ -140,24 +140,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr><td></td>
-											<td>김땡떙</td>
-											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
-											<td>29-10-2020</td>
+									<c:forEach var="vo" items="${pmlist}">
+										<tr>
+											<td>${vo.conference.conference_title}</td>
+											<td>${vo.id}</td>
+											<td>${vo.payment_item}</td>
+											<td>${vo.payment_status}</td>
+											<td>${vo.conference.conference_date}</td>
 										</tr>
-										<tr><td></td>
-											<td>이세모</td>
-											<td>developer</td>
-											<td>Trainer Avenue Peoria, IL 61602</td>
-											<td>29-11-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PaymentMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+	
+		
+	<resultMap type="Conference" id="resultConference"> 
+		<id property="conference_id" column="conference_id"></id>
+		<result property="conference_member" column="conference_member" />
+		<result property="conference_title" column="conference_title" />
+		<result property="conference_contents" column="conference_contents" />
+		<result property="conference_date" column="conference_date" />
+		<result property="id" column="id" />
+	</resultMap>
+	
+	<resultMap type="Payment" id="resultPayment"> 
+		<id property="payment_id" column="payment_id"></id>
+		<result property="payment_item" column="payment_item" />
+		<result property="payment_status" column="payment_status" />
+		<result property="payment_members_count" column="payment_members_count" />
+		<result property="payment_prestatus" column="payment_prestatus" />
+		<result property="id" column="id" />
+		<result property="conference_id" column="conference_id" />
+		<result property="annual_id" column="annual_id" />
+		<collection property="Conference" resultMap = "resultConference"></collection>
+	</resultMap>
+
+	
+	<select id="paymentList" resultType="arraylist" parameterType="string"
+		resultMap="resultPayment">
+		select c.conference_title, p.id ,p.payment_item,p.payment_status,c.conference_date
+		from conference c , payment p
+		where c.conference_id = p.conference_id
+	</select>
+</mapper>

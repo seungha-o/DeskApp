@@ -7,10 +7,11 @@
 	<typeAliases>
 		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
 		<typeAlias type ="com.kh.wefer.project.model.domain.Project" alias="Project"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment" alias="Payment"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Conference" alias="Conference"/>
 	</typeAliases>
 	<mappers> <!-- 쿼리문이 있는 xml등록 -->
 		<mapper resource="mapper/member-mapper.xml"/>
+		<mapper resource="mapper/payment-mapper.xml"/>
 	</mappers>
-	
-	
 </configuration>

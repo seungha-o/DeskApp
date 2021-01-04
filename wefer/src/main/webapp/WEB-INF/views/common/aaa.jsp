@@ -9,11 +9,14 @@
 </head>
 <body>
 <table>
-	<c:forEach var="vo" items="${list}">
-		<tr>
-			<td>${vo.name}</td>
-		</tr>
-	</c:forEach>
+		<c:forEach var="vo" items="${pmlist}">
+										<tr>
+											<td>${vo.conference.conference_title}</td>
+											<td>${vo.id}</td>
+											<td>${vo.payment_item}</td>
+											<td>${vo.payment_status}</td>
+										</tr>
+									</c:forEach>
 </table>
 </body>
 </html>

@@ -251,6 +251,7 @@
 		</div>
 	</div>
 	<div class="mobile-menu-overlay"></div>
+	
 	<script type="text/javascript">
 	   $.ajax({
       url : "${pageContext.request.contextPath}/memeberList",
