@@ -154,7 +154,7 @@
 														<li class="weight-500 col-md-6">
 															<h4 class="text-blue h5 mb-20">개인 정보 설정 </h4>
 															<div class="form-group">
-																<label>사원번호</label>
+																<label>사원번호 : ID</label>
 																<input class="form-control form-control-lg" type="text">
 															</div>
 															<div class="form-group">
@@ -162,7 +162,11 @@
 																<input class="form-control form-control-lg" type="text">
 															</div>
 															<div class="form-group">
-																<label>제목</label>
+																<label>부서명</label>
+																<input class="form-control form-control-lg" type="text">
+															</div>
+															<div class="form-group">
+																<label>직책</label>
 																<input class="form-control form-control-lg" type="text">
 															</div>
 															<div class="form-group">
@@ -187,14 +191,6 @@
 																</div>
 															</div>
 															<div class="form-group">
-																<label>출신국가</label>
-																<select class="selectpicker form-control form-control-lg" data-style="btn-outline-secondary btn-lg" title="Not Chosen">
-																	<option>United States</option>
-																	<option>India</option>
-																	<option>United Kingdom</option>
-																</select>
-															</div>
-															<div class="form-group">
 																<label>시군구(지역)</label>
 																<input class="form-control form-control-lg" type="text">
 															</div>
@@ -209,14 +205,16 @@
 															<div class="form-group">
 																<label>주소</label>
 																<textarea class="form-control"></textarea>
-															</div>
-															
-															
+															</div>															
 															<div class="form-group">
 																<div class="custom-control custom-checkbox mb-5">
 																	<input type="checkbox" class="custom-control-input" id="customCheck1-1">
-																	<label class="custom-control-label weight-400" for="customCheck1-1">I agree to receive notification emails</label>
+																	<label class="custom-control-label weight-400" for="customCheck1-1">알림 이메일 수신에 동의합니다</label>
 																</div>
+															</div>
+															<div class="form-group">
+																<label>비밀번호 </label>
+																<input class="form-control form-control-lg" type="passward">
 															</div>
 															<div class="form-group mb-0">
 																<input type="submit" class="btn btn-primary" value="정보수정">
