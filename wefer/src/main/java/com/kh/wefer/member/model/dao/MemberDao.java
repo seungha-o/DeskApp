@@ -14,6 +14,6 @@ public class MemberDao {
 	private SqlSession sqlSession;
 	
 	public List<Member> memberList() {
-		return sqlSession.selectList("Member.memberList");
+		return sqlSession.selectList("MemberMapper.memberList");
 	}
 }

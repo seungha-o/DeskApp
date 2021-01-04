@@ -231,14 +231,20 @@
 						<div class="dropdown-divider"></div>
 					</li>
 					<li>
-						<div class="sidebar-small-cap">주소록</div>
-					</li>
-					<li>
-						<c:forEach var="vo" items="${list}" varStatus="status">
-						<tr>
-							<td align="center">${vo.name}</td>
-						</tr>
-						</c:forEach>
+					<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-list3"></span>
+							<span class="mtext">주소록</span>
+					</a>
+					<ul class="submenu result">
+						
+					</ul>
+				</li>
+				<li>
+				<div id="result">
+					
+			
+				</div>
+					
 					</li>
 				</ul>
 			</div>

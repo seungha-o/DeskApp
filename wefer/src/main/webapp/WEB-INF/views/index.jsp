@@ -6,6 +6,9 @@
 	<meta charset="utf-8">
 	<title>wefer</title>
 
+	<!-- Jquery CDN -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  	
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="./resources/vendors/images/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="./resources/vendors/images/favicon-32x32.png">
