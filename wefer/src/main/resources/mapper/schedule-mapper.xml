@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Schedules"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+	<resultMap type="Schedules" id="resultSchedules"> <!-- type = "xml의 별칭" -->
+		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="id" column="id"></id>
+		<result property="schedules_id" column="schedules_id" />
+		<result property="schedules_staus" column="schedules_staus" />
+		<result property="schedules_std_date" column="schedules_std_date" />
+		<result property="schedules_end_date" column="schedules_end_date" />
+		<result property="schedules_name" column="schedules_name" />
+		<result property="schedules_content" column="schedules_content" />
+		<result property="schedules_color" column="schedules_color" />
+		<result property="id" column="id" />
+		<result property="dept_no" column="dept_no" />
+
+	</resultMap>
+	
+</mapper>
