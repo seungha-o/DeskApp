@@ -17,4 +17,6 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Payment> paymentList() {
 		return pmDao.paymentList();
 	}
+
+	
 }

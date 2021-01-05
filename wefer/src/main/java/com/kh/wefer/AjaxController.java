@@ -16,20 +16,12 @@ import com.kh.wefer.member.model.service.MemberService;
 @RestController
 public class AjaxController {
 	@Autowired 
-	private MemberService mService; // impl에있는 service호출
-	
+	private MemberService mService;
 	@ResponseBody
 	@PostMapping("/memeberList")
 	public Object restController() {
-		
-		System.out.println("aaa");
 		List<Member> arrList = new ArrayList<Member>();
 		arrList= mService.memberList();
-		System.out.println(arrList.get(0).getName());
-		
-//		Gson gson = new Gson();
-//		JSONObject.fromObject(gson.toJson(arrList).toString());
-		
 		return arrList;
 	}
 }

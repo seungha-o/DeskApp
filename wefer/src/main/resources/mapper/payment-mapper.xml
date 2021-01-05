@@ -21,9 +21,12 @@
 		<result property="id" column="id" />
 		<result property="conference_id" column="conference_id" />
 		<result property="annual_id" column="annual_id" />
+		<result property="annual_content" column="annual_content" />
+		<result property="annual_kind" column="annual_kind" />
+		<result property="annual_stddate" column="annual_stddate" />
+		<result property="annual_enddate" column="annual_enddate" />
 		<collection property="Conference" resultMap = "resultConference"></collection>
 	</resultMap>
-
 	
 	<select id="paymentList" resultType="arraylist" parameterType="string"
 		resultMap="resultPayment">
@@ -31,4 +34,18 @@
 		from conference c , payment p
 		where c.conference_id = p.conference_id
 	</select>
+	
+	<insert id = "annualInsert" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		insert into annual 
+		values (SEQ_PAYMENT_ANNUAL.nextval,
+		#{annual_content},
+		#{annual_stddate},
+		#{annual_enddate},
+		#{annual_kind},
+		#{id});
+		
+	</insert>
+	
+	
 </mapper>

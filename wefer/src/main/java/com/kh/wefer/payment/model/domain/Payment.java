@@ -15,7 +15,62 @@ public class Payment extends Conference implements java.io.Serializable {
 	private String id;
 	private String conference_id;
 	private Conference Conference;
+	private String annual_id;
+	private String annual_content;
+	private String annual_kind;
+	private Date annual_stddate;
+	private Date annual_enddate; 
 	
+	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
+			Date conference_date, String id, String payment_id, String payment_item, String payment_status,
+			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
+			com.kh.wefer.payment.model.domain.Conference conference, String annual_id, String annual_content,
+			String annual_kind, Date annual_stddate, Date annual_enddate) {
+		super(conference_id, conference_member, conference_title, conference_contents, conference_date, id);
+		this.payment_id = payment_id;
+		this.payment_item = payment_item;
+		this.payment_status = payment_status;
+		this.payment_members_count = payment_members_count;
+		this.payment_prestatus = payment_prestatus;
+		id = id2;
+		conference_id = conference_id2;
+		Conference = conference;
+		this.annual_id = annual_id;
+		this.annual_content = annual_content;
+		this.annual_kind = annual_kind;
+		this.annual_stddate = annual_stddate;
+		this.annual_enddate = annual_enddate;
+	}
+	public String getAnnual_id() {
+		return annual_id;
+	}
+	public void setAnnual_id(String annual_id) {
+		this.annual_id = annual_id;
+	}
+	public String getAnnual_content() {
+		return annual_content;
+	}
+	public void setAnnual_content(String annual_content) {
+		this.annual_content = annual_content;
+	}
+	public String getAnnual_kind() {
+		return annual_kind;
+	}
+	public void setAnnual_kind(String annual_kind) {
+		this.annual_kind = annual_kind;
+	}
+	public Date getAnnual_stddate() {
+		return annual_stddate;
+	}
+	public void setAnnual_stddate(Date annual_stddate) {
+		this.annual_stddate = annual_stddate;
+	}
+	public Date getAnnual_enddate() {
+		return annual_enddate;
+	}
+	public void setAnnual_enddate(Date annual_enddate) {
+		this.annual_enddate = annual_enddate;
+	}
 	public Payment() {
 		
 	}
@@ -38,7 +93,8 @@ public class Payment extends Conference implements java.io.Serializable {
 		return "Payment [payment_id=" + payment_id + ", payment_item=" + payment_item + ", payment_status="
 				+ payment_status + ", payment_members_count=" + payment_members_count + ", payment_prestatus="
 				+ payment_prestatus + ", id=" + id + ", conference_id=" + conference_id + ", Conference=" + Conference
-				+ "]";
+				+ ", annual_id=" + annual_id + ", annual_content=" + annual_content + ", annual_kind=" + annual_kind
+				+ ", annual_stddate=" + annual_stddate + ", annual_enddate=" + annual_enddate + "]";
 	}
 	public String getPayment_id() {
 		return payment_id;

@@ -236,15 +236,10 @@
 							<span class="mtext">주소록</span>
 					</a>
 					<ul class="submenu result">
-						
+						<!-- 주소록 나오는 부분 -->
 					</ul>
 				</li>
 				<li>
-				<div id="result">
-					
-			
-				</div>
-					
 					</li>
 				</ul>
 			</div>
@@ -259,7 +254,6 @@
       contentType : "application/json; charset=utf-8;",
       dataType : "json",
       success : function(data) {
-        
          for (var i = 0; i < data.length; i++) {
         	 $('.result').append('<li><a href="#" class="active">' + data[i].name + '</a></li>')
          }

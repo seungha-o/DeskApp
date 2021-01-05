@@ -288,7 +288,7 @@
 			</div>
 		</div>
 		<button type="button" class="pd-20 btn btn-primary btn-lg"
-			style="float: right;" onclick="location.href='/wefer/apprForm.do' ">결재작성</button>
+			style="float: right;" onclick="window.location='/wefer/apprForm.do'">결재작성</button>
 	</div>
 	<!-- js -->
 	<script src="./resources/vendors/scripts/core.js"></script>

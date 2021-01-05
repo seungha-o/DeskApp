@@ -16,4 +16,5 @@ public class PaymentDao {
 	public List<Payment> paymentList(){
 		return sqlSession.selectList("PaymentMapper.paymentList");
 	}
+	
 }
