@@ -5,45 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>approval Form</title>
-<!-- Jquery CDN -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Site favicon -->
-<link rel="apple-touch-icon" sizes="180x180"
-	href="./resources/vendors/images/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="./resources/vendors/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="./resources/vendors/images/favicon-16x16.png">
 
-<!-- Mobile Specific Metas -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-	rel="stylesheet">
-<!-- CSS -->
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/core.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/icon-font.min.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/style.css">
-
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async
-	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-
-	gtag('config', 'UA-119386393-1');
-</script>
 </head>
 <script type="text/javascript">
 	function select() {
@@ -52,6 +14,9 @@
 			$("#ann").val("휴가신청서입니다.");
 			$("#annDate").show();
 		}
+	}
+	function choose() {
+		console.log(this.value);
 	}
 </script>
 
@@ -143,31 +108,17 @@
 												<div class="chat-list bg-light-gray">
 													<div class="chat-search select-People"></div>
 													<div class="chat-search">
-														<span class="ti-search"></span> <input type="text"
-															placeholder="Search Contact">
+														<span class="ti-search"></span> 
+														<input type="text">
 													</div>
 
 													<div
 														class="notification-list chat-notification-list customscroll">
-														<ul>
-															<li><a href="#"> <img
-																	src="./resources/vendors/images/img.jpg" alt="">John
-																	Doe
-															</a></li>
-															<li><a href="#"> <img
-																	src="./resources/vendors/images/img.jpg" alt="">John
-																	Doe
-															</a></li>
-															<li><a href="#"> <img
-																	src="./resources/vendors/images/img.jpg" alt="">John
-																	Doe
-															</a></li>
-															<li><a href="#"> <img
-																	src="./resources/vendors/images/img.jpg" alt="">John
-																	Doe
-															</a></li>
-															<li>
-														</ul>
+														
+															<ul class="submenu ref">
+																	<!-- 참조자 나오는 부분 -->
+															</ul>
+														
 														<!-- 스크롤부분 -->
 													</div>
 													<!-- 회색박스 -->
@@ -203,10 +154,23 @@
 		<button type="submit" class="pd-20 btn btn-primary btn-lg"
 			style="float: right;" onclick="location.href='/wefer/aInsert.do' ">결재작성</button>
 	</div>
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
+	<script type="text/javascript">
+	   $.ajax({
+      url : "${pageContext.request.contextPath}/memeberList",
+      type : "POST",
+      contentType : "application/json; charset=utf-8;",
+      dataType : "json",
+      success : function(data) {
+         for (var i = 0; i < data.length; i++) {
+        	 $('.ref').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '</a></li>')
+         }
+      },
+      error : function() {
+         alert("restController err");  
+      }
+   });
+   </script>
+
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script
