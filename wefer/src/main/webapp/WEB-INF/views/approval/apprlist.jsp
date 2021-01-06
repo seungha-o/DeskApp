@@ -7,45 +7,7 @@
 <!-- Basic Page Info -->
 <meta charset="utf-8">
 <title>approval</title>
-<!-- Jquery CDN -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Site favicon -->
-<link rel="apple-touch-icon" sizes="180x180"
-	href="./resources/vendors/images/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="./resources/vendors/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="./resources/vendors/images/favicon-16x16.png">
 
-<!-- Mobile Specific Metas -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-	rel="stylesheet">
-<!-- CSS -->
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/core.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/icon-font.min.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/style.css">
-
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async
-	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-
-	gtag('config', 'UA-119386393-1');
-</script>
 <style>
 .nav-link {
 	background-color: white !important;
@@ -171,30 +133,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr><td></td>
-											<td>김땡떙</td>
-											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
-											<td>29-10-2020</td>
+									<c:forEach var="vo" items="${pmlist}">
+										<tr>
+											<td>${vo.conference.conference_title}</td>
+											<td>${vo.id}</td>
+											<td>${vo.payment_item}</td>
+											<td>${vo.payment_status}</td>
+											<td>${vo.conference.conference_date}</td>
 										</tr>
-										<tr><td></td>
-											<td>이세모</td>
-											<td>developer</td>
-											<td>Trainer Avenue Peoria, IL 61602</td>
-											<td>29-11-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -216,36 +163,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr><td></td>
-											<td>김땡떙</td>
-											<td>marketing</td>
-											<td><a href = "#" onclick="location.href='/wefer/apprDetail.do'">2829 Trainer Avenue Peoria</a></td>
-											<td>29-10-2020</td>
+									<c:forEach var="vo" items="${pmlist}">
+										<tr>
+											<td>${vo.conference.conference_title}</td>
+											<td>${vo.id}</td>
+											<td>${vo.payment_item}</td>
+											<td>${vo.payment_status}</td>
+											<td>${vo.conference.conference_date}</td>
 										</tr>
-										<tr><td></td>
-											<td>이세모</td>
-											<td>developer</td>
-											<td>Trainer Avenue Peoria, IL 61602</td>
-											<td>29-11-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -266,19 +192,16 @@
 											<th>Date</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr><td></td>
-											<td>이세모</td>
-											<td>developer</td>
-											<td>Trainer Avenue Peoria, IL 61602</td>
-											<td>29-11-2020</td>
+								<tbody>
+									<c:forEach var="vo" items="${pmlist}">
+										<tr>
+											<td>${vo.conference.conference_title}</td>
+											<td>${vo.id}</td>
+											<td>${vo.payment_item}</td>
+											<td>${vo.payment_status}</td>
+											<td>${vo.conference.conference_date}</td>
 										</tr>
-										<tr><td></td>
-											<td>박동글</td>
-											<td>developer</td>
-											<td>2829 sdfsdf Trainer Avenue Peoria, IL 61602</td>
-											<td>29-12-2020</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -288,13 +211,10 @@
 			</div>
 		</div>
 		<button type="button" class="pd-20 btn btn-primary btn-lg"
-			style="float: right;" onclick="window.location='/wefer/apprForm.do'">결재작성</button>
+			style="float: right;" onclick="window.location='/wefer/apprForm.do '">결재작성</button>
+	
 	</div>
-	<!-- js -->
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
+	
 	<script
 		src="./resources/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script

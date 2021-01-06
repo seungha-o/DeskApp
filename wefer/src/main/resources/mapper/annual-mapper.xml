@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
 <mapper namespace="AnnualMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
 	<resultMap type="Annual" id="resultAnnual"> 
 		<id property="id" column="id"/>
@@ -12,14 +13,16 @@
 	
 	<insert id = "annualInsert" parameterType="string"
 		flushCache="true" statementType="PREPARED">
+		<selectKey resultType="string" keyProperty="id" order="BEFORE">
+			select id from member where id = #{id}
+		</selectKey>
 		insert into annual ( annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
 		values (SEQ_PAYMENT_ANNUAL.nextval,
 		#{annual_content},
 		#{annual_stddate},
 		#{annual_enddate},
 		#{annual_kind},
-		MemberID_SEQ.currval)
+		#{id})
 	</insert>
-	
 	
 </mapper>

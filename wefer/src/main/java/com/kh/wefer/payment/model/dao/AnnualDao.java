@@ -8,9 +8,10 @@ import com.kh.wefer.payment.model.domain.Annual;
 
 @Repository("aDao")
 public class AnnualDao {
-@Autowired
-private SqlSession sqlSession;
-public int insertAnnual(Annual a) {
-	return sqlSession.insert("AnnualMapper.annualInsert");
-}
+	@Autowired
+	private SqlSession sqlSession;
+
+	public int insertAnnual(Annual a) {
+		return sqlSession.insert("AnnualMapper.annualInsert", a);
+	}
 }

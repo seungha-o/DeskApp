@@ -1,6 +1,6 @@
 package com.kh.wefer.payment.model.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;

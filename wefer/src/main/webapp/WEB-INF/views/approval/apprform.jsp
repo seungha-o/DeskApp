@@ -7,19 +7,7 @@
 <title>approval Form</title>
 
 </head>
-<script type="text/javascript">
-	function select() {
-		var x = document.getElementById("payment_item").value;
-		if (x == "휴가") {
-			$("#ann").val("휴가신청서입니다.");
-			$("#annDate").show();
-		}
-	}
-	function choose() {
-		var z = $('.ref li > .btn').val();
-		console.log(z);
-	}
-</script>
+
 
 <style>
 .chat-box .chat-desc ul, .pd-ltr-20 {
@@ -146,9 +134,7 @@
 					</form>
 				</div>
 				<div class="html-editor pd-20 card-box mb-30">
-					<textarea name="annual_content"
-						class="textarea_editor form-control border-radius-0"
-						placeholder="Enter text ..."></textarea>
+					<input type = "hidden" onclick="myFunction()">
 				</div>
 			</div>
 		</div>
@@ -163,7 +149,7 @@
       dataType : "json",
       success : function(data) {
          for (var i = 0; i < data.length; i++) {
-        	 $('.ref').append('<li onclick="choose()"  ><button class="butn'+i+'" type ="button" value = "' + data[i].name + '"        > ' + data[i].name + '</button></li>')
+        	 $('.ref').append('<li onclick="choose("'+data[i].name+'")"><a href ="#">' + data[i].name + '</a></li>')
          }
       },
       error : function() {
@@ -171,7 +157,23 @@
       }
    });
    </script>
-
+<script type="text/javascript">
+	function select() {
+		var x = document.getElementById("payment_item").value;
+		if (x == "휴가") {
+			$("#ann").val("휴가신청서입니다.");
+			$("#annDate").show();
+		}
+	}
+	
+	function choose(y) {
+//
+		var a = String(y);
+		console.log(a);
+		
+	}
+	
+</script>
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script

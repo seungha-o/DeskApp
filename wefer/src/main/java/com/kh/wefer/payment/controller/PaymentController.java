@@ -47,9 +47,15 @@ public class PaymentController {
 
 	// jsp에서 작성된 글을 pInsert.do에 insert
 	@RequestMapping(value = "/aInsert.do")
-	public String annualInsert(Annual a,HttpServletRequest request) {
-		System.out.println(a);
-		aService.insertAnnual(a);
+	public String annualInsert(Annual a, HttpSession session, HttpServletRequest request) {
+		try {
+			System.out.println(a);
+			a.setId((String) session.getAttribute("loginId"));
+			aService.insertAnnual(a);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:approval.do";
 		
 	}
