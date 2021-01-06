@@ -24,6 +24,13 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
 	rel="stylesheet">
+	
+	<script src="./resources/vendors/scripts/jquery-3.1.1.min.js"></script> <!-- 값 제어를 위해 jquery -->
+    <link href="./resources/src/plugins/air-datepicker/dist/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Air datepicker css -->
+    <script src="./resources/src/plugins/air-datepicker/dist/js/datepicker.js"></script> <!-- Air datepicker js -->
+    <script src="./resources/src/plugins/air-datepicker/dist/js/i18n/datepicker.ko.js"></script> <!-- 달력 한글 추가를 위해 커스텀 -->
+	
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/core.css">
@@ -31,10 +38,9 @@
 	href="./resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/style.css">
-
-
+	
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async
+<!-- <script async
 	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 <script>
 	window.dataLayer = window.dataLayer || [];
@@ -42,8 +48,64 @@
 		dataLayer.push(arguments);
 	}
 	gtag('js', new Date());
+	console.log(gtag());
 
 	gtag('config', 'UA-119386393-1');
+	console.log(gtag());
+</script> -->
+<script type="text/javascript">
+$(document).ready(function () {
+	  $("button[name='prj-add-person']").click(function () {
+		  var arr = [];
+		  
+		var project_sub_title = $("input[type='text'][name='project_sub_title']").val();
+		var prj_person_select_val = $("#prj-person option:selected").val();
+		var prj_person = $("select[name='prj-person']").val();
+		if(project_sub_title==null || prj_person_select_val == "default"){
+			alert("값을 모두 입력해 주세요");
+		}else{
+			for(var i=0; i<= arr; i++){
+				arr[i] = prj_person;
+				console.log(arr[i]);
+			}
+	    $("#result").append("<div id='project_sub_title2'><span>"+project_sub_title+"</span><span>"+prj_person+"</span></div>");
+	    $("input[type='text'][name='project_sub_title']").val('');
+	    $("#prj-person option:eq(0)").prop("selected", "selected");
+
+	    
+
+	    
+		}
+	
+		
+		
+	  });
+		 
+	 /*  $("#prj-multi-person").click(function () {
+		$("<div id='prj-multi-form-person' class='dropdown bootstrap-select form-control'>"
+		+"<select id='prj-person' name='prj-person' class='selectpicker form-control' data-style='btn-outline-primary' data-size='5' tabindex='-98'>"
+		+"<optgroup label='===================================================' data-max-options='2'>"
+		+"<option value='default' selected='selected'>담당</option>"
+		+"</optgroup>"
+		+"<optgroup label='Condiments' data-max-options='2'>"
+		+"<option>Mustard</option>"
+		+"</optgroup>"
+		+"</select>"
+		+"<button type='button' class='btn dropdown-toggle btn-outline-primary' data-toggle='dropdown' role='combobox' aria-owns='bs-select-1' aria-haspopup='listbox' aria-expanded='false' data-id='prj-person' title='담당'>"
+		+"<div class='filter-option'>"
+		+"<div class='filter-option-inner'>"
+		+"<div class='filter-option-inner-inner'>담당</div></div> </div></button>"
+		+"<div class='dropdown-menu'>"
+		+"<div class='inner show' role='listbox' id='bs-select-1' tabindex='-1'>"
+		+"<ul class='dropdown-menu inner show' role='presentation'></ul></div></div></div>").appendTo("#person-form-group")
+	}); */
+	  
+	 /*  $("#prj-remove-person").click(function () {
+		  $("#prj-multi-form-person:last").remove();
+	  
+	  }); */
+	  
+	});
 </script>
 
 
@@ -88,22 +150,22 @@
 									<div class="modal-dialog modal-lg modal-dialog-centered">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+												<h4 class="modal-title" id="myLargeModalLabel">프로젝트 생성</h4>
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 											</div>
+												<form action = "projectInsert.do" method="post">
 											<div class="modal-body">
-												<form>
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 명</label>
 														<div class="col-sm-12 col-md-10">
-															<input class="form-control" type="text" placeholder="Johnny Brown">
+															<input id="project_name" class="form-control" name="project_name" type="text" placeholder="프로젝트 주제를 입력해 주세요">
 														</div>
 													</div>
 										
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">대표컬러</label>
 														<div class="col-sm-12 col-md-10">
-															<input class="form-control" value="#563d7c" type="color">
+															<input id="form-control" class="form-control" name="project_color" value="#563d7c" type="color">
 														</div>
 													</div>
 													
@@ -114,13 +176,13 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">시작일</label>
 														<div class="col-sm-12 col-md-10">
-															<input class="form-control date-picker" placeholder="Select Date" type="text">
+															<input id="datepicker1" class="form-control" name="project_std_date" placeholder="Select Date" type="text">
 														</div>
 													</div>
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
 														<div class="col-sm-12 col-md-10">
-															<input class="form-control date-picker" placeholder="Select Date" type="text">
+															<input id="datepicker2"  class="form-control" name="project_end_date" placeholder="Select Date" type="text">
 														</div>
 													</div>
 													<hr>
@@ -128,40 +190,44 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 역할</label>
 														<div class="col-sm-12 col-md-10">
-															<input class="form-control" type="text" placeholder="Johnny Brown">
+															<input id="project_sub_title"  class="form-control" type="text" name="project_sub_title" placeholder="Johnny Brown">
 														</div>
 													</div>
 												
 												
-													<div class="form-group row">
-														<label class="col-sm-12 col-md-2 col-form-label">인원</label>
-														<div class="col-sm-12 col-md-10">
-															<div class="form-group">
+													
+															<div class="form-group row">
+															<div class="col-sm-12 col-md-10">
+															<div id="person-form-group" class="form-group">
 																
-																<select class="selectpicker form-control" data-style="btn-outline-primary" data-size="5">
-																	<optgroup label="Condiments" data-max-options="2">
-																		<option>Mustard</option>
-																		<option>Ketchup</option>
-																		<option>Relish</option>
-																	</optgroup>
-																	<optgroup label="Breads" data-max-options="2">
-																		<option>Plain</option>
-																		<option>Steamed</option>
-																		<option>Toasted</option>
-																	</optgroup>
-																</select>
+																
+																<div class="fa-hover">
+																
+																<button id="prj-multi-person" type="button" class="btn btn-light" style="float: right; margin-top: 10px;">
+																<i class="icon-copy fa fa-user-plus" aria-hidden="true"></i>인원추가
+																</button>
 															</div>
+															
+															
+																
+																</div>
+															
 														</div>
-													</div>                                               
+													</div> 	
+												
+												<div class="form-group row">
+												<div id="result"></div>
+												</div>                                            
 													<div class="prj-add-btn" style="display: flex; justify-content: flex-end;">
-														<button type="button" class="btn btn-light">추가하기</button>
+														<button type="button" id="prj-add-person" name="prj-add-person" class="btn btn-light">추가하기</button>
 													</div>
-												</form>
-											</div>
+												</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+												<input type="reset" class="btn btn-secondary" data-dismiss="modal" value="close" name="prj-clear">
 												<button type="button" class="btn btn-primary">Save changes</button>
 											</div>
+												</form>
+											
 										</div>
 									</div>
 								</div>
@@ -272,5 +338,97 @@
 		<script src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
 		<script src="./resources/vendors/scripts/advanced-components.js"></script>
 </body>
+ 
+    <script>
+        //한개만 단순하게 만들때
+        $("#datepicker").datepicker({
+            language: 'ko'
+        });
 
+
+
+
+
+        //두개짜리 제어 연결된거 만들어주는 함수
+        datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+
+        /*
+            * 달력 생성기
+            * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
+            * @example   datePickerSet($("#datepicker"));
+            * 
+            * 
+            * @param sDate, 
+            * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
+            * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
+            */
+        function datePickerSet(sDate, eDate, flag) {
+
+            //시작 ~ 종료 2개 짜리 달력 datepicker	
+            if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0 && eDate.length > 0) {
+                var sDay = sDate.val();
+                var eDay = eDate.val();
+
+                if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+                    var edp = eDate.datepicker().data("datepicker");
+                    edp.selectDate(new Date(eDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                //시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(eDay)) {
+                    sDate.datepicker({
+                        maxDate: new Date(eDay.replace(/-/g, "/"))
+                    });
+                }
+                sDate.datepicker({
+                    language: 'en',
+                    dateFormat:'yyyy-mm-dd',
+                    autoClose: true,
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+                if (!isValidStr(sDay)) {
+                    eDate.datepicker({
+                        minDate: new Date(sDay.replace(/-/g, "/"))
+                    });
+                }
+                eDate.datepicker({
+                    language: 'en',
+                    dateFormat:'yyyy-mm-dd',
+                    autoClose: true,
+                    onSelect: function () {
+                        datePickerSet(sDate, eDate);
+                    }
+                });
+
+                //한개짜리 달력 datepicker
+            } else if (!isValidStr(sDate)) {
+                var sDay = sDate.val();
+                if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
+                    var sdp = sDate.datepicker().data("datepicker");
+                    sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+                }
+
+                sDate.datepicker({
+                    language: 'en',
+                    dateFormat:'yyyy-mm-dd',
+                    autoClose: true
+                });
+            }
+
+
+            function isValidStr(str) {
+                if (str == null || str == undefined || str == "")
+                    return true;
+                else
+                    return false;
+            }
+        }
+    </script>
 </html>

@@ -13,8 +13,8 @@ public class Project {
 //	PROJECT_STATUS   NOT NULL VARCHAR2(2000) 
 private String project_id;
 private String project_title;
-private Date project_std_date;
-private Date project_end_date;
+private String project_std_date;
+private String project_end_date;
 private String project_status;
 
 public Project() {
@@ -22,7 +22,7 @@ public Project() {
 }
 
 
-public Project(String project_id, String project_title, Date project_std_date, Date project_end_date,
+public Project(String project_id, String project_title, String project_std_date, String project_end_date,
 		String project_status) {
 	super();
 	this.project_id = project_id;
@@ -45,16 +45,16 @@ public String getProject_title() {
 public void setProject_title(String project_title) {
 	this.project_title = project_title;
 }
-public Date getProject_std_date() {
+public String getProject_std_date() {
 	return project_std_date;
 }
-public void setProject_std_date(Date project_std_date) {
+public void setProject_std_date(String project_std_date) {
 	this.project_std_date = project_std_date;
 }
-public Date getProject_end_date() {
+public String getProject_end_date() {
 	return project_end_date;
 }
-public void setProject_end_date(Date project_end_date) {
+public void setProject_end_date(String project_end_date) {
 	this.project_end_date = project_end_date;
 }
 public String getProject_status() {
