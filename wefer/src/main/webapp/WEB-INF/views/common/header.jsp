@@ -40,6 +40,21 @@
 
 	gtag('config', 'UA-119386393-1');
 </script>
+<script type="text/javascript">
+	var change = function() {
+		var elem = document.getElementById("commute");
+		if (elem.value == "출근") {
+			alert("출근 확인되었습니다.");
+			elem.value = "퇴근";
+		} else {
+			var conf = confirm("퇴근하시겠습니까 현재시간은 TO_CHAR(SYSDATE, 'HH:MI:SS') 입니다.");
+			if (conf)
+				elem.value = "출근";
+			else
+				elem.value = "퇴근";
+		}
+	}
+</script>
 	<div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo"><img src="./resources/vendors/images/deskapp-logo.svg" alt=""></div>
@@ -60,6 +75,7 @@
 
 		</div>
 		<div class="header-right">
+		<input class="btn btn-success" type="button" value="출근" id = "commute" onclick='change();'>
 			<div class="dashboard-setting user-notification">
 				<div class="dropdown">
 					<a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">

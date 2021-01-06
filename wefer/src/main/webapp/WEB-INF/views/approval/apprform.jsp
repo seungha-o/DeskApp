@@ -16,7 +16,8 @@
 		}
 	}
 	function choose() {
-		console.log(this.value);
+		var z = $('.ref li > .btn').val();
+		console.log(z);
 	}
 </script>
 
@@ -109,7 +110,7 @@
 													<div class="chat-search select-People"></div>
 													<div class="chat-search">
 														<span class="ti-search"></span> 
-														<input type="text">
+														<input name="set-name" type="text">
 													</div>
 
 													<div
@@ -162,7 +163,7 @@
       dataType : "json",
       success : function(data) {
          for (var i = 0; i < data.length; i++) {
-        	 $('.ref').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '</a></li>')
+        	 $('.ref').append('<li onclick="choose()"  ><button class="butn'+i+'" type ="button" value = "' + data[i].name + '"        > ' + data[i].name + '</button></li>')
          }
       },
       error : function() {
