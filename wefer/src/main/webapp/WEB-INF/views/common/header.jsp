@@ -267,6 +267,11 @@
 					</li>
 					
 					<li>
+						<a href="chat.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-chat3"></span><span class="mtext">채팅</span>
+						</a>
+					</li>
+					<li>
 						<div class="dropdown-divider"></div>
 					</li>
 					<li>
@@ -279,6 +284,11 @@
 					</ul>
 				</li>
 				<li>
+				<div id="result">
+					
+			
+				</div>
+					
 					</li>
 				</ul>
 			</div>
