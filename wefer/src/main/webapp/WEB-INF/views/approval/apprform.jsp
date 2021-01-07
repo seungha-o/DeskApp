@@ -96,9 +96,8 @@
 											<div class="modal-body">
 												<div class="chat-list bg-light-gray">
 													<div class="chat-search select-People"></div>
-													<div class="chat-search">
-														<span class="ti-search"></span> 
-														<input name="set-name" type="text">
+													<div class="chat-search" id = "set-name">
+														<!--  클릭한 참조자 이름  -->
 													</div>
 
 													<div
@@ -149,7 +148,7 @@
       dataType : "json",
       success : function(data) {
          for (var i = 0; i < data.length; i++) {
-        	 $('.ref').append('<li onclick="choose("'+data[i].name+'")"><a href ="#">' + data[i].name + '</a></li>')
+        	 $('.ref').append('<li onclick="choose(\''+data[i].name+'\');"><a href ="#">' + data[i].name + '</a></li>')
          }
       },
       error : function() {
@@ -166,11 +165,9 @@
 		}
 	}
 	
-	function choose(y) {
-//
-		var a = String(y);
+	function choose(a) {
+		$('#set-name').append('<div>\''+a+'\'</div>');
 		console.log(a);
-		
 	}
 	
 </script>
