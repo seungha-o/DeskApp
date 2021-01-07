@@ -75,7 +75,11 @@ public class MemberController {
 				session.setAttribute("dept", result.getDept_no()); 
 				System.out.println(m.getId());
 				mv.setViewName("member/sessiontest");
+				
 			}
+			
+
+	
 		}catch (Exception e) {
 		 e.printStackTrace();
 		}

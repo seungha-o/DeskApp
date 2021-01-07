@@ -16,6 +16,11 @@ public class MemberDao {
 	public List<Member> memberList() {
 		return sqlSession.selectList("Member.memberList");
 	}
+	public List<Member> projectMemberList() {
+		return sqlSession.selectList("Member.projectMemberList");
+	}
+	
+
 
 	public int insertMember(Member m) {
 		return sqlSession.insert("Member.insertMember", m);

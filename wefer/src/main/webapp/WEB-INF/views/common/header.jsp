@@ -238,7 +238,7 @@
 
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index.html">
+			<a href="#" onclick="location.href='/wefer/'">
 				<img src="./resources/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
 				<img src="./resources/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
 			</a>
@@ -283,6 +283,11 @@
 					</li>
 					
 					<li>
+						<a href="chat.html" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-chat3"></span><span class="mtext">채팅</span>
+						</a>
+					</li>
+					<li>
 						<div class="dropdown-divider"></div>
 					</li>
 					<li>
@@ -295,6 +300,11 @@
 					</ul>
 				</li>
 				<li>
+				<div id="result">
+					
+			
+				</div>
+					
 					</li>
 				</ul>
 			</div>
@@ -303,20 +313,45 @@
 	<div class="mobile-menu-overlay"></div>
 	
 	<script type="text/javascript">
-	   $.ajax({
-      url : "${pageContext.request.contextPath}/memeberList",
-      type : "POST",
-      contentType : "application/json; charset=utf-8;",
-      dataType : "json",
-      success : function(data) {
-         for (var i = 0; i < data.length; i++) {
-        	 $('.result').append('<li><a href="#" class="active">' + data[i].name + '</a></li>')
-         }
-      },
-      error : function() {
-         alert("restController err");  
-      }
-   });
+	$.ajax({
+	    url : "${pageContext.request.contextPath}/memeberList",
+	    type : "POST",
+	    contentType : "application/json; charset=utf-8;",
+	    dataType : "json",
+	    success : function(data) {
+	    	
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	    		 if($('.insa').length == 0){
+		      	 $('.result').append('<ul class="insa"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			 
+	    		 }
+	    	   }else if(data[i].dept_name == '경영팀'){
+	    		   if($('.gyeonyoung').length == 0){
+		      	 		$('.result').append('<ul class="gyeonyoung"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			   
+	    		   }
+	    	   }else if(data[i].dept_name == '개발팀'){
+	    		   if($('.geabal').length == 0){
+		      	 		$('.result').append('<ul class="geabal"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			   
+	   		   }	   
+	    	   }
+	       }
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	  	      	 $('.insa').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '경영팀'){
+	  	      	 $('.gyeonyoung').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '개발팀'){
+	  	      	 $('.geabal').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }
+	       
+	       }
+	       
+	       
+	    },
+	    error : function() {
+	       alert("restController err");  
+	    }
+	 });
    </script>
    	<script src="./resources/vendors/scripts/core.js"></script>
 	<script src="./resources/vendors/scripts/script.min.js"></script>

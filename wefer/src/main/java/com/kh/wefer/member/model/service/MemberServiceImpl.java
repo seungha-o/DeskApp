@@ -19,6 +19,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public List<Member> projectMemberList() {
+		return mDao.projectMemberList();
+	}
+
+	
+	
+	@Override
 	public int insertMember(Member m) {
 		return mDao.insertMember(m);
 

@@ -6,6 +6,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
+		<typeAlias type ="com.kh.wefer.member.model.domain.Dept" alias="Dept"/>
 		<typeAlias type ="com.kh.wefer.project.model.domain.Project" alias="Project"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment" alias="Payment"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Conference" alias="Conference"/>

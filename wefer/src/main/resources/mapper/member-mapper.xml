@@ -17,12 +17,25 @@
 		<result property="dept_no" column="dept_no" />
 		<result property="birth" column="birth" />
 		<result property="manage" column="manage" />
-
+		<result property="dept_name" column="dept_name" />
 	</resultMap>
+	<!-- 	<resultMap type="Dept" id="resultDept"> type = "xml의 별칭"
+		property에는vo의 필드명, column에는 db table의 컬럼명
+		<id property="dep`t_no" column="dept_no"></id>
+		<result property="dept_name" column="dept_name" />
+		
+		
+
+	</resultMap> -->
 	
 	<select id="memberList" resultType="arraylist"
 		resultMap="resultMember">
-		select name from member
+		select dept.dept_name,member.position, member.name from dept, member where dept.dept_no = member.dept_no
+	</select>
+	
+	<select id="projectMemberList" resultType="arraylist"
+		resultMap="resultMember">
+		select dept.dept_name,member.position, member.name from dept, member where dept.dept_no = member.dept_no
 	</select>
 	
 	<insert id="insertMember"  parameterType="Member"  statementType="PREPARED">

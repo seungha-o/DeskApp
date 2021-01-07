@@ -21,6 +21,7 @@ public class Member implements java.io.Serializable {
 	private String signiture;
 	private String employ_date;
 	private String dept_no;
+	private String dept_name;
 	@DateTimeFormat(pattern = "yyyymmdd")
 	private Date birth;
 	private int manage;
@@ -29,16 +30,11 @@ public class Member implements java.io.Serializable {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", phone=" + phone + ", email="
-				+ email + ", position=" + position + ", profile=" + profile + ", status=" + status + ", annual="
-				+ annual + ", signiture=" + signiture + ", employ_date=" + employ_date + ", dept_no=" + dept_no
-				+ ", birth=" + birth + ", manage=" + manage + "]";
-	}
+
+
 	public Member(String id, String password, String name, String phone, String email, String position, String profile,
-			String status, String annual, String signiture, String employ_date, String dept_no, Date birth,
-			int manage) {
+			String status, String annual, String signiture, String employ_date, String dept_no, String dept_name,
+			Date birth, int manage) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -52,9 +48,34 @@ public class Member implements java.io.Serializable {
 		this.signiture = signiture;
 		this.employ_date = employ_date;
 		this.dept_no = dept_no;
+		this.dept_name = dept_name;
 		this.birth = birth;
 		this.manage = manage;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", phone=" + phone + ", email="
+				+ email + ", position=" + position + ", profile=" + profile + ", status=" + status + ", annual="
+				+ annual + ", signiture=" + signiture + ", employ_date=" + employ_date + ", dept_no=" + dept_no
+				+ ", dept_name=" + dept_name + ", birth=" + birth + ", manage=" + manage + "]";
+	}
+
+
+
+	public String getDept_name() {
+		return dept_name;
+	}
+
+
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+
 
 	public String getId() {
 		return id;

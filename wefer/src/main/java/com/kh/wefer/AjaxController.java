@@ -24,4 +24,12 @@ public class AjaxController {
 		arrList= mService.memberList();
 		return arrList;
 	}
+	
+	@ResponseBody
+	@PostMapping("/projectMemberList")
+	public Object addPersonController() {
+		List<Member> arrList = new ArrayList<Member>();
+		arrList= mService.projectMemberList();
+		return arrList;
+	}
 }

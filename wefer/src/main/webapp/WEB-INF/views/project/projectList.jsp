@@ -193,41 +193,82 @@ $(document).ready(function () {
 															<input id="project_sub_title"  class="form-control" type="text" name="project_sub_title" placeholder="Johnny Brown">
 														</div>
 													</div>
-												
-												
-													
-															<div class="form-group row">
-															<div class="col-sm-12 col-md-10">
+
+
+
+													<div class="form-group row">
+														<div style="width: 98%;">
 															<div id="person-form-group" class="form-group">
-																
-																
+
+
 																<div class="fa-hover">
-																
-																<button id="prj-multi-person" type="button" class="btn btn-light" style="float: right; margin-top: 10px;">
-																<i class="icon-copy fa fa-user-plus" aria-hidden="true"></i>인원추가
-																</button>
-															</div>
-															
-															
-																
+
+																	<button id="prj-multi-person" type="button"
+																		class="btn btn-light"
+																		style="float: right; margin-top: 10px;">
+																		<i id="prj-add-member" class="icon-copy fi-torsos-female-male"
+																			data-toggle="modal" data-target="#Medium-modal">인원추가</i>
+																	</button>
+
+																	<div class="modal fade" id="Medium-modal" tabindex="-1"
+																		role="dialog" aria-labelledby="myLargeModalLabel"
+																		aria-hidden="true">
+																		<div class="modal-dialog modal-dialog-centered">
+																			<!-- <div class="modal-header"></div> -->
+																			<div class="modal-content">
+																				<div class="modal-body">
+																					<div class="chat-list bg-light-gray">
+																						<div class="chat-search select-People"></div>
+																						<div class="chat-search">
+																							<span class="ti-search"></span> <input
+																								type="text">
+																						</div>
+
+																						<div
+																							class="notification-list chat-notification-list customscroll">
+
+																							<ul class="submenu ref">
+																								<!-- 참조자 나오는 부분 -->
+																							</ul>
+
+																							<!-- 스크롤부분 -->
+																						</div>
+																						<!-- 회색박스 -->
+																					</div>
+																				</div>
+																				<div class="modal-footer">
+																					<button type="button" class="btn btn-primary">Save
+																						changes</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
 																</div>
-															
+
+
+
+															</div>
+
 														</div>
-													</div> 	
-												
-												<div class="form-group row">
-												<div id="result"></div>
-												</div>                                            
-													<div class="prj-add-btn" style="display: flex; justify-content: flex-end;">
-														<button type="button" id="prj-add-person" name="prj-add-person" class="btn btn-light">추가하기</button>
+													</div>
+
+													<div class="form-group row">
+														<div id="result"></div>
+													</div>
+													<div class="prj-add-btn"
+														style="display: flex; justify-content: flex-end;">
+														<button type="button" id="prj-add-person"
+															name="prj-add-person" class="btn btn-light">추가하기</button>
 													</div>
 												</div>
-											<div class="modal-footer">
-												<input type="reset" class="btn btn-secondary" data-dismiss="modal" value="close" name="prj-clear">
-												<button type="button" class="btn btn-primary">Save changes</button>
-											</div>
-												</form>
-											
+												<div class="modal-footer">
+													<input type="reset" class="btn btn-secondary"
+														data-dismiss="modal" value="close" name="prj-clear">
+													<button type="button" class="btn btn-primary">Save
+														changes</button>
+												</div>
+											</form>
+
 										</div>
 									</div>
 								</div>
@@ -258,7 +299,10 @@ $(document).ready(function () {
 									<td>@mdo</td>
 									<td>
 										<div class="progress mb-20">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+											<div
+												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+												role="progressbar" style="width: 50%" aria-valuenow="0"
+												aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</td>
 								</tr>
@@ -269,7 +313,10 @@ $(document).ready(function () {
 									<td>@fat</td>
 									<td>
 										<div class="progress mb-20">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+											<div
+												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+												role="progressbar" style="width: 50%" aria-valuenow="0"
+												aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</td>
 								</tr>
@@ -280,7 +327,10 @@ $(document).ready(function () {
 									<td>@twitter</td>
 									<td>
 										<div class="progress mb-20">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+											<div
+												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+												role="progressbar" style="width: 50%" aria-valuenow="0"
+												aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 									</td>
 								</tr>
@@ -289,27 +339,36 @@ $(document).ready(function () {
 						<div class="collapse-box collapse" id="basic-table">
 							<div class="code-box">
 								<div class="clearfix">
-									<a href="javascript:;" class="btn btn-primary btn-sm code-copy pull-left"
-										data-clipboard-target="#basic-table-code"><i class="fa fa-clipboard"></i> Copy
+									<a href="javascript:;"
+										class="btn btn-primary btn-sm code-copy pull-left"
+										data-clipboard-target="#basic-table-code"><i
+										class="fa fa-clipboard"></i> Copy Code</a> <a href="#basic-table"
+										class="btn btn-primary btn-sm pull-right collapsed"
+										rel="content-y" data-toggle="collapse" role="button"
+										aria-expanded="false"><i class="fa fa-eye-slash"></i> Hide
 										Code</a>
-									<a href="#basic-table" class="btn btn-primary btn-sm pull-right collapsed"
-										rel="content-y" data-toggle="collapse" role="button" aria-expanded="false"><i
-											class="fa fa-eye-slash"></i> Hide Code</a>
 								</div>
-								<pre><code class="xml copy-pre hljs" id="basic-table-code">
-									<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"table"</span>&gt;</span>
+								<pre>
+									<code class="xml copy-pre hljs" id="basic-table-code">
+									<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span
+											class="hljs-attr">class</span>=<span class="hljs-string">"table"</span>&gt;</span>
 									<span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
 										<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-										<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"col"</span>&gt;</span>#<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+										<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span
+											class="hljs-attr">scope</span>=<span class="hljs-string">"col"</span>&gt;</span>#<span
+											class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
 										<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
 									<span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
 									<span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
 										<span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
-										<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">scope</span>=<span class="hljs-string">"row"</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+										<span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span
+											class="hljs-attr">scope</span>=<span class="hljs-string">"row"</span>&gt;</span>1<span
+											class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
 										<span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
 									<span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
 									<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
-								</code></pre>
+								</code>
+								</pre>
 							</div>
 						</div>
 					</div>
@@ -317,7 +376,8 @@ $(document).ready(function () {
 				</div>
 			</div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+				DeskApp - Bootstrap 4 Admin Template By <a
+					href="https://github.com/dropways" target="_blank">Ankit
 					Hingarajiya</a>
 			</div>
 		</div>
@@ -330,98 +390,147 @@ $(document).ready(function () {
 	<script src="./resources/src/plugins/jquery-steps/jquery.steps.js"></script>
 	<script src="./resources/vendors/scripts/steps-setting.js"></script>
 
-		<!-- switchery js -->
-		<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
-		<!-- bootstrap-tagsinput js -->
-		<script src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-		<!-- bootstrap-touchspin js -->
-		<script src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
-		<script src="./resources/vendors/scripts/advanced-components.js"></script>
+	<!-- switchery js -->
+	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
+	<!-- bootstrap-tagsinput js -->
+	<script
+		src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+	<!-- bootstrap-touchspin js -->
+	<script
+		src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+	<script src="./resources/vendors/scripts/advanced-components.js"></script>
 </body>
+
+<script>
+/* 사원추가 */
+ $(document).ready(function() {
+	 $("#prj-add-member").click(function() {
+			$.ajax({
+			    url : "${pageContext.request.contextPath}/projectMemberList",
+			    type : "POST",
+			    contentType : "application/json; charset=utf-8;",
+			    dataType : "json",
+			    success : function(data) {
+			    	
+			       for (var i = 0; i < data.length; i++) {
+			    	   if(data[i].dept_name == '인사팀'){
+			    		 if($('.insa1').length == 0){
+				      	 $('.ref').append('<ul id="insa" class="insa1"><span>'+data[i].dept_name+'</span></ul>');		       			 
+			    		 }
+			    	   }else if(data[i].dept_name == '경영팀'){
+			    		   if($('.gyeonyoung1').length == 0){
+				      	 		$('.ref').append('<ul id="gyeonyoung" class="gyeonyoung1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+			    		   }
+			    	   }else if(data[i].dept_name == '개발팀'){
+			    		   if($('.geabal1').length == 0){
+				      	 		$('.ref').append('<ul id="geabal" class="geabal1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+			   		   }	   
+			    	   }
+			       }
+			       for (var i = 0; i < data.length; i++) {
+			    	   if(data[i].dept_name == '인사팀'){
+			    		   console.log(data[i].dept_name);
+			  	      	 $('.insa1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			      	   }else if(data[i].dept_name == '경영팀'){
+			  	      	 $('.gyeonyoung1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			      	   }else if(data[i].dept_name == '개발팀'){
+			  	      	 $('.geabal1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			      	   }
+			       }
+			       
+			       
+			    },
+			    error : function() {
+			       alert("restController err");  
+			    }
+			 });
+			
+		});
+		
+		
+});
+	
+
+
  
-    <script>
-        //한개만 단순하게 만들때
-        $("#datepicker").datepicker({
-            language: 'ko'
-        });
+	//한개만 단순하게 만들때
+	$("#datepicker").datepicker({
+		language : 'ko'
+	});
 
+	//두개짜리 제어 연결된거 만들어주는 함수
+	datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
 
+	/*
+	 * 달력 생성기
+	 * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
+	 * @example   datePickerSet($("#datepicker"));
+	 * 
+	 * 
+	 * @param sDate, 
+	 * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
+	 * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
+	 */
+	function datePickerSet(sDate, eDate, flag) {
 
+		//시작 ~ 종료 2개 짜리 달력 datepicker	
+		if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0
+				&& eDate.length > 0) {
+			var sDay = sDate.val();
+			var eDay = eDate.val();
 
+			if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+				var sdp = sDate.datepicker().data("datepicker");
+				sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
 
-        //두개짜리 제어 연결된거 만들어주는 함수
-        datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+				var edp = eDate.datepicker().data("datepicker");
+				edp.selectDate(new Date(eDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+			}
 
-        /*
-            * 달력 생성기
-            * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
-            * @example   datePickerSet($("#datepicker"));
-            * 
-            * 
-            * @param sDate, 
-            * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
-            * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
-            */
-        function datePickerSet(sDate, eDate, flag) {
+			//시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+			if (!isValidStr(eDay)) {
+				sDate.datepicker({
+					maxDate : new Date(eDay.replace(/-/g, "/"))
+				});
+			}
+			sDate.datepicker({
+				language : 'en',
+				dateFormat : 'yyyy-mm-dd',
+				autoClose : true,
+				onSelect : function() {
+					datePickerSet(sDate, eDate);
+				}
+			});
 
-            //시작 ~ 종료 2개 짜리 달력 datepicker	
-            if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0 && eDate.length > 0) {
-                var sDay = sDate.val();
-                var eDay = eDate.val();
+			//종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+			if (!isValidStr(sDay)) {
+				eDate.datepicker({
+					minDate : new Date(sDay.replace(/-/g, "/"))
+				});
+			}
+			eDate.datepicker({
+				language : 'en',
+				dateFormat : 'yyyy-mm-dd',
+				autoClose : true,
+				onSelect : function() {
+					datePickerSet(sDate, eDate);
+				}
+			});
 
-                if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
-                    var sdp = sDate.datepicker().data("datepicker");
-                    sdp.selectDate(new Date(sDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+			//한개짜리 달력 datepicker
+		} else if (!isValidStr(sDate)) {
+			var sDay = sDate.val();
+			if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
+				var sdp = sDate.datepicker().data("datepicker");
+				sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+			}
 
-                    var edp = eDate.datepicker().data("datepicker");
-                    edp.selectDate(new Date(eDay.replace(/-/g, "/")));  //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
-                }
-
-                //시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
-                if (!isValidStr(eDay)) {
-                    sDate.datepicker({
-                        maxDate: new Date(eDay.replace(/-/g, "/"))
-                    });
-                }
-                sDate.datepicker({
-                    language: 'en',
-                    dateFormat:'yyyy-mm-dd',
-                    autoClose: true,
-                    onSelect: function () {
-                        datePickerSet(sDate, eDate);
-                    }
-                });
-
-                //종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
-                if (!isValidStr(sDay)) {
-                    eDate.datepicker({
-                        minDate: new Date(sDay.replace(/-/g, "/"))
-                    });
-                }
-                eDate.datepicker({
-                    language: 'en',
-                    dateFormat:'yyyy-mm-dd',
-                    autoClose: true,
-                    onSelect: function () {
-                        datePickerSet(sDate, eDate);
-                    }
-                });
-
-                //한개짜리 달력 datepicker
-            } else if (!isValidStr(sDate)) {
-                var sDay = sDate.val();
-                if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
-                    var sdp = sDate.datepicker().data("datepicker");
-                    sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
-                }
-
-                sDate.datepicker({
-                    language: 'en',
-                    dateFormat:'yyyy-mm-dd',
-                    autoClose: true
-                });
-            }
-
+			sDate.datepicker({
+				language : 'en',
+				dateFormat : 'yyyy-mm-dd',
+				autoClose : true
+			});
+		}
 
             function isValidStr(str) {
                 if (str == null || str == undefined || str == "")
