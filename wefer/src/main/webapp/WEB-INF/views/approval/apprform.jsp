@@ -96,7 +96,7 @@
 											<div class="modal-body">
 												<div class="chat-list bg-light-gray">
 													<div class="chat-search select-People"></div>
-													<div class="chat-search" id = "set-name">
+													<div class="chat-search" id = "set-name" style="overflow: scroll; position:relative; height: 10%">
 														<!--  클릭한 참조자 이름  -->
 													</div>
 
@@ -113,8 +113,8 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-primary">Save
-													changes</button>
+												<button id = "clear-set-name" type="button" class="btn btn-primary">다시고르기</button>
+												<button type="button" class="btn btn-primary">Savechanges</button>
 											</div>
 										</div>
 									</div>
@@ -131,6 +131,8 @@
 						</div>
 
 					</form>
+				
+					
 				</div>
 				<div class="html-editor pd-20 card-box mb-30">
 					<input type = "hidden" onclick="myFunction()">
@@ -146,17 +148,48 @@
       type : "POST",
       contentType : "application/json; charset=utf-8;",
       dataType : "json",
-      success : function(data) {
+     
+      /*  success : function(data) {
          for (var i = 0; i < data.length; i++) {
         	 $('.ref').append('<li onclick="choose(\''+data[i].name+'\');"><a href ="#">' + data[i].name + '</a></li>')
          }
-      },
-      error : function() {
+      }, */
+      success : function(data) {
+	    	
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	    		 if($('.insa1').length == 0){
+		      	 $('.ref').append('<ul id="insa" class="insa1"><span>'+data[i].dept_name+'</span></ul>');		       			 
+	    		 }
+	    	   }else if(data[i].dept_name == '경영팀'){
+	    		   if($('.gyeonyoung1').length == 0){
+		      	 		$('.ref').append('<ul id="gyeonyoung" class="gyeonyoung1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+	    		   }
+	    	   }else if(data[i].dept_name == '개발팀'){
+	    		   if($('.geabal1').length == 0){
+		      	 		$('.ref').append('<ul id="geabal" class="geabal1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+	   		   }	   
+	    	   }
+	       }
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	  	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '경영팀'){
+	  	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '개발팀'){
+	  	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }
+	       }
+	       
+	       
+	    },error : function() {
          alert("restController err");  
       }
    });
-   </script>
-<script type="text/javascript">
+	   
+	  
+
+
 	function select() {
 		var x = document.getElementById("payment_item").value;
 		if (x == "휴가") {
@@ -166,9 +199,15 @@
 	}
 	
 	function choose(a) {
-		$('#set-name').append('<div>\''+a+'\'</div>');
-		console.log(a);
+		$('#set-name').append('<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'+a+'</div>&nbsp;&nbsp;');
+		
 	}
+	
+	$('#clear-set-name').click(function() {
+		$("#set-name").empty();
+	});
+	
+	
 	
 </script>
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>

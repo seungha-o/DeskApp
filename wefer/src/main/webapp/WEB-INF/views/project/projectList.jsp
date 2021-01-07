@@ -53,60 +53,7 @@
 	gtag('config', 'UA-119386393-1');
 	console.log(gtag());
 </script> -->
-<script type="text/javascript">
-$(document).ready(function () {
-	  $("button[name='prj-add-person']").click(function () {
-		  var arr = [];
-		  
-		var project_sub_title = $("input[type='text'][name='project_sub_title']").val();
-		var prj_person_select_val = $("#prj-person option:selected").val();
-		var prj_person = $("select[name='prj-person']").val();
-		if(project_sub_title==null || prj_person_select_val == "default"){
-			alert("값을 모두 입력해 주세요");
-		}else{
-			for(var i=0; i<= arr; i++){
-				arr[i] = prj_person;
-				console.log(arr[i]);
-			}
-	    $("#result").append("<div id='project_sub_title2'><span>"+project_sub_title+"</span><span>"+prj_person+"</span></div>");
-	    $("input[type='text'][name='project_sub_title']").val('');
-	    $("#prj-person option:eq(0)").prop("selected", "selected");
 
-	    
-
-	    
-		}
-	
-		
-		
-	  });
-		 
-	 /*  $("#prj-multi-person").click(function () {
-		$("<div id='prj-multi-form-person' class='dropdown bootstrap-select form-control'>"
-		+"<select id='prj-person' name='prj-person' class='selectpicker form-control' data-style='btn-outline-primary' data-size='5' tabindex='-98'>"
-		+"<optgroup label='===================================================' data-max-options='2'>"
-		+"<option value='default' selected='selected'>담당</option>"
-		+"</optgroup>"
-		+"<optgroup label='Condiments' data-max-options='2'>"
-		+"<option>Mustard</option>"
-		+"</optgroup>"
-		+"</select>"
-		+"<button type='button' class='btn dropdown-toggle btn-outline-primary' data-toggle='dropdown' role='combobox' aria-owns='bs-select-1' aria-haspopup='listbox' aria-expanded='false' data-id='prj-person' title='담당'>"
-		+"<div class='filter-option'>"
-		+"<div class='filter-option-inner'>"
-		+"<div class='filter-option-inner-inner'>담당</div></div> </div></button>"
-		+"<div class='dropdown-menu'>"
-		+"<div class='inner show' role='listbox' id='bs-select-1' tabindex='-1'>"
-		+"<ul class='dropdown-menu inner show' role='presentation'></ul></div></div></div>").appendTo("#person-form-group")
-	}); */
-	  
-	 /*  $("#prj-remove-person").click(function () {
-		  $("#prj-multi-form-person:last").remove();
-	  
-	  }); */
-	  
-	});
-</script>
 
 
 
@@ -219,9 +166,8 @@ $(document).ready(function () {
 																				<div class="modal-body">
 																					<div class="chat-list bg-light-gray">
 																						<div class="chat-search select-People"></div>
-																						<div class="chat-search">
-																							<span class="ti-search"></span> <input
-																								type="text">
+																						<div class="chat-search" id = "set-name" style="overflow: scroll; position:relative; height: 10%">
+																						<!--  클릭한 참조자 이름  -->
 																						</div>
 
 																						<div
@@ -237,8 +183,8 @@ $(document).ready(function () {
 																					</div>
 																				</div>
 																				<div class="modal-footer">
-																					<button type="button" class="btn btn-primary">Save
-																						changes</button>
+																					<button id = "clear-set-name" type="button" class="btn btn-primary">정정</button>
+																					<button id = "prj-add-project" type="button" class="btn btn-primary">추가</button>
 																				</div>
 																			</div>
 																		</div>
@@ -262,10 +208,8 @@ $(document).ready(function () {
 													</div>
 												</div>
 												<div class="modal-footer">
-													<input type="reset" class="btn btn-secondary"
-														data-dismiss="modal" value="close" name="prj-clear">
-													<button type="button" class="btn btn-primary">Save
-														changes</button>
+													<input type="button" class="btn btn-secondary" value="닫기" id="prj-clear" name="prj-clear">
+													<button id="prj-save" type="submit" class="btn btn-primary">저장하기</button>
 												</div>
 											</form>
 
@@ -428,15 +372,14 @@ $(document).ready(function () {
 			    	   }
 			       }
 			       for (var i = 0; i < data.length; i++) {
-			    	   if(data[i].dept_name == '인사팀'){
-			    		   console.log(data[i].dept_name);
-			  	      	 $('.insa1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
-			      	   }else if(data[i].dept_name == '경영팀'){
-			  	      	 $('.gyeonyoung1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
-			      	   }else if(data[i].dept_name == '개발팀'){
-			  	      	 $('.geabal1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
-			      	   }
-			       }
+			      	   if(data[i].dept_name == '인사팀'){
+			    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			        	   }else if(data[i].dept_name == '경영팀'){
+			    	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			        	   }else if(data[i].dept_name == '개발팀'){
+			    	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			        	   }
+			         }
 			       
 			       
 			    },
@@ -449,9 +392,10 @@ $(document).ready(function () {
 		
 		
 });
+
+
 	
-
-
+ 
  
 	//한개만 단순하게 만들때
 	$("#datepicker").datepicker({
@@ -539,5 +483,49 @@ $(document).ready(function () {
                     return false;
             }
         }
+	 
+	 function choose(a) {
+			$('#set-name').append('<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'+a+'</div>&nbsp;&nbsp;');
+			
+		}
+		
+		$('#clear-set-name').click(function() {
+			$("#set-name").empty();
+		});
+		
+		$('#prj-add-project').click(function() {
+			$('#result').append($('#set-name').text());
+			$('#set-name').empty();
+			$('#Medium-modal').modal('toggle');
+		});
+		
+		$('#prj-save').click(function() {
+			$('#project_name').val('');
+			$('#datepicker1').val('');
+			$('#datepicker2').val('');
+			$('#project_sub_title').val('');
+			$('#result').empty();
+			$('#bd-example-modal-lg').modal('toggle');
+			$('.modal-backdrop').remove();
+		});
+		
+		$('#prj-clear').click(function() {
+			$('#project_name').val('');
+			$('#datepicker1').val('');
+			$('#datepicker2').val('');
+			$('#project_sub_title').val('');
+			$('#result').empty();
+			$('#bd-example-modal-lg').modal('toggle');
+			$('.modal-backdrop').remove();
+		});
+		
+	
+		
+		
+	
+		
+		
+		
+		
     </script>
 </html>
