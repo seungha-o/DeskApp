@@ -16,8 +16,8 @@ public class MemberDao {
 	public List<Member> memberList() {
 		return sqlSession.selectList("Member.memberList");
 	}
-	public List<Member> projectMemberList() {
-		return sqlSession.selectList("Member.projectMemberList");
+	public List<Member> memberAllList() {
+		return sqlSession.selectList("Member.memberAllList");
 	}
 	
 
@@ -33,5 +33,17 @@ public class MemberDao {
 			return sqlSession.selectOne("Member.login",m) ;
 			
 		}
+	}
+
+	public int delete(String id) {
+		System.out.println(id);
+		return sqlSession.delete("Member.delete", id);
+	}
+
+	public List<Member> deptmemberlist(String dept_no) {
+		return sqlSession.selectList("Member.deptmemberlist", dept_no);
+	}
+	public List<Member> searchmemberlist(String keyword) {
+		return sqlSession.selectList("Member.searchmemberlist", keyword);
 	}
 }

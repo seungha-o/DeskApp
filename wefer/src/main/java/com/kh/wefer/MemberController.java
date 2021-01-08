@@ -2,7 +2,9 @@ package com.kh.wefer;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wefer.member.model.domain.Member;
@@ -85,6 +90,38 @@ public class MemberController {
 		}
 		return mv;
 		
+	}
+	
+	@RequestMapping("/memberlist")
+	public String mlist(Locale locale, Model model) {
+		return "member/memberlist";
+	}
+//	@RequestMapping("/memberlist.do")
+//	public ModelAndView gomlist(ModelAndView mv) {
+//		List<Member> list = mService.memberAllList();
+//		mv.setViewName("member/memberlist");
+//		mv.addObject("list", list);
+//		return mv;
+//	}
+	
+//	@ResponseBody
+//	@PostMapping("/deptmemberlist.do")
+//	public Object deptlist(@RequestParam(name="dept") String dept_no) {
+//		if(dept_no==null||dept_no.equals("")) {
+//			dept_no = "*";
+//			
+//		}
+//		List<Member> list = new ArrayList<Member>();
+//		list = mService.deptmemberlist(dept_no);
+//		System.out.println(list);
+//		return list;
+//	}
+//	
+	@RequestMapping("/deletemember.do")
+	public ModelAndView delete(@RequestParam(name="id") String id,ModelAndView mv) {
+		mService.delete(id);
+		mv.setViewName("redirect:memberlist.do");
+		return mv;
 	}
 	
 }

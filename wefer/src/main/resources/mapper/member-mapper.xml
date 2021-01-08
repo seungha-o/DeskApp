@@ -33,9 +33,9 @@
 		select dept.dept_name,member.position, member.name from dept, member where dept.dept_no = member.dept_no
 	</select>
 	
-	<select id="projectMemberList" resultType="arraylist"
+	<select id="memberAllList" resultType="arraylist"
 		resultMap="resultMember">
-		select dept.dept_name,member.position, member.name from dept, member where dept.dept_no = member.dept_no
+		select * from member order by dept_no desc
 	</select>
 	
 	<insert id="insertMember"  parameterType="Member"  statementType="PREPARED">
@@ -74,5 +74,27 @@
 	<select id="login" resultType="Member"
 		resultMap="resultMember">
 		select * from member where id=#{id} and password=#{password}
+	</select>
+	
+	<delete id="delete" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		delete from member where id=#{id}
+	</delete>
+	
+	
+	<select id="deptmemberlist" resultType="arraylist"
+		resultMap="resultMember">
+		select * from member where dept_no =#{dept_no}
+	</select>
+	
+
+		
+		
+	<select id="searchmemberlist" parameterType="string"
+		resultType="arraylist" resultMap="resultMember">
+		SELECT * FROM member
+		WHERE name
+		LIKE '%'||#{keyword}||'%' 
+		ORDER BY dept_no desc
 	</select>
 </mapper>

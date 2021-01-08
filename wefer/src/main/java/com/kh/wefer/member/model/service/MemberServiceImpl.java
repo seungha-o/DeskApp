@@ -17,14 +17,12 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> memberList() {
 		return mDao.memberList();
 	}
-
+	
 	@Override
-	public List<Member> projectMemberList() {
-		return mDao.projectMemberList();
+	public List<Member> memberAllList() {
+		return mDao.memberAllList();
 	}
 
-	
-	
 	@Override
 	public int insertMember(Member m) {
 		return mDao.insertMember(m);
@@ -35,6 +33,22 @@ public class MemberServiceImpl implements MemberService{
 	public Member login(Member m) {
 		return mDao.login(m);
 
+	}
+
+	@Override
+	public int delete(String id) {
+		System.out.println(id);
+		return mDao.delete(id);
+	}
+
+	@Override
+	public List<Member> deptmemberlist(String dept_no) {
+		return mDao.deptmemberlist(dept_no);
+	}
+
+	@Override
+	public List<Member> searchmemberlist(String keyword) {
+		return mDao.searchmemberlist(keyword);
 	}
 	
 }
