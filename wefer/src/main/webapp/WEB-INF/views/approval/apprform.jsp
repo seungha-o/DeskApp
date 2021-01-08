@@ -5,8 +5,37 @@
 <head>
 <meta charset="UTF-8">
 <title>approval Form</title>
+<link rel="apple-touch-icon" sizes="180x180"
+	href="./resources/vendors/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="./resources/vendors/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./resources/vendors/images/favicon-16x16.png">
 
+<!-- Mobile Specific Metas -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+	rel="stylesheet">
+	
+	<script src="./resources/vendors/scripts/jquery-3.1.1.min.js"></script> <!-- 값 제어를 위해 jquery -->
+    <link href="./resources/src/plugins/air-datepicker/dist/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Air datepicker css -->
+    <script src="./resources/src/plugins/air-datepicker/dist/js/datepicker.js"></script> <!-- Air datepicker js -->
+    <script src="./resources/src/plugins/air-datepicker/dist/js/i18n/datepicker.ko.js"></script> <!-- 달력 한글 추가를 위해 커스텀 -->
+	
+<!-- CSS -->
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/core.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/icon-font.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/style.css">
 </head>
+
 <style>
 .chat-box .chat-desc ul, .pd-ltr-20 {
 	padding: 20px 20px 10px;
@@ -87,38 +116,38 @@
 									style="font-size: 40px; padding-left: 5px;" data-toggle="modal"
 									data-target="#Medium-modal"></i>
 
-								<div class="modal fade" id="Medium-modal" tabindex="-1"
-									role="dialog" aria-labelledby="myLargeModalLabel"
-									aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered">
-										<!-- <div class="modal-header"></div> -->
-										<div class="modal-content">
-											<div class="modal-body">
-												<div class="chat-list bg-light-gray">
-													<div class="chat-search select-People"></div>
-													<div class="chat-search" id="set-name">
-														<!--  클릭한 참조자 이름  -->
-													</div>
+							<div class="modal fade" id="Medium-modal" tabindex="-1"
+																		role="dialog" aria-labelledby="myLargeModalLabel"
+																		aria-hidden="true">
+																		<div class="modal-dialog modal-dialog-centered">
+																			<!-- <div class="modal-header"></div> -->
+																			<div class="modal-content">
+																				<div class="modal-body">
+																					<div class="chat-list bg-light-gray">
+																						<div class="chat-search select-People"></div>
+																						<div class="chat-search" id = "set-name" style="overflow: scroll; position:relative; height: 10%">
+																						<!--  클릭한 참조자 이름  -->
+																						</div>
 
-													<div
-														class="notification-list chat-notification-list customscroll">
+																						<div
+																							class="notification-list chat-notification-list customscroll">
 
-														<ul class="submenu ref">
-															<!-- 참조자 나오는 부분 -->
-														</ul>
+																							<ul class="submenu ref">
+																								<!-- 참조자 나오는 부분 -->
+																							</ul>
 
-														<!-- 스크롤부분 -->
-													</div>
-													<!-- 회색박스 -->
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-primary">Save
-													changes</button>
-											</div>
-										</div>
-									</div>
-								</div>
+																							<!-- 스크롤부분 -->
+																						</div>
+																						<!-- 회색박스 -->
+																					</div>
+																				</div>
+																				<div class="modal-footer">
+																					<button id = "clear-set-name" type="button" class="btn btn-primary">정정</button>
+																					<button id = "prj-add-project" type="button" class="btn btn-primary">추가</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -141,41 +170,90 @@
 	
 	</div>
 	<script type="text/javascript">
-		$.ajax({
-			url : "${pageContext.request.contextPath}/memeberList",
-			type : "POST",
-			contentType : "application/json; charset=utf-8;",
-			dataType : "json",
-			success : function(data) {
-				for (var i = 0; i < data.length; i++) {
-					$('.ref').append(
-							'<li onclick="choose(\'' + data[i].name
-									+ '\');"><a href ="#">' + data[i].name
-									+ '</a></li>')
-				}
-			},
-			error : function() {
-				alert("restController err");
-			}
-		});
-	</script>
-	<script type="text/javascript">
-		function select() {
-			var x = document.getElementById("payment_item").value;
-			if (x == "휴가") {
-				$("#ann").val("휴가신청서입니다.");
-				$("#annDate").show();
-			}
+	   $.ajax({
+      url : "${pageContext.request.contextPath}/memeberList",
+      type : "POST",
+      contentType : "application/json; charset=utf-8;",
+      dataType : "json",
+     
+      /*  success : function(data) {
+         for (var i = 0; i < data.length; i++) {
+        	 $('.ref').append('<li onclick="choose(\''+data[i].name+'\');"><a href ="#">' + data[i].name + '</a></li>')
+         }
+      }, */
+      success : function(data) {
+	    	
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	    		 if($('.insa1').length == 0){
+		      	 $('.ref').append('<ul id="insa" class="insa1"><span>'+data[i].dept_name+'</span></ul>');		       			 
+	    		 }
+	    	   }else if(data[i].dept_name == '경영팀'){
+	    		   if($('.gyeonyoung1').length == 0){
+		      	 		$('.ref').append('<ul id="gyeonyoung" class="gyeonyoung1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+	    		   }
+	    	   }else if(data[i].dept_name == '개발팀'){
+	    		   if($('.geabal1').length == 0){
+		      	 		$('.ref').append('<ul id="geabal" class="geabal1"><span>'+data[i].dept_name+'</span></ul>');		       			   
+	   		   }	   
+	    	   }
+	       }
+	       for (var i = 0; i < data.length; i++) {
+	    	   if(data[i].dept_name == '인사팀'){
+	  	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '경영팀'){
+	  	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }else if(data[i].dept_name == '개발팀'){
+	  	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	      	   }
+	       }
+	       
+	       
+	    },error : function() {
+         alert("restController err");  
+      }
+   });
+	   
+	  
+
+
+	function select() {
+		var x = document.getElementById("payment_item").value;
+		if (x == "휴가") {
+			$("#ann").val("휴가신청서입니다.");
+			$("#annDate").show();
 		}
-	</script>
-<script>
-function goWrite() {
-	var sHTML = $('.summernote').code();
-	alert(sHTML);
-	//document.writeForm.submit();
+	}
 	
-}
+	function choose(a) {
+		$('#set-name').append('<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'+a+'</div>&nbsp;&nbsp;');
+		
+	}
+	
+	$('#clear-set-name').click(function() {
+		$("#set-name").empty();
+	});
+	
+	
+	
 </script>
+	<!-- js -->
+	<script src="./resources/vendors/scripts/core.js"></script>
+	<script src="./resources/vendors/scripts/script.min.js"></script>
+	<script src="./resources/vendors/scripts/process.js"></script>
+	<script src="./resources/vendors/scripts/layout-settings.js"></script>
+	<script src="./resources/src/plugins/jquery-steps/jquery.steps.js"></script>
+	<script src="./resources/vendors/scripts/steps-setting.js"></script>
+
+	<!-- switchery js -->
+	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
+	<!-- bootstrap-tagsinput js -->
+	<script
+		src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+	<!-- bootstrap-touchspin js -->
+	<script
+		src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+	<script src="./resources/vendors/scripts/advanced-components.js"></script>
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<script
 		src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
