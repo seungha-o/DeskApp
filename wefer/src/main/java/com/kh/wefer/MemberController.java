@@ -50,7 +50,7 @@ public class MemberController {
 	 public ModelAndView ProfileList(Locale locale, Member m, ModelAndView mv, HttpSession session, HttpServletRequest request)	 {		 
 		  session = request.getSession();
 		  String id = (String) session.getAttribute("loginId");
-		 mv.addObject("profileList",mService.ProfileList(id));
+		 mv.addObject("profileList",mService.profileList(id));
 		 mv.setViewName("member/profile");
 		 return mv;
 	  }

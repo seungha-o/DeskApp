@@ -51,4 +51,16 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.searchmemberlist(keyword);
 	}
 	
+	
+	//mypageºÎºÐ
+	@Override
+	public Member profileList(String id) {
+		return mDao.profileList(id);
+	}
+
+	@Override
+	public int updateProfile(Member m) {
+		return mDao.updateProfile(m);
+	}
+	
 }

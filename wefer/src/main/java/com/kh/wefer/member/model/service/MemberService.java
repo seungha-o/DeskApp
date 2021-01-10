@@ -18,4 +18,8 @@ public interface MemberService {
 	List<Member> deptmemberlist(String dept_no);
 
 	List<Member> searchmemberlist(String keyword);
+	//mypage부분
+	Member profileList(String id);
+
+	int updateProfile(Member m);
 }

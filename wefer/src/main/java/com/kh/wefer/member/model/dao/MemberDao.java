@@ -48,7 +48,7 @@ public class MemberDao {
 	}
 	
 	//======= Profile Page ========
-	public Member ProfileList(String id) { //Profile페이지 연락처 정보 보여주기
+	public Member profileList(String id) { //Profile페이지 연락처 정보 보여주기
 		return sqlSession.selectOne("Member.ProfileList", id);
 	}
 		
