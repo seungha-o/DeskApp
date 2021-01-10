@@ -25,7 +25,8 @@ public class Member implements java.io.Serializable {
 	@DateTimeFormat(pattern = "yyyymmdd")
 	private Date birth;
 	private int manage;
-
+	private String address;
+	
 	public Member() {
 
 	}
@@ -34,7 +35,7 @@ public class Member implements java.io.Serializable {
 
 	public Member(String id, String password, String name, String phone, String email, String position, String profile,
 			String status, String annual, String signiture, String employ_date, String dept_no, String dept_name,
-			Date birth, int manage) {
+			Date birth, int manage, String address) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -51,6 +52,7 @@ public class Member implements java.io.Serializable {
 		this.dept_name = dept_name;
 		this.birth = birth;
 		this.manage = manage;
+		this.address = address;
 	}
 
 
@@ -60,23 +62,8 @@ public class Member implements java.io.Serializable {
 		return "Member [id=" + id + ", password=" + password + ", name=" + name + ", phone=" + phone + ", email="
 				+ email + ", position=" + position + ", profile=" + profile + ", status=" + status + ", annual="
 				+ annual + ", signiture=" + signiture + ", employ_date=" + employ_date + ", dept_no=" + dept_no
-				+ ", dept_name=" + dept_name + ", birth=" + birth + ", manage=" + manage + "]";
+				+ ", dept_name=" + dept_name + ", birth=" + birth + ", manage=" + manage + ", address=" + address + "]";
 	}
-
-
-
-	public String getDept_name() {
-		return dept_name;
-	}
-
-
-
-	public void setDept_name(String dept_name) {
-		this.dept_name = dept_name;
-	}
-
-
-
 	public String getId() {
 		return id;
 	}
@@ -149,6 +136,12 @@ public class Member implements java.io.Serializable {
 	public void setDept_no(String dept_no) {
 		this.dept_no = dept_no;
 	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
 	public Date getBirth() {
 		return birth;
 	}
@@ -160,6 +153,15 @@ public class Member implements java.io.Serializable {
 	}
 	public void setManage(int manage) {
 		this.manage = manage;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	

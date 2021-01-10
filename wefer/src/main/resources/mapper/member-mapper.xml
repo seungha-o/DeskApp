@@ -97,4 +97,19 @@
 		LIKE '%'||#{keyword}||'%' 
 		ORDER BY dept_no desc
 	</select>
+	
+	<!-- Profile 페이지 연락처 조회 -->
+	<select id="ProfileList" resultType="Member"
+		parameterType="string">
+		select * from member where id=#{id}
+	</select>
+	
+
+	
+	<!-- Profile 페이지 연락처 정보 수정 -->
+	<update id="updateProfile" parameterType="Member" flushCache="true" statementType="PREPARED">
+	UPDATE Member SET phone = #{phone},
+	email = #{email}, address = #{address}
+	WHERE id = #{id} AND password = #{password}
+	</update>
 </mapper>

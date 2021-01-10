@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>approval Form</title>
+<title>ProfileForm</title>
 
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
@@ -88,13 +89,13 @@
 						<div class="pd-20 card-box height-100-p">
 							<div class="profile-photo">
 								<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
-								<img src="vendors/images/photo1.jpg" alt="" class="avatar-photo">
+								<img src="./resources/vendors/images/photo1.jpg" alt="" class="avatar-photo">
 								<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-body pd-5">
 												<div class="img-container">
-													<img id="image" src="vendors/images/photo2.jpg" alt="Picture">
+													<img id="image" src="./resources/vendors/images/photo2.jpg" alt="Picture">
 												</div>
 											</div>
 											<div class="modal-footer">
@@ -105,33 +106,28 @@
 									</div>
 								</div>
 							</div>
-							<h5 class="text-center h5 mb-0">Ross C. Lopez</h5>
+							<h5 class="text-center h5 mb-0">"${profileList.name}"</h5>
 							<p class="text-center text-muted font-14">Lorem ipsum dolor sit amet</p>
 							<div class="profile-info">
 								<h5 class="mb-20 h5 text-blue">연락처 정보</h5>
 								<ul>
+								
 									<li>
 										<span>Email 주소:</span>
-										FerdinandMChilds@test.com
+										"${profileList.email}"
 									</li>
 									<li>
 										<span>핸드폰 번호:</span>
-										619-229-0054
-									</li>
-									<li>
-										<span>출신국:</span>
-										미국
+										"${profileList.phone}"
 									</li>
 									<li>
 										<span>주소:</span>
-										1807 Holden Street<br>
-										San Diego, CA 92115
+										
+										"${profileList.address}"
 									</li>
-								</ul>
-							</div>
 							
-			
-						
+								</ul>
+							</div>	
 						</div>
 					</div>
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
@@ -141,7 +137,7 @@
 									<ul class="nav nav-tabs customtab" role="tablist">
 																	
 										<li class="nav-item"> 
-											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">개인 정보 설정 </a>
+											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 설정    Click 해주세요 </a>
 										</li>
 									</ul>
 									<div class="tab-content">
@@ -152,22 +148,24 @@
 												<form>
 													<ul class="profile-edit-list row">
 														<li class="weight-500 col-md-6">
-															<h4 class="text-blue h5 mb-20">개인 정보 설정 </h4>
+															<h4 class="text-blue h5 mb-20">개인 정보 수정 </h4>
+															
 															<div class="form-group">
+																
 																<label>사원번호 : ID</label>
-																<input class="form-control form-control-lg" type="text">
+															    <input class="form-control form-control-lg" type="text" readonly="readonly"  value ="${profileList.id}">				
 															</div>
 															<div class="form-group">
 																<label>성 명 </label>
-																<input class="form-control form-control-lg" type="text">
+																<input class="form-control form-control-lg" type="text" value ="${profileList.name}">
 															</div>
 															<div class="form-group">
 																<label>부서명</label>
-																<input class="form-control form-control-lg" type="text">
+																<input class="form-control form-control-lg" type="text" value ="${profileList.dept_no}">
 															</div>
 															<div class="form-group">
 																<label>직책</label>
-																<input class="form-control form-control-lg" type="text">
+																<input class="form-control form-control-lg" type="text" value ="${profileList.position}">
 															</div>
 															<div class="form-group">
 																<label>Email</label>
@@ -175,29 +173,8 @@
 															</div>
 															<div class="form-group">
 																<label>생년월일</label>
-																<input class="form-control form-control-lg date-picker" type="text">
-															</div>
-															<div class="form-group">
-																<label>성별</label>
-																<div class="d-flex">
-																<div class="custom-control custom-radio mb-5 mr-20">
-																	<input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-																	<label class="custom-control-label weight-400" for="customRadio4">남자</label>
-																</div>
-																<div class="custom-control custom-radio mb-5">
-																	<input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-																	<label class="custom-control-label weight-400" for="customRadio5">여자</label>
-																</div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label>시군구(지역)</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>우편번호</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
+																<input class="form-control form-control-lg date-picker" type="text" value ="${profileList.birth}">
+															</div>													
 															<div class="form-group">
 																<label>핸드폰 번호</label>
 																<input class="form-control form-control-lg" type="text">

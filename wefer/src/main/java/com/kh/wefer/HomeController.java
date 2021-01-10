@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +35,9 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(Locale locale, ModelAndView mv) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public ModelAndView home(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		String loginUserName = (String) session.getAttribute("loginId");
+		mv.addObject("loginId", loginUserName);
 		mv.setViewName("index");
 		return mv;
 	}
