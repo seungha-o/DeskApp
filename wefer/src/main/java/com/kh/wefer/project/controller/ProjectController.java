@@ -58,7 +58,7 @@ public class ProjectController {
 					
 				}
 
-
+			}
 			
 //			pService.projectInsert(p);
 			System.out.println("성공");
