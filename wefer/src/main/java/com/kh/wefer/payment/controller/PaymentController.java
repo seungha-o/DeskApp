@@ -1,8 +1,5 @@
 package com.kh.wefer.payment.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,16 +46,12 @@ public class PaymentController {
 	}
 
 
+
 	@RequestMapping(value = "/aInsert.do")
 	public String annualInsert
-	( Annual a, Payment b, HttpSession session, HttpServletRequest request, @RequestParam(name="annual_stddate")String start,
-			@RequestParam(name="annual_enddate")String end) {
+	( Annual a, Payment b, HttpSession session, HttpServletRequest request,
+			@RequestParam(name="annual_enddate", required = false)String end) {
 		try {
-			System.out.println(start); //휴가 시작날짜
-			System.out.println(end); // 종료날짜
-			
-			System.out.println(a); // 휴가계 인서트 된거
-			//System.out.println(b); // 휴가계 인서트 된거
 			a.setId((String) session.getAttribute("loginId"));
 			b.setId((String) session.getAttribute("loginId"));
 		

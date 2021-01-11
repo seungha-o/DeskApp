@@ -13,9 +13,9 @@ public class Annual implements java.io.Serializable {
 	private String annual_content;
 	private String annual_kind;
 	private String id;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_stddate;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_enddate;
 	
 	@Override

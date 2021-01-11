@@ -18,11 +18,14 @@ public class Payment extends Conference implements java.io.Serializable {
 	private String annual_id;
 	private String annual_content;
 	private String annual_kind;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_stddate;
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_enddate; 
 	
+
 	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
-			Date conference_date, String id, String payment_id, String payment_item, String payment_status,
+			java.sql.Date conference_date, String id, String payment_id, String payment_item, String payment_status,
 			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
 			com.kh.wefer.payment.model.domain.Conference conference, String annual_id, String annual_content,
 			String annual_kind, Date annual_stddate, Date annual_enddate) {
@@ -73,20 +76,6 @@ public class Payment extends Conference implements java.io.Serializable {
 	}
 	public Payment() {
 		
-	}
-	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
-			Date conference_date, String id, String payment_id, String payment_item, String payment_status,
-			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
-			com.kh.wefer.payment.model.domain.Conference conference) {
-		super(conference_id, conference_member, conference_title, conference_contents, conference_date, id);
-		this.payment_id = payment_id;
-		this.payment_item = payment_item;
-		this.payment_status = payment_status;
-		this.payment_members_count = payment_members_count;
-		this.payment_prestatus = payment_prestatus;
-		id = id2;
-		conference_id = conference_id2;
-		Conference = conference;
 	}
 	@Override
 	public String toString() {

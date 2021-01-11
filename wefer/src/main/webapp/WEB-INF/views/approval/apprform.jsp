@@ -72,12 +72,13 @@
 								<select id="payment_item" name="payment_item"
 									onchange="select()" class="custom-select col-3">
 									<option value="no">Choose...</option>
-									<option value="휴가">휴가계</option>
-								</select> <input id="ann" class="form-control" type="text"
+									<option value="반차">반차</option>
+									<option value="월차">월차</option>
+								</select> <input id="ann" class="form-control kind" type="text"
 									placeholder="제목을 입력하세요" />
 							</div>
 						</div>
-						<div id="annDate" style="display: none">
+						<div id="annDate_one" style="display: none">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">시작일</label>
 								<div class="col-sm-12 col-md-10">
@@ -85,6 +86,8 @@
 										name="annual_stddate" placeholder="Select Date" type="text">
 								</div>
 							</div>
+							</div>
+						<div id="annDate_two" style="display: none">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
 								<div class="col-sm-12 col-md-10">
@@ -262,9 +265,14 @@
 
 		function select() {
 			var x = document.getElementById("payment_item").value;
-			if (x == "휴가") {
-				$("#ann").val("휴가신청서입니다.");
-				$("#annDate").show();
+			if (x == "반차") {
+				$(".kind").val("[반차] 휴가신청서입니다.");
+				$("#annDate_one").show();
+				$("#annDate_two").hide();
+			}else {
+				$(".kind").val("[월차] 휴가신청서입니다.");
+				$("#annDate_one").show();
+				$("#annDate_two").show();
 			}
 		}
 		</script>
