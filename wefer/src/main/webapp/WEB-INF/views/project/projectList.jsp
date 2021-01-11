@@ -56,7 +56,12 @@
 
 
 
-
+<style>
+.prj-sub{
+	display: inline;
+	margin-right: 10px;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -105,7 +110,7 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 명</label>
 														<div class="col-sm-12 col-md-10">
-															<input id="project_name" class="form-control" name="project_name" type="text" placeholder="프로젝트 주제를 입력해 주세요">
+															<input id="project_name" class="form-control project_name" name="project_name" type="text" placeholder="프로젝트 주제를 입력해 주세요">
 														</div>
 													</div>
 										
@@ -116,6 +121,7 @@
 														</div>
 													</div>
 													
+									
 											
 													
 											
@@ -123,13 +129,13 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">시작일</label>
 														<div class="col-sm-12 col-md-10">
-															<input id="datepicker1" class="form-control" name="project_std_date" placeholder="Select Date" type="text">
+															<input id="datepicker1" class="form-control project_std_date" name="project_std_date" placeholder="Select Date" type="text">
 														</div>
 													</div>
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
 														<div class="col-sm-12 col-md-10">
-															<input id="datepicker2"  class="form-control" name="project_end_date" placeholder="Select Date" type="text">
+															<input id="datepicker2"  class="form-control project_end_date" name="project_end_date" placeholder="Select Date" type="text">
 														</div>
 													</div>
 													<hr>
@@ -137,7 +143,7 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 역할</label>
 														<div class="col-sm-12 col-md-10">
-															<input id="project_sub_title"  class="form-control" type="text" name="project_sub_title" placeholder="Johnny Brown">
+															<input id="project_sub_title"  class="form-control project_sub_title" type="text" name="project_sub_title" placeholder="Johnny Brown">
 														</div>
 													</div>
 
@@ -148,14 +154,18 @@
 															<div id="person-form-group" class="form-group">
 
 
-																<div class="fa-hover">
+																<div class="fa-hover" style="margin-left:135px;" >
 
+																	
+																	
 																	<button id="prj-multi-person" type="button"
 																		class="btn btn-light"
-																		style="float: right; margin-top: 10px;">
+																		style="float: right; margin:0;">
 																		<i id="prj-add-member" class="icon-copy fi-torsos-female-male"
 																			data-toggle="modal" data-target="#Medium-modal">인원추가</i>
 																	</button>
+																	
+																	
 
 																	<div class="modal fade" id="Medium-modal" tabindex="-1"
 																		role="dialog" aria-labelledby="myLargeModalLabel"
@@ -166,7 +176,7 @@
 																				<div class="modal-body">
 																					<div class="chat-list bg-light-gray">
 																						<div class="chat-search select-People"></div>
-																						<div class="chat-search" id = "set-name" style="overflow: scroll; position:relative; height: 10%">
+																						<div class="chat-search" id = "set-name" style="overflow: auto; position:relative; height: 10%">
 																						<!--  클릭한 참조자 이름  -->
 																						</div>
 
@@ -198,14 +208,13 @@
 														</div>
 													</div>
 
-													<div class="form-group row">
-														<div id="result"></div>
-													</div>
+											
 													<div class="prj-add-btn"
 														style="display: flex; justify-content: flex-end;">
 														<button type="button" id="prj-add-person"
 															name="prj-add-person" class="btn btn-light">추가하기</button>
 													</div>
+													<div id="prj-member-result"></div>
 												</div>
 												<div class="modal-footer">
 													<input type="button" class="btn btn-secondary" value="닫기" id="prj-clear" name="prj-clear">
@@ -350,7 +359,7 @@
  $(document).ready(function() {
 	 $("#prj-add-member").click(function() {
 			$.ajax({
-			    url : "${pageContext.request.contextPath}/projectMemberList",
+			    url : "${pageContext.request.contextPath}/memeberList",
 			    type : "POST",
 			    contentType : "application/json; charset=utf-8;",
 			    dataType : "json",
@@ -372,13 +381,22 @@
 			    	   }
 			       }
 			       for (var i = 0; i < data.length; i++) {
+			    	  
 			      	   if(data[i].dept_name == '인사팀'){
-			    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			    	      	 $('.insa1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
 			        	   }else if(data[i].dept_name == '경영팀'){
-			    	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			    	      	 $('.gyeonyoung1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
 			        	   }else if(data[i].dept_name == '개발팀'){
-			    	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+			    	      	 $('.geabal1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
 			        	   }
+			      	   
+			      	/*  if(data[i].dept_name == '인사팀'){
+		    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
+		        	   }else if(data[i].dept_name == '경영팀'){
+		    	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
+		        	   }else if(data[i].dept_name == '개발팀'){
+		    	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
+		        	   } */
 			         }
 			       
 			       
@@ -484,43 +502,132 @@
             }
         }
 	 
-	 function choose(a) {
-			$('#set-name').append('<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'+a+'</div>&nbsp;&nbsp;');
+	/*  function choose(a) {
+		 var member_id = this.lastChild;
+		
+				 
+		 console.log(member_id.value);
+		 
+			$('#set-name').append('<div class="setting-name" style="display:block; left=10px; margin-right:10px;">'+a+'&nbsp;&nbsp;<input type="hidden" name="members_id" value="'+member_id+'"></div>');
 			
-		}
+		} */
+		
+
+		
+		$(document).on("click",".add-person1", function() {
+			console.log($(this).children(".member_id").val());
+			var member_id = $(this).children(".member_id").val();
+			var member_name = $(this).text();
+			$('#set-name').append('<div class="setting-name" style="display:block; left=10px; margin-right:10px;">'+member_name+'&nbsp;&nbsp;<input type="hidden" name="members_id" value="'+member_id+'"></div>');
+		})
+		
 		
 		$('#clear-set-name').click(function() {
 			$("#set-name").empty();
 		});
 		
 		$('#prj-add-project').click(function() {
-			$('#result').append($('#set-name').text());
-			$('#set-name').empty();
-			$('#Medium-modal').modal('toggle');
+			if($('.setting-name').length == 0){
+				alert('인원을 한명 이상 골라주세요');
+			}else if($('.setting-name').length > 3){
+				alert('인원은 세명까지 고를 수 있습니다.');
+			}else{
+				if($('.prj-member-list').length < 3){
+						var member_list = $(".setting-name").get();
+						var member_id = $("input[name=members_id][type=hidden]").get();
+						console.log($('.prj-member-list').length);
+					$('#set-name').empty();
+					for(var i = 0; i < member_list.length; i++){
+						var member_name = $(member_list[i]).text();
+						var members_id = $(member_id[i]).val();
+						console.log(members_id);
+					$('.fa-hover').append('<div class="prj-member-list" style="width:600px; margin-top:15px; margin-left:10px;">'+member_name+'<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="prj_member_id" value="'+members_id+'"><div>');						
+					}
+					$('#Medium-modal').modal('toggle');
+					$('.modal-backdrop').remove(); 
+				}else{
+					$('#set-name').empty();
+					alert('인원은 세명까지 고를 수 있습니다.');
+					$('#Medium-modal').modal('toggle');
+					$('.modal-backdrop').remove(); 
+				}	
+			}
+			
+			
+			
+			
 		});
 		
-		$('#prj-save').click(function() {
-			$('#project_name').val('');
-			$('#datepicker1').val('');
-			$('#datepicker2').val('');
-			$('#project_sub_title').val('');
-			$('#result').empty();
-			$('#bd-example-modal-lg').modal('toggle');
-			$('.modal-backdrop').remove();
+/* 		$('#prj-save').click(function() {
+				$('#project_name').val('');
+				$('#datepicker1').val('');
+				$('#datepicker2').val('');
+				$('#project_sub_title').val('');
+				$('#result').empty();
+				$('#bd-example-modal-lg').modal('toggle');
+				$('.modal-backdrop').remove();	
+			
+			
 		});
-		
+		 */
 		$('#prj-clear').click(function() {
 			$('#project_name').val('');
 			$('#datepicker1').val('');
 			$('#datepicker2').val('');
 			$('#project_sub_title').val('');
 			$('#result').empty();
-			$('#bd-example-modal-lg').modal('toggle');
-			$('.modal-backdrop').remove();
+			$('#bd-example-modal-lg').modal("toggle");
+			$('.modal-backdrop').remove(); 
 		});
 		
-	
 		
+		 $('#prj-add-person').click(function() {
+			var project_name = $('.project_name').val();
+			var project_std_date = $('.project_std_date').val();
+			var project_end_date = $('.project_end_date').val();
+			var project_sub_title = $('.project_sub_title').val();
+			var prj_member_list = $('.prj-member-list').get();
+			var member_id_group = $("input[name=prj_member_id][type=hidden]").get();
+			
+		
+			
+			
+			if(project_name == ""||project_std_date == ""||project_end_date == ""||project_sub_title == ""||prj_member_list.length == 0){
+				alert("항목을 모두 입력해 주세요");
+			}else{
+				var i = 0;
+			$('#prj-member-result').append('<div class="prj-sub-group"><div class="prj-sub">'+project_sub_title+'<input type="hidden" name="sub_members" value="'+project_sub_title+'"></div></div>');
+			for(i = 0; i < prj_member_list.length; i++){
+				var sub_member = $(prj_member_list[i]).text();
+				var sub_members = sub_member.replace(/\x/g,'');
+				var prj_member_id = $(member_id_group[i]).val();
+				
+				
+			$('.prj-sub-group').last().append('<div class="prj-sub-member">'+sub_members+'<input type="hidden" name="prj_members_id" value="'+prj_member_id+'"></div>');
+				
+			}
+			$('.prj-sub-group').last().append('<input type="hidden" name="prj_members_id_count" value="'+i+'"></div>')
+			
+			$('.prj-sub-group').last().app
+			$('.prj-sub-group').last().append('<a class="del-sub-group" href="javascript:void(0);">x</a>');
+			$('#project_sub_title').val('');
+			$('.prj-member-list').remove();
+			}
+			
+			console.log($("input[type=color]").val());
+		})
+		
+		
+		
+		$(document).on("click",".del-person", function() {
+			$(this).parent().remove();
+			
+		})
+		
+		$(document).on("click",".del-sub-group", function() {
+			$(this).parent().remove();
+			
+		})
 		
 	
 		
