@@ -22,4 +22,6 @@ public interface MemberService {
 	Member profileList(String id);
 
 	int updateProfile(Member m);
+
+	
 }

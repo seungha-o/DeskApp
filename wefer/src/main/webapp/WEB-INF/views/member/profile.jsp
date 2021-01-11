@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,60 +146,53 @@
 										<!-- Setting Tab start -->
 										<div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
 											<div class="profile-setting">
-												<form>
+												<form name ="profileModiForm" id ="frm" action ="UpdateProfile.do" method = "post">
 													<ul class="profile-edit-list row">
 														<li class="weight-500 col-md-6">
 															<h4 class="text-blue h5 mb-20">개인 정보 수정 </h4>
+														
 															
 															<div class="form-group">
-																
 																<label>사원번호 : ID</label>
-															    <input class="form-control form-control-lg" type="text" readonly="readonly"  value ="${profileList.id}">				
+															    <input name="id" class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.id}">				
 															</div>
 															<div class="form-group">
 																<label>성 명 </label>
-																<input class="form-control form-control-lg" type="text" value ="${profileList.name}">
+																<input class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.name}">
 															</div>
 															<div class="form-group">
 																<label>부서명</label>
-																<input class="form-control form-control-lg" type="text" value ="${profileList.dept_no}">
+																<input class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.dept_no}">
 															</div>
 															<div class="form-group">
 																<label>직책</label>
-																<input class="form-control form-control-lg" type="text" value ="${profileList.position}">
+																<input class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.position}">
 															</div>
 															<div class="form-group">
 																<label>Email</label>
-																<input class="form-control form-control-lg" type="email">
+																<input name="email" class="form-control form-control-lg" type="email" value ="${profileList.email}">
 															</div>
 															<div class="form-group">
 																<label>생년월일</label>
-																<input class="form-control form-control-lg date-picker" type="text" value ="${profileList.birth}">
+																<input class="form-control form-control-lg date-picker" type="text" readonly="readonly" value ="${profileList.birth}">
 															</div>													
 															<div class="form-group">
 																<label>핸드폰 번호</label>
-																<input class="form-control form-control-lg" type="text">
+																<input name="phone" class="form-control form-control-lg" type="text" value ="${profileList.phone}">
 															</div>
 															<div class="form-group">
 																<label>주소</label>
-																<textarea class="form-control"></textarea>
+																<textarea name="address" type="text" class="form-control" value="${profileList.address}"></textarea>
 															</div>															
-															<div class="form-group">
-																<div class="custom-control custom-checkbox mb-5">
-																	<input type="checkbox" class="custom-control-input" id="customCheck1-1">
-																	<label class="custom-control-label weight-400" for="customCheck1-1">알림 이메일 수신에 동의합니다</label>
-																</div>
-															</div>
+															
 															<div class="form-group">
 																<label>비밀번호 </label>
-																<input class="form-control form-control-lg" type="passward">
+																<input name="password" class="form-control form-control-lg" type="password" placeholder="비밀번호가 일치되어야 정보가 수정됩니다.">
 															</div>
 															<div class="form-group mb-0">
 																<input type="submit" class="btn btn-primary" value="정보수정">
 															</div>
 														</li>
-														
-														
 													</ul>
 												</form>
 											</div>
@@ -218,6 +212,7 @@
 	</div>
 
 
+	<!-- js -->
 	<script src="./resources/vendors/scripts/core.js"></script>
 	<script src="./resources/vendors/scripts/script.min.js"></script>
 	<script src="./resources/vendors/scripts/process.js"></script>

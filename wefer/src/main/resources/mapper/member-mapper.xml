@@ -108,8 +108,13 @@
 	
 	<!-- Profile 페이지 연락처 정보 수정 -->
 	<update id="updateProfile" parameterType="Member" flushCache="true" statementType="PREPARED">
-	UPDATE Member SET phone = #{phone},
-	email = #{email}, address = #{address}
-	WHERE id = #{id} AND password = #{password}
+	UPDATE Member SET 
+	phone=#{phone},
+	email=#{email}, 
+	address=#{address}
+	WHERE 
+	id=#{id} 
+	AND 
+	password=#{password}
 	</update>
 </mapper>

@@ -51,8 +51,10 @@ public class MemberDao {
 	public Member profileList(String id) { //Profile페이지 연락처 정보 보여주기
 		return sqlSession.selectOne("Member.ProfileList", id);
 	}
+	public int updateProfile(Member m) {
+		return sqlSession.update("Member.updateProfile", m);
+	}
+	
 		
-	public int updateProfile(Member m) {  //Profile설정에서 본인 정보 수정
-		return sqlSession.update("Member.updateProfile",m);
-		}
+	
 }
