@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wefer.HomeController;
@@ -40,19 +41,27 @@ public class PaymentController {
 		return mv;
 	}
 	
-	// 글 작성 jsp
+
 	@RequestMapping(value = "/apprForm.do", method = RequestMethod.GET)
 	public String apprform(ModelAndView mv) {
 		return "approval/apprform";
 	}
 
-	// jsp에서 작성된 글을 pInsert.do에 insert
+
 	@RequestMapping(value = "/aInsert.do")
-	public String annualInsert(Annual a, HttpSession session, HttpServletRequest request) {
+	public String annualInsert
+	( Annual a, Payment b, HttpSession session, HttpServletRequest request, @RequestParam(name="annual_stddate")String start,
+			@RequestParam(name="annual_enddate")String end) {
 		try {
-			System.out.println(a);
+			System.out.println(start); //휴가 시작날짜
+			System.out.println(end); // 종료날짜
+			
+			System.out.println(a); // 휴가계 인서트 된거
+			//System.out.println(b); // 휴가계 인서트 된거
 			a.setId((String) session.getAttribute("loginId"));
-			aService.insertAnnual(a);
+			b.setId((String) session.getAttribute("loginId"));
+		
+			aService.insertAnnualPayment(a, b);
 
 		} catch (Exception e) {
 			e.printStackTrace();
