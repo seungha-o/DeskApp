@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Annual implements java.io.Serializable {
 	private static final long serialVersionUID = 20001L; 
+	
 	private String annual_id;
 	private String annual_content;
 	private String annual_kind;
 	private String id;
-	@DateTimeFormat(pattern = "yyyymmdd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date annual_stddate;
-	@DateTimeFormat(pattern = "yyyymmdd")
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
 	private Date annual_enddate;
 	
 	@Override

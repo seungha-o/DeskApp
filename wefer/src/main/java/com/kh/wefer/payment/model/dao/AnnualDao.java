@@ -11,6 +11,11 @@ public class AnnualDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	public String seqAnnualPayment() {
+		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
+		return seqAnnualPayment;
+	}
+
 	public int insertAnnual(Annual a) {
 		return sqlSession.insert("AnnualMapper.annualInsert", a);
 	}

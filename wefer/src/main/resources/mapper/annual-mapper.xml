@@ -11,18 +11,21 @@
 		<result property="annual_enddate" column="annual_enddate" />
 	</resultMap>
 	
-	<insert id = "annualInsert" parameterType="string"
+	<insert id = "annualInsert" parameterType="Annual"
 		flushCache="true" statementType="PREPARED">
-		<selectKey resultType="string" keyProperty="id" order="BEFORE">
-			select id from member where id = #{id}
-		</selectKey>
+      <selectKey resultType="string" keyProperty="id" order="BEFORE">
+         select id from member where id = #{id}
+      </selectKey>
 		insert into annual ( annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
-		values (SEQ_PAYMENT_ANNUAL.nextval,
+		values (#{annual_id},
 		#{annual_content},
 		#{annual_stddate},
 		#{annual_enddate},
 		#{annual_kind},
 		#{id})
 	</insert>
-	
+
+	<select id = "seqAnnualPayment" resultType="string">
+	select SEQ_PAYMENT_ANNUAL.nextval from dual
+	</select>
 </mapper>

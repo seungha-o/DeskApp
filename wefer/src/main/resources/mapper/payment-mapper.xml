@@ -35,17 +35,19 @@
 		where c.conference_id = p.conference_id
 	</select>
 	
-	<insert id = "annualInsert" parameterType="string"
+	<insert id = "paymentInsert" parameterType="Payment"
 		flushCache="true" statementType="PREPARED">
-		insert into annual 
-		values (SEQ_PAYMENT_ANNUAL.nextval,
-		#{annual_content},
-		#{annual_stddate},
-		#{annual_enddate},
-		#{annual_kind},
-		#{id});
-		
+		<selectKey resultType="string" keyProperty="id" order="BEFORE">
+			select id from member where id = #{id}
+		</selectKey>
+		insert into payment (payment_id, payment_item, payment_members_count, id, conference_id, annual_id)
+		values (SEQ_PAYMENT.nextval,
+		#{payment_item},
+	
+		#{payment_members_count},
+<!-- 		#{payment_prestatus}, -->
+		#{id},
+		#{conference_id},
+		#{annual_id})
 	</insert>
-	
-	
 </mapper>
