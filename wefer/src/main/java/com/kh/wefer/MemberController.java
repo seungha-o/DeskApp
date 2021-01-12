@@ -60,19 +60,30 @@ public class MemberController {
 		
 	  }
 	 
-	//Profile 화면에서 본인이 수정
-	@ResponseBody  
-	@RequestMapping(value="/UpdateProfile.do",method=RequestMethod.POST , produces = "application/json; charset=UTF-8")
-	public String ProfileUpdate(Member m) {
-		JSONObject job = new JSONObject();
-		try {
-			job.put("ack", mService.updateProfile(m));		
+	 @RequestMapping("/UpdateProfile.do")
+	 public ModelAndView UpdateProfile(Member m, ModelAndView mv,HttpServletRequest request )	 {	
+		 System.out.println(m);
+		 try {
+			 mService.updateProfile(m);
+			 mv.setViewName("redirect:profile.do");
 		} catch (Exception e) {
-			job.put("ack", -1);
-		} finally {
-			return job.toJSONString(); //전달된 데이터 /리턴은 string 타입
-			}
+			e.printStackTrace();
 		}
+		 return mv;
+	 }
+//	//Profile 화면에서 본인이 수정  ajax안씀 
+//	@ResponseBody  
+//	@RequestMapping(value="/UpdateProfile.do",method=RequestMethod.POST , produces = "application/json; charset=UTF-8")
+//	public String ProfileUpdate(Member m) {
+//		JSONObject job = new JSONObject();
+//		try {
+//			job.put("ack", mService.updateProfile(m));		
+//		} catch (Exception e) {
+//			job.put("ack", -1);
+//		} finally {
+//			return job.toJSONString(); //전달된 데이터 /리턴은 string 타입
+//			}
+//		}
 	
 	@RequestMapping("/insertmember")
 	public String goinsert(Locale locale, Model model) {

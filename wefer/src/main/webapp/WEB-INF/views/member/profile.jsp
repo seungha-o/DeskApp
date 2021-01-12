@@ -122,8 +122,7 @@
 										"${profileList.phone}"
 									</li>
 									<li>
-										<span>주소:</span>
-										
+										<span>주소:</span>										
 										"${profileList.address}"
 									</li>
 							
@@ -138,7 +137,7 @@
 									<ul class="nav nav-tabs customtab" role="tablist">
 																	
 										<li class="nav-item"> 
-											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 설정    Click 해주세요 </a>
+											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 수정을 원하면   Click 해주세요 </a>
 										</li>
 									</ul>
 									<div class="tab-content">
@@ -151,7 +150,6 @@
 														<li class="weight-500 col-md-6">
 															<h4 class="text-blue h5 mb-20">개인 정보 수정 </h4>
 														
-															
 															<div class="form-group">
 																<label>사원번호 : ID</label>
 															    <input name="id" class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.id}">				
@@ -182,12 +180,12 @@
 															</div>
 															<div class="form-group">
 																<label>주소</label>
-																<textarea name="address" type="text" class="form-control" value="${profileList.address}"></textarea>
+																<input name="address" type="text" class="form-control" maxlength="300" value="${profileList.address}" >
 															</div>															
 															
 															<div class="form-group">
 																<label>비밀번호 </label>
-																<input name="password" class="form-control form-control-lg" type="password" placeholder="비밀번호가 일치되어야 정보가 수정됩니다.">
+																<input name="password" class="form-control form-control-lg" type="password" placeholder="비밀번호가 일치되어야 정보가 수정">
 															</div>
 															<div class="form-group mb-0">
 																<input type="submit" class="btn btn-primary" value="정보수정">
