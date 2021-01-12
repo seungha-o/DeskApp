@@ -54,6 +54,11 @@ public class MemberController {
 		 mv.setViewName("member/profile");
 		 return mv;
 	  }
+	 @RequestMapping(value ="/personerProfileList.do", method = RequestMethod.GET)
+	 public void PersonerProfileList(Locale locale, Member m, ModelAndView mv, @RequestParam(name="addrMemberId") String addrMember, HttpServletRequest request)	 {		 
+		 System.out.println(addrMember);
+		
+	  }
 	 
 	//Profile 화면에서 본인이 수정
 	@ResponseBody  

@@ -138,6 +138,7 @@
 															<input id="datepicker2"  class="form-control project_end_date" name="project_end_date" placeholder="Select Date" type="text">
 														</div>
 													</div>
+													
 													<hr>
 
 													<div class="form-group row">

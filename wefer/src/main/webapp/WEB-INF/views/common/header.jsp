@@ -337,11 +337,11 @@
 	       }
 	       for (var i = 0; i < data.length; i++) {
 	    	   if(data[i].dept_name == '인사팀'){
-	  	      	 $('.insa').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	  	      	 $('.insa').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"> '  + data[i].name + '('+data[i].position+')</a></li>');		   
 	      	   }else if(data[i].dept_name == '경영팀'){
-	  	      	 $('.gyeonyoung').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	  	      	 $('.gyeonyoung').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"> '  + data[i].name + '('+data[i].position+')</a></li>');		   
 	      	   }else if(data[i].dept_name == '개발팀'){
-	  	      	 $('.geabal').append('<li onclick="choose()" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
+	  	      	 $('.geabal').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"> ' + data[i].name + '('+data[i].position+')</a></li>');		   
 	      	   }
 	       
 	       }

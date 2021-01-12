@@ -16,59 +16,77 @@ private String project_title;
 private String project_std_date;
 private String project_end_date;
 private String project_status;
+private String project_color;
 
 public Project() {
 	// TODO Auto-generated constructor stub
 }
 
-
 public Project(String project_id, String project_title, String project_std_date, String project_end_date,
-		String project_status) {
+		String project_status, String project_color) {
 	super();
 	this.project_id = project_id;
 	this.project_title = project_title;
 	this.project_std_date = project_std_date;
 	this.project_end_date = project_end_date;
 	this.project_status = project_status;
+	this.project_color = project_color;
 }
-
 
 public String getProject_id() {
 	return project_id;
 }
+
 public void setProject_id(String project_id) {
 	this.project_id = project_id;
 }
+
 public String getProject_title() {
 	return project_title;
 }
+
 public void setProject_title(String project_title) {
 	this.project_title = project_title;
 }
+
 public String getProject_std_date() {
 	return project_std_date;
 }
+
 public void setProject_std_date(String project_std_date) {
 	this.project_std_date = project_std_date;
 }
+
 public String getProject_end_date() {
 	return project_end_date;
 }
+
 public void setProject_end_date(String project_end_date) {
 	this.project_end_date = project_end_date;
 }
+
 public String getProject_status() {
 	return project_status;
 }
+
 public void setProject_status(String project_status) {
 	this.project_status = project_status;
 }
+
+public String getProject_color() {
+	return project_color;
+}
+
+public void setProject_color(String project_color) {
+	this.project_color = project_color;
+}
+
 @Override
 public String toString() {
 	return "Project [project_id=" + project_id + ", project_title=" + project_title + ", project_std_date="
-			+ project_std_date + ", project_end_date=" + project_end_date + ", project_status=" + project_status + "]";
+			+ project_std_date + ", project_end_date=" + project_end_date + ", project_status=" + project_status
+			+ ", project_color=" + project_color + "]";
 }
-
 
 
 
