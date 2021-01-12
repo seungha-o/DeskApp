@@ -2,9 +2,23 @@
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%-- <%@page import = "com.kh.wefer.schedules.model.domain.Schedules" %>
+<%@page import = "java.util.List" %>
+<%@page import = "java.util.ArrayList" %>s --%>
+
+<%-- <%
+	List<Schedules> list = (ArrayList<Schedules>)request.getAttribute("schedulesList");
+%> --%>
 <html>
 <head>
- <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+
+
+
 <!-- Basic Page Info -->
 <meta charset="utf-8">
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
@@ -48,7 +62,6 @@
 	gtag('config', 'UA-119386393-1');
 </script>
 <script type="text/javascript">
-
 	$(document).ready(function() {
 		$("input:radio[name=deptName]").on('click', function() {
 			alert('로그인 후 이용 가능 합니다.');
@@ -56,6 +69,51 @@
 
 	});
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+	 
+    var calendarEl = document.getElementById('calendar');
+	
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+      },
+      locale : "ko",
+      //defaultDate: "2019-08-22",
+      navLinks: true, // can click day/week names to navigate views
+      businessHours: true, // display business hours
+      editable: true,
+      events: [
+<%-- <% 
+  	  for (int i = 0; i < list.size(); i++) {
+  	  	Schedules schd = (Schedules)list.get(i);
+%>	
+  	  {
+  	   title : '<%= schd.getSchedules_name() %>',
+  	   start : '<%= schd.getSchedules_std_date() %>',
+  	   end : '<%= schd.getSchedules_end_date() %>'
+  	   },
+<%
+	}
+%>
+	 --%>	
+     <c:forEach var="vo" items="${list}" varStatus="status">
+ {	
+		   title : "${vo.schedules_name}",
+		   start : "${vo.schedules_std_date}",
+		   end : "${vo.schedules_end_date}",
+		  },
+     </c:forEach>
+      ]
+    });
+
+    calendar.render();
+}); 
+</script>
+
 </head>
 <body>
 
@@ -81,12 +139,14 @@
 				<div class="pd-20 card-box mb-30">
 					<div class="calendar-wrap">
 						<div class="radio-wrap">
-							<input type="radio" id="dept1" value="dept1" name="deptName"><label for="dept1">회사</label>&nbsp;&nbsp;
-							<input type="radio" id="dept2" value="dept2" name="deptName"><label for="dept2">인사팀</label>&nbsp;&nbsp;
-							<input type="radio" id="dept3" value="dept3" name="deptName"><label for="dept3">개발팀</label>&nbsp;&nbsp;
-							<input type="radio" id="dept4" value="dept4" name="deptName"><label for="dept4">경영팀</label>&nbsp;&nbsp;
-							<input type="radio" id="dept5" value="dept5" name="deptName"><label for="dept5">영업팀</label>&nbsp;&nbsp;
-							<input type="radio" id="dept6" value="dept6" name="deptName"><label for="dept6">전체일정</label>&nbsp;&nbsp;
+							<input type="radio" id="dept1" value="dept1" name="deptName"><label
+								for="dept_com">회사</label>&nbsp;&nbsp; 
+								<input type="radio" id="dept2" value="dept2" name="deptName"><label
+								for="dept1">인사팀</label>&nbsp;&nbsp;
+								<input type="radio" id="dept3" value="dept4" name="deptName"><label
+								for="dept2">경영팀</label>&nbsp;&nbsp;
+								<input type="radio" id="dept4" value="dept3" name="deptName"><label
+								for="dept4">개발팀</label>&nbsp;&nbsp; 
 						</div>
 						<div id='calendar'></div>
 					</div>
@@ -114,47 +174,50 @@
 						class="modal modal-top fade calendar-modal">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
-								<form id="add-event">
+								<form action="a.do" id="add_schedule" method="post">
 									<div class="modal-body">
 										<h4 class="text-blue h4 mb-10">일정추가</h4>
+	<!-- 수정하세야 -->
+								<input type="hidden" name="schedules_id" value="0">
+								<input type="hidden" name="id" value="test1">
+								<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
+								<input type="text" name="schedules_status" value="회사">
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
-												name="ename">
+												name="schedules_name">
 										</div>
 										<div class="form-group">
 											<label>시작일</label> <input type='text'
-												class="datetimepicker form-control" name="edate">
+												class="datetimepicker form-control" id="schedules_std_date" name="schedules_std_date">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text'
-												class="datetimepicker form-control" name="edate">
+												class="datetimepicker form-control" id="schedules_end_date" name="schedules_end_date">
 										</div>
 										<div class="form-group">
 											<label>설명</label>
-											<textarea class="form-control" name="edesc"></textarea>
+											<textarea class="form-control" name="schedules_content"></textarea>
 										</div>
 										<div class="form-group">
-											<label>부서명</label> <select class="form-control" name="ecolor">
-												<option value="fc-bg-default">회사</option>
-												<option value="fc-bg-blue">인사팀</option>
-												<option value="fc-bg-lightgreen">개발팀</option>
-												<option value="fc-bg-pinkred">영업팀</option>
-												<option value="fc-bg-deepskyblue">전체</option>
+											<label>부서명</label> <select class="form-control" name="dept_no">
+												<option value="1">인사팀</option>
+												<option value="2">경영팀</option>
+												<option value="3">개발팀</option>
 											</select>
 										</div>
 										<div class="form-group">
-											<label>색상</label> <select class="form-control" name="ecolor">
+											<label>색상</label> <select class="form-control" name="schedules_color">
 												<option value="fc-bg-default">기본색</option>
-												<option value="fc-bg-blue">파랑</option>
-												<option value="fc-bg-lightgreen">밝은녹색</option>
-												<option value="fc-bg-pinkred">핑크레드</option>
-												<option value="fc-bg-deepskyblue">짙은파랑</option>
+												<option value="fc-bg-red" style="color:#D25565;">빨강</option>
+												<option value="fc-bg-green" style="color:#1bb14d;"">초록</option>
+												<option value="fc-bg-blue" style="color:#3e3bdd;">파랑</option>
 											</select>
-									</div>
-									<div class="modal-footer">
-										<button type="submit" class="btn btn-primary">저장</button>
-										<button type="button" class="btn btn-primary"
-											data-dismiss="modal">닫기</button>
+										</div>
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-primary">저장</button>
+											<button type="button" class="btn btn-primary"
+												data-dismiss="modal">닫기</button>
+										</div>
 									</div>
 								</form>
 							</div>
@@ -166,12 +229,67 @@
 		</div>
 	</div>
 	<!-- js -->
+	<script>
+	$(function(){
+		jQuery(function() {
+			// page is ready
+			jQuery('#calendar').fullCalendar({
+				themeSystem: 'bootstrap4',
+				// emphasizes business hours
+				businessHours: false,
+				defaultView: 'month',
+				// event dragging & resizing
+				editable: true,
+				// header
+				header: {
+					left: 'title',
+					center: 'month,agendaWeek,agendaDay',
+					right: 'today prev,next'
+				},
+				events: [
+					   <c:forEach var="vo" items="${list}" varStatus="status">
+					   {	
+					  		   title : "${vo.schedules_name}",
+					  		   start : "${vo.schedules_std_date}",
+					  		   end : "${vo.schedules_end_date}",
+					  		   className: 'fc-bg-default',
+								icon : "circle",
+					  		  },
+					       </c:forEach>
+			
+				],
+				dayClick: function() {
+					jQuery('#modal-view-event-add').modal();
+				},
+				eventClick: function(event, jsEvent, view) {
+					jQuery('.event-icon').html("<i class='fa fa-"+event.icon+"'></i>");
+					jQuery('.event-title').html(event.title);
+					jQuery('.event-body').html(event.description);
+					jQuery('.eventUrl').attr('href',event.url);
+					jQuery('#modal-view-event').modal();
+				},
+			})
+	});
+              $("#add_schedule").submit(function(){
+            	   var sValue = $("#schedules_std_date").val();
+            	   var eValue = $("#schedules_end_date").val();
+                   $("#schedules_std_date").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
+                   $("#schedules_end_date").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
+            	  alert($("#schedules_std_date").val());
+            	  alert($("#schedules_end_date").val());
+
+              })
+              
+              // 현재 변경된 데이터 셋팅
+          
+           });
+	</script>
 	<script src="./resources/vendors/scripts/core.js"></script>
 	<script src="./resources/vendors/scripts/script.min.js"></script>
 	<script src="./resources/vendors/scripts/process.js"></script>
 	<script src="./resources/vendors/scripts/layout-settings.js"></script>
 	<script src="./resources/src/plugins/fullcalendar/fullcalendar.min.js"></script>
-	<script src="./resources/vendors/scripts/calendar-setting.js"></script>
+	<!-- <script src="./resources/vendors/scripts/calendar-setting.js"></script> -->
 	<script src="./resources/src/locale/ko.js"></script>
 </body>
 </html>

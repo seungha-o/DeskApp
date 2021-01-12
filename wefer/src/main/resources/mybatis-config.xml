@@ -11,10 +11,12 @@
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment" alias="Payment"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Conference" alias="Conference"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Annual" alias="Annual"/>
+		<typeAlias type ="com.kh.wefer.schedules.model.domain.Schedules" alias="Schedules"/>
 	</typeAliases>
 	<mappers> <!-- 쿼리문이 있는 xml등록 -->
 		<mapper resource="mapper/member-mapper.xml"/>
 		<mapper resource="mapper/payment-mapper.xml"/>
 		<mapper resource="mapper/annual-mapper.xml"/>
+	 <mapper resource="mapper/schedule-mapper.xml"/>
 	</mappers>
 </configuration>

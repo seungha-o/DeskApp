@@ -5,15 +5,25 @@
 		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
 		<id property="id" column="id"></id>
 		<result property="schedules_id" column="schedules_id" />
-		<result property="schedules_staus" column="schedules_staus" />
+		<result property="schedules_status" column="schedules_status" />
 		<result property="schedules_std_date" column="schedules_std_date" />
 		<result property="schedules_end_date" column="schedules_end_date" />
 		<result property="schedules_name" column="schedules_name" />
 		<result property="schedules_content" column="schedules_content" />
 		<result property="schedules_color" column="schedules_color" />
-		<result property="id" column="id" />
 		<result property="dept_no" column="dept_no" />
-
 	</resultMap>
+	
+	<select id="schedulesList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
+		SELECT * FROM SCHEDULES where id =#{test1}
+	</select>
+	
+	<insert id="insertSchedules" parameterType="Schedules" flushCache="true" statementType="PREPARED">
+		INSERT INTO SCHEDULES VALUES(Schedules_SEQ.NEXTVAL,#{schedules_status},#{schedules_std_date},#{schedules_end_date},#{schedules_name},
+			#{schedules_content},#{schedules_color},#{id},#{dept_no}
+		)
+
+	
+	</insert>
 	
 </mapper>
