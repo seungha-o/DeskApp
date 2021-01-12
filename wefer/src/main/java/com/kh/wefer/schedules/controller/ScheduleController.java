@@ -71,7 +71,7 @@ public class ScheduleController {
 	@Autowired
 	private SchedulesService schdservice;
 
-	// ¿œ¡§∞‘Ω√
+	// ÏùºÏ†ïÍ≤åÏãú
 
 	@RequestMapping(value = "/schedule.do", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
@@ -81,7 +81,7 @@ public class ScheduleController {
 		return mv;
 	}
 
-	// ¿œ¡§√ﬂ∞°
+	// ÏùºÏ†ïÏ∂îÍ∞Ä
 
 	@ResponseBody
 	@RequestMapping(value = "/insertSchedules", method = RequestMethod.POST)
