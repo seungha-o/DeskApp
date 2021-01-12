@@ -33,6 +33,7 @@
 
 	<select id="paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
+		
 		select c.conference_title, p.id
 		,p.payment_item, p.payment_status,c.conference_date, p.conference_id,
 		p.annual_id, p.payment_id,p.write_date
@@ -43,6 +44,8 @@
 		left outer join annual a
 		on
 		a.annual_id = p.annual_id
+
+		order by p.write_date
 	</select>
 
 	<insert id="paymentInsert" parameterType="Payment"
@@ -71,4 +74,7 @@
 		on a.annual_id = p.annual_id where payment_id = #{payment_id}
 	</select>
 	
+	<select id = "currMember" resultType="string">
+	select id from member
+	</select>
 </mapper>

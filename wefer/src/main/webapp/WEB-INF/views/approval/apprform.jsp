@@ -12,6 +12,21 @@
 <head>
 <meta charset="UTF-8">
 <title>approval Form</title>
+<link rel="apple-touch-icon" sizes="180x180"
+	href="./resources/vendors/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="./resources/vendors/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./resources/vendors/images/favicon-16x16.png">
+
+<!-- Mobile Specific Metas -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="./resources/src/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="./resources/vendors/scripts/jquery-3.1.1.min.js"></script>
@@ -99,48 +114,47 @@
 						</div>
 						<div class="form-group row">
 							<label class="col-sm-12 col-md-2 col-form-label">수신참조인</label>
-
 							<div class="col-sm-12 col-md-10 wrap">
+								<div id="person-form-group" class="form-control">
+									<div class="fa-hover"></div>
 
-								<input placeholder="Search Here" type="text"
-									data-role="tagsinput"> <i
-									class="icon-copy fi-torsos-female-male"
-									style="font-size: 40px; padding-left: 5px;" data-toggle="modal"
-									data-target="#Medium-modal"></i>
+									<div class="modal fade" id="Medium-modal" tabindex="-1"
+										role="dialog" aria-labelledby="myLargeModalLabel"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<!-- <div class="modal-header"></div> -->
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="chat-list bg-light-gray">
+														<div class="chat-search select-People"></div>
+														<div class="chat-search" id="set-name"
+															style="overflow: scroll; position: relative; height: 10%">
+															<!--  클릭한 참조자 이름  -->
+														</div>
+														<div
+															class="notification-list chat-notification-list customscroll">
 
-								<div class="modal fade" id="Medium-modal" tabindex="-1"
-									role="dialog" aria-labelledby="myLargeModalLabel"
-									aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered">
-										<!-- <div class="modal-header"></div> -->
-										<div class="modal-content">
-											<div class="modal-body">
-												<div class="chat-list bg-light-gray">
-													<div class="chat-search select-People"></div>
-													<div class="chat-search" id="set-name"
-														style="overflow: scroll; position: relative; height: 10%">
-														<!--  클릭한 참조자 이름  -->
+															<ul class="submenu ref">
+																<!-- 참조자 나오는 부분 -->
+															</ul>
+															<!-- 스크롤부분 -->
+														</div>
+														<!-- 회색박스 -->
 													</div>
-													<div
-														class="notification-list chat-notification-list customscroll">
-
-														<ul class="submenu ref">
-															<!-- 참조자 나오는 부분 -->
-														</ul>
-														<!-- 스크롤부분 -->
-													</div>
-													<!-- 회색박스 -->
 												</div>
-											</div>
-											<div class="modal-footer">
-												<button id="clear-set-name" type="button"
-													class="btn btn-primary">정정</button>
-												<button id="prj-add-project" type="button"
-													class="btn btn-primary">추가</button>
+												<div class="modal-footer">
+													<button id="clear-set-name" type="button"
+														class="btn btn-primary">정정</button>
+													<button id="prj-add-project" type="button"
+														class="btn btn-primary">추가</button>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+								<i class="icon-copy fi-torsos-female-male"
+									style="font-size: 40px; padding-right: 15px; display: block; margin-left: 10px; line-height: 1;"
+									data-toggle="modal" data-target="#Medium-modal"></i>
 							</div>
 						</div>
 						<div class="form-group row">
@@ -151,7 +165,6 @@
 						</div>
 					</div>
 					<div class="html-editor pd-20 card-box mb-30">
-						<%-- 	<%@ include file="/WEB-INF/views/common/aaa.jsp"%> --%>
 						<div class="jsx-2303464893 editor">
 							<div class="fr-box fr-basic fr-top" role="application">
 								<div class="fr-wrapper show-placeholder" dir="auto"
@@ -194,73 +207,142 @@
 
 	<script type="text/javascript">
 		$.ajax({
-			url : "${pageContext.request.contextPath}/memeberList",
-			type : "POST",
-			contentType : "application/json; charset=utf-8;",
-			dataType : "json",
-			success : function(data) {
+					url : "${pageContext.request.contextPath}/memeberList",
+					type : "POST",
+					contentType : "application/json; charset=utf-8;",
+					dataType : "json",
+					success : function(data) {
 
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].dept_name == '인사팀') {
-						if ($('.insa1').length == 0) {
-							$('.ref').append(
-									'<ul id="insa" class="insa1"><span>'
-											+ data[i].dept_name
-											+ '</span></ul>');
+						for (var i = 0; i < data.length; i++) {
+							if (data[i].dept_name == '인사팀') {
+								if ($('.insa1').length == 0) {
+									$('.ref').append(
+											'<ul id="insa" class="insa1"><span>'
+													+ data[i].dept_name
+													+ '</span></ul>');
+								}
+							} else if (data[i].dept_name == '경영팀') {
+								if ($('.gyeonyoung1').length == 0) {
+									$('.ref').append(
+											'<ul id="gyeonyoung" class="gyeonyoung1"><span>'
+													+ data[i].dept_name
+													+ '</span></ul>');
+								}
+							} else if (data[i].dept_name == '개발팀') {
+								if ($('.geabal1').length == 0) {
+									$('.ref').append(
+											'<ul id="geabal" class="geabal1"><span>'
+													+ data[i].dept_name
+													+ '</span></ul>');
+								}
+							}
 						}
-					} else if (data[i].dept_name == '경영팀') {
-						if ($('.gyeonyoung1').length == 0) {
-							$('.ref').append(
-									'<ul id="gyeonyoung" class="gyeonyoung1"><span>'
-											+ data[i].dept_name
-											+ '</span></ul>');
-						}
-					} else if (data[i].dept_name == '개발팀') {
-						if ($('.geabal1').length == 0) {
-							$('.ref').append(
-									'<ul id="geabal" class="geabal1"><span>'
-											+ data[i].dept_name
-											+ '</span></ul>');
-						}
-					}
-				}
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].dept_name == '인사팀') {
-						$('.insa1').append(
-								'<li onclick = "choose(\'[' + data[i].dept_name
-										+ ']' + data[i].name + '('
-										+ data[i].position
-										+ ')\')" class="add-person1" value = "'
-										+ data[i].name + '" ><a href="#"> '
-										+ data[i].name + '(' + data[i].position
-										+ ')</a></li>');
-					} else if (data[i].dept_name == '경영팀') {
-						$('.gyeonyoung1').append(
-								'<li onclick = "choose(\'[' + data[i].dept_name
-										+ ']' + data[i].name + '('
-										+ data[i].position
-										+ ')\')" class="add-person1" value = "'
-										+ data[i].name + '" ><a href="#"> '
-										+ data[i].name + '(' + data[i].position
-										+ ')</a></li>');
-					} else if (data[i].dept_name == '개발팀') {
-						$('.geabal1').append(
-								'<li onclick = "choose(\'[' + data[i].dept_name
-										+ ']' + data[i].name + '('
-										+ data[i].position
-										+ ')\')" class="add-person1" value = "'
-										+ data[i].name + '" ><a href="#"> '
-										+ data[i].name + '(' + data[i].position
-										+ ')</a></li>');
-					}
-				}
+						for (var i = 0; i < data.length; i++) {
 
-			},
-			error : function() {
-				alert("restController err");
-			}
+							if (data[i].dept_name == '인사팀') {
+								$('.insa1')
+										.append(
+												'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+														+ data[i].dept_name
+														+ ']'
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+							} else if (data[i].dept_name == '경영팀') {
+								$('.gyeonyoung1')
+										.append(
+												'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+														+ data[i].dept_name
+														+ ']'
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+							} else if (data[i].dept_name == '개발팀') {
+								$('.geabal1')
+										.append(
+												'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+														+ data[i].dept_name
+														+ ']'
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+							}
+						}
+					},
+					error : function() {
+						alert("restController err");
+					}
+				});
+		$(document)
+				.on(
+						"click",
+						".add-person1",
+						function() {
+							console.log($(this).children(".member_id").val());
+							var member_id = $(this).children(".member_id")
+									.val();
+							var member_name = $(this).text();
+							$('#set-name')
+									.append(
+											'<div class="setting-name" style="display:block; left=10px; margin-right:10px;">'
+													+ member_name
+													+ '&nbsp;&nbsp;<input type="hidden" name="members_id" value="'+member_id+'"></div>');
+						})
+
+		$('#clear-set-name').click(function() {
+			$("#set-name").empty();
 		});
 
+		$(document).on("click", ".del-person", function() {
+			$(this).parent().remove();
+
+		})
+
+		$(document).on("click", ".del-sub-group", function() {
+			$(this).parent().remove();
+
+		})
+
+		$('#prj-add-project')
+				.click(
+						function() {
+							if ($('.setting-name').length == 0) {
+								alert('인원을 한명 이상 골라주세요');
+							} else if ($('.setting-name').length > 3) {
+								alert('인원은 세명까지 고를 수 있습니다.');
+							} else {
+								if ($('.prj-member-list').length < 3) {
+									var member_list = $(".setting-name").get();
+									var member_id = $(
+											"input[name=members_id][type=hidden]")
+											.get();
+									console.log($('.prj-member-list').length);
+									$('#set-name').empty();
+									for (var i = 0; i < member_list.length; i++) {
+										var member_name = $(member_list[i])
+												.text();
+										var members_id = $(member_id[i]).val();
+										console.log(members_id);
+										$('.fa-hover')
+												.append(
+														'<div class="prj-member-list" style="line-height: 2; margin-right:10px; float: left;">'
+																+ member_name
+																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="prj_member_id" value="'+members_id+'"><div>');
+									}
+									$('#Medium-modal').modal('toggle');
+									$('.modal-backdrop').remove();
+								} else {
+									$('#set-name').empty();
+									alert('인원은 세명까지 고를 수 있습니다.');
+									$('#Medium-modal').modal('toggle');
+									$('.modal-backdrop').remove();
+								}
+							}
+
+						});
 		function select() {
 			var x = document.getElementById("payment_item").value;
 			if (x == "반차") {
@@ -377,9 +459,6 @@
 	<script
 		src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
 	<script src="./resources/vendors/scripts/advanced-components.js"></script>
-	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
-	<script
-		src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 	<script
 		src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
 	<script src="./resources/vendors/scripts/advanced-components.js"></script>
