@@ -108,7 +108,7 @@
 														id="example-select-all"> <span
 														class="dt-checkbox-label"></span>
 												</div></th>
-											<th>아이디</th>
+											<th>이름</th>
 											<th>payment_item</th>
 											<th>payment_status</th>
 											<th>Date</th>
@@ -118,12 +118,12 @@
 										<c:forEach var="vo" items="${pmlist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
-												<td>${vo.id}</td>
+												<td>${vo.member.name}</td>
 												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
 												<c:choose>
 											 	<c:when test="${vo.conference.conference_date == null}">
-													<td>${vo.write_date} 왜 안나오지 ;</td>
+													<td>${vo.write_date}</td>
 												</c:when> 
 												<c:otherwise>
 												<td>${vo.conference.conference_date}</td> 

@@ -37,7 +37,7 @@ public class PaymentController {
 			my_name.setId((String) session.getAttribute("loginId"));
 			mv.addObject("pmlist", pmService.paymentList(my_name));
 			mv.setViewName("approval/apprlist");
-	
+			System.out.println(pmService.paymentList(my_name));
 		return mv;
 	}
 

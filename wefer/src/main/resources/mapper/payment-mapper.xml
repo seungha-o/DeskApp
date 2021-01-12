@@ -22,6 +22,25 @@
 		<result property="annual_enddate" column="annual_enddate" />
 	</resultMap>
 
+<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
+		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="id" column="id"></id>
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="position" column="position" />
+		<result property="profile" column="profile" />
+		<result property="status" column="status" />
+		<result property="annual" column="annual" />
+		<result property="signiture" column="signiture" />
+		<result property="employ_date" column="employ_date" />
+		<result property="dept_no" column="dept_no" />
+		<result property="birth" column="birth" />
+		<result property="manage" column="manage" />
+		<result property="dept_name" column="dept_name" />
+	</resultMap>
+	
 	<resultMap type="Payment" id="resultPayment">
 		<id property="payment_id" column="payment_id"></id>
 		<result property="payment_item" column="payment_item" />
@@ -36,16 +55,20 @@
 		<result property="annual_kind" column="annual_kind" />
 		<result property="annual_stddate" column="annual_stddate" />
 		<result property="annual_enddate" column="annual_enddate" />
+		<result property="write_date" column="write_date" />
 		<collection property="Conference"
 			resultMap="resultConference"></collection>
-	
+		<collection property="Member"
+			resultMap="resultMember"></collection>
+			
+
 	</resultMap>
 
 	<select id="paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
-		select c.conference_title, p.id 
-		,p.payment_item, p.payment_status,c.conference_date, p.conference_id,
-		p.annual_id, p.payment_id,p.write_date
+		select c.conference_title, p.id,
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
 		left outer join conference c
 		on
@@ -53,11 +76,16 @@
 		left outer join annual a
 		on
 		a.annual_id = p.annual_id
+		left outer join member m
+		on
+		m.id = p.id
 		where exists (select 1
 		from member
 		where member.id = p.id
-		and member.id = #{id}
+		and member.id =
+		#{id}
 		)
+
 	</select>
 
 	<insert id="paymentInsert" parameterType="Payment"
@@ -87,6 +115,6 @@
 		annual a
 		on a.annual_id = p.annual_id where payment_id = #{payment_id}
 	</select>
-	
+
 
 </mapper>
