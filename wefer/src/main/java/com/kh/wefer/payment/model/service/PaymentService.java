@@ -6,4 +6,6 @@ import com.kh.wefer.payment.model.domain.Payment;
 
 public interface PaymentService {
 	public List<Payment> paymentList();
+	
+	public Payment paymentDetail(String payment_id);
 }

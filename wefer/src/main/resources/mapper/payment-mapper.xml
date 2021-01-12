@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="PaymentMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
-	
-		
-	<resultMap type="Conference" id="resultConference"> 
+
+
+	<resultMap type="Conference" id="resultConference">
 		<id property="conference_id" column="conference_id"></id>
 		<result property="conference_member" column="conference_member" />
 		<result property="conference_title" column="conference_title" />
-		<result property="conference_contents" column="conference_contents" />
+		<result property="conference_contents"
+			column="conference_contents" />
 		<result property="conference_date" column="conference_date" />
 		<result property="id" column="id" />
 	</resultMap>
-	
-	<resultMap type="Payment" id="resultPayment"> 
+
+	<resultMap type="Payment" id="resultPayment">
 		<id property="payment_id" column="payment_id"></id>
 		<result property="payment_item" column="payment_item" />
 		<result property="payment_status" column="payment_status" />
-		<result property="payment_members_count" column="payment_members_count" />
+		<result property="payment_members_count"
+			column="payment_members_count" />
 		<result property="payment_prestatus" column="payment_prestatus" />
 		<result property="id" column="id" />
 		<result property="conference_id" column="conference_id" />
@@ -25,28 +27,48 @@
 		<result property="annual_kind" column="annual_kind" />
 		<result property="annual_stddate" column="annual_stddate" />
 		<result property="annual_enddate" column="annual_enddate" />
-		<collection property="Conference" resultMap = "resultConference"></collection>
+		<collection property="Conference"
+			resultMap="resultConference"></collection>
 	</resultMap>
-	
-	<select id="paymentList" resultType="arraylist" parameterType="string"
-		resultMap="resultPayment">
-		select c.conference_title, p.id ,p.payment_item,p.payment_status,c.conference_date
-		from conference c , payment p
-		where c.conference_id = p.conference_id
+
+	<select id="paymentList" resultType="arraylist"
+		parameterType="string" resultMap="resultPayment">
+		select c.conference_title, p.id
+		,p.payment_item, p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id, p.payment_id,p.write_date
+		from payment p
+		left outer join conference c
+		on
+		c.conference_id = p.conference_id
+		left outer join annual a
+		on
+		a.annual_id = p.annual_id
 	</select>
-	
-	<insert id = "paymentInsert" parameterType="Payment"
+
+	<insert id="paymentInsert" parameterType="Payment"
 		flushCache="true" statementType="PREPARED">
-		<selectKey resultType="string" keyProperty="id" order="BEFORE">
+		<selectKey resultType="string" keyProperty="id"
+			order="BEFORE">
 			select id from member where id = #{id}
 		</selectKey>
-		insert into payment (payment_id, payment_members_count, id, conference_id, annual_id)
+		insert into payment (payment_id, payment_members_count, id,
+		conference_id, annual_id)
 		values (SEQ_PAYMENT.nextval,
-	
+
 		#{payment_members_count},
-<!-- 		#{payment_prestatus}, -->
+		<!-- #{payment_prestatus}, -->
 		#{id},
 		#{conference_id},
 		#{annual_id})
 	</insert>
+
+	<select id="paymentDetail" parameterType="string"
+		resultMap="resultPayment" resultType="Payment">
+		select * from payment p
+		left outer join conference c
+		on c.conference_id = p.conference_id
+		left outer join annual a
+		on a.annual_id = p.annual_id where payment_id = #{payment_id}
+	</select>
+	
 </mapper>

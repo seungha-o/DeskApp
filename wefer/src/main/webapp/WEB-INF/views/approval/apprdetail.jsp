@@ -45,13 +45,13 @@
 	gtag('config', 'UA-119386393-1');
 </script>
 <script>
-function check(){
-	 if($('.conf').css('display') == 'none'){
-	      $('.conf').show();
-	    }else{
-	      $('.conf').hide();
-	    }
-}
+	function check() {
+		if ($('.conf').css('display') == 'none') {
+			$('.conf').show();
+		} else {
+			$('.conf').hide();
+		}
+	}
 </script>
 </head>
 <style>
@@ -70,7 +70,7 @@ function check(){
 }
 
 .check {
-    float: right;
+	float: right;
 	width: 100px;
 	padding: 10px !important;
 }
@@ -79,8 +79,10 @@ function check(){
 	text-align: center;
 	padding: inherit;
 }
-.conf{
-display: none; text-align: center;
+
+.conf {
+	display: none;
+	text-align: center;
 }
 </style>
 <body>
@@ -103,7 +105,7 @@ display: none; text-align: center;
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="pd-20 card-box mb-30">
 					<div>
 						<ul class="list-group list-group-flush">
@@ -126,44 +128,55 @@ display: none; text-align: center;
 								</div>
 							</li>
 							<li class="list-group-item pt-20 pb-20">
-							<div class="container">
-								<h6 class="weight-400 d-flex">
-									<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-									제목입니다.
-								</h6>
+								<div class="container">
+									<h6 class="weight-400 d-flex">
+										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+										${payment_id.payment_item}
+									</h6>
 								</div>
 							</li>
 							<li class="list-group-item pt-20 pb-20">
 								<div class="container">
-								<h6 class="weight-400 d-flex">
-									<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-									수신인 발신인
-								</h6>
+									<h6 class="weight-400 d-flex">
+										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+										<c:choose>
+											<c:when
+												test="${payment_id.conference.conference_member == null}">
+												<td>${payment_id.id}</td>
+											</c:when>
+											<c:otherwise>
+												<td>${payment_id.conference.conference_member}</td>
+											</c:otherwise>
+										</c:choose>
+									</h6>
 								</div>
 							</li>
 							<li class="list-group-item pt-20 pb-20">
 								<div class="container">
-								<h6 class="weight-400 d-flex">
-									<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-									첨부파일
-								</h6>
+									<h6 class="weight-400 d-flex">
+										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+										첨부파일
+									</h6>
 								</div>
 							</li>
 							<li class="list-group-item pt-20 pb-20">
-						<div class="container">
-								<h6 class="weight-400 d-flex">
-									<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-									글내용
-								</h6> ${board.board_content} Lorem ipsum dolor sit amet Consectetur
-								adipiscing elit Integer molestie lorem at massa Facilisis in
-								pretium nisl aliquet Nulla volutpat aliquam velit Phasellus
-								iaculis neque Purus sodales ultricies Vestibulum laoreet
-								porttitor sem Ac tristique libero volutpat at Faucibus porta
-								lacus fringilla vel Aenean sit amet erat nunc Eget porttitor
-								lorem
+								<div class="container">
+									<h6 class="weight-400 d-flex">
+										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+										  <c:if test = "${payment_id.conference.conference_title != null}">
+										${payment_id.conference.conference_title}
+										</c:if>
+									</h6>
+									 <c:choose>
+									 <c:when test = "${payment_id.conference.conference_contents == null}">
+									 <td>${payment_id.annual_content}</td>
+									 </c:when>
+									 <c:otherwise>
+												<td>${payment_id.conference.conference_contents}</td>
+											</c:otherwise>
+									 </c:choose>
 								</div>
 							</li>
-								
 							<li class="list-group-item pt-20 pb-20">
 								<div class="container">
 									<label for="content">comment</label>
@@ -179,11 +192,9 @@ display: none; text-align: center;
 										</div>
 									</form>
 								</div>
-
 								<div class="container">
 									<div class="commentList"></div>
 								</div> <%@ include file="/WEB-INF/views/approval/appr-comment.jsp"%>
-
 							</li>
 						</ul>
 					</div>

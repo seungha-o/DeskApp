@@ -95,22 +95,29 @@
 														id="example-select-all"> <span
 														class="dt-checkbox-label"></span>
 												</div></th>
-											<th>Name</th>
-											<th>Office</th>
-											<th>title</th>
+											<th>아이디</th>
+											<th>payment_item</th>
+											<th>payment_status</th>
 											<th>Date</th>
 										</tr>
 									</thead>
 									<tbody>
-									<c:forEach var="vo" items="${pmlist}">
-										<tr>
-											<td>${vo.conference.conference_title}</td>
-											<td>${vo.id}</td>
-											<td>${vo.payment_item}</td>
-											<td>${vo.payment_status}</td>
-											<td>${vo.conference.conference_date}</td>
-										</tr>
-									</c:forEach>
+										<c:forEach var="vo" items="${pmlist}">
+											<tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.id}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
+												<td>${vo.payment_status}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date} 왜 안나오지 ;</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -133,15 +140,15 @@
 										</tr>
 									</thead>
 									<tbody>
-									<c:forEach var="vo" items="${pmlist}">
-										<tr>
-											<td>${vo.conference.conference_title}</td>
-											<td>${vo.id}</td>
-											<td>${vo.payment_item}</td>
-											<td>${vo.payment_status}</td>
-											<td>${vo.conference.conference_date}</td>
-										</tr>
-									</c:forEach>
+										<c:forEach var="vo" items="${pmlist}">
+											<tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.id}</td>
+												<td>${vo.payment_item}</td>
+												<td>${vo.payment_status}</td>
+												<td>${vo.conference.conference_date}</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -163,15 +170,15 @@
 										</tr>
 									</thead>
 									<tbody>
-									<c:forEach var="vo" items="${pmlist}">
-										<tr>
-											<td>${vo.conference.conference_title}</td>
-											<td>${vo.id}</td>
-											<td>${vo.payment_item}</td>
-											<td>${vo.payment_status}</td>
-											<td>${vo.conference.conference_date}</td>
-										</tr>
-									</c:forEach>
+										<c:forEach var="vo" items="${pmlist}">
+											<tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.id}</td>
+												<td>${vo.payment_item}</td>
+												<td>${vo.payment_status}</td>
+												<td>${vo.conference.conference_date}</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -192,16 +199,16 @@
 											<th>Date</th>
 										</tr>
 									</thead>
-								<tbody>
-									<c:forEach var="vo" items="${pmlist}">
-										<tr>
-											<td>${vo.conference.conference_title}</td>
-											<td>${vo.id}</td>
-											<td>${vo.payment_item}</td>
-											<td>${vo.payment_status}</td>
-											<td>${vo.conference.conference_date}</td>
-										</tr>
-									</c:forEach>
+									<tbody>
+										<c:forEach var="vo" items="${pmlist}">
+											<tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.id}</td>
+												<td>${vo.payment_item}</td>
+												<td>${vo.payment_status}</td>
+												<td>${vo.conference.conference_date}</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -212,9 +219,9 @@
 		</div>
 		<button type="button" class="pd-20 btn btn-primary btn-lg"
 			style="float: right;" onclick="window.location='/wefer/apprForm.do '">결재작성</button>
-	
+
 	</div>
-	
+
 	<script
 		src="./resources/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script

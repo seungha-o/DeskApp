@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%
+<%
 	request.setCharacterEncoding("UTF-8");
 %>
 <%
@@ -12,7 +12,8 @@
 <head>
 <meta charset="UTF-8">
 <title>approval Form</title>
-<script type="text/javascript" src="./resources/src/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="./resources/src/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="./resources/vendors/scripts/jquery-3.1.1.min.js"></script>
 <!-- 값 제어를 위해 jquery -->
 <link
@@ -86,7 +87,7 @@
 										name="annual_stddate" placeholder="Select Date" type="text">
 								</div>
 							</div>
-							</div>
+						</div>
 						<div id="annDate_two" style="display: none">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
@@ -120,14 +121,12 @@
 														style="overflow: scroll; position: relative; height: 10%">
 														<!--  클릭한 참조자 이름  -->
 													</div>
-
 													<div
 														class="notification-list chat-notification-list customscroll">
 
 														<ul class="submenu ref">
 															<!-- 참조자 나오는 부분 -->
 														</ul>
-
 														<!-- 스크롤부분 -->
 													</div>
 													<!-- 회색박스 -->
@@ -148,10 +147,8 @@
 							<label class="col-sm-10 col-md-2 col-form-label">참조문서</label>
 							<div class="col-sm-12 col-md-10">
 								<input type="file" class="form-control">
-
 							</div>
 						</div>
-
 					</div>
 					<div class="html-editor pd-20 card-box mb-30">
 						<%-- 	<%@ include file="/WEB-INF/views/common/aaa.jsp"%> --%>
@@ -171,14 +168,13 @@
 				</form>
 			</div>
 		</div>
-
 	</div>
 	<script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors,
 			elPlaceHolder : "smartEditor",
-			sSkinURI : "./resources/src/se/SmartEditor2Skin.html", 
+			sSkinURI : "./resources/src/se/SmartEditor2Skin.html",
 			fCreator : "createSEditor2",
 			htParams : {
 				bUseToolbar : true,
@@ -187,13 +183,15 @@
 			}
 		});
 		$(function() {
-			$("#savebutton").click(function() {
-								oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
-								$("#frm").submit();
-							});
+			$("#savebutton").click(
+					function() {
+						oEditors.getById["smartEditor"].exec(
+								"UPDATE_CONTENTS_FIELD", []);
+						$("#frm").submit();
+					});
 		})
 	</script>
-	
+
 	<script type="text/javascript">
 		$.ajax({
 			url : "${pageContext.request.contextPath}/memeberList",
@@ -269,16 +267,15 @@
 				$(".kind").val("[반차] 휴가신청서입니다.");
 				$("#annDate_one").show();
 				$("#annDate_two").hide();
-			}else {
+			} else {
 				$(".kind").val("[월차] 휴가신청서입니다.");
 				$("#annDate_one").show();
 				$("#annDate_two").show();
 			}
 		}
-		</script>
-		
-		<script type="text/javascript">
-		
+	</script>
+
+	<script type="text/javascript">
 		//두개짜리 제어 연결된거 만들어주는 함수
 		datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
 
@@ -351,7 +348,10 @@
 			}
 		}
 
-		function choose(a) {$('#set-name').append('<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'
+		function choose(a) {
+			$('#set-name')
+					.append(
+							'<div class="setting-name" style="display:inline; left=10px; margin-right:10px;">'
 									+ a + '</div>&nbsp;&nbsp;');
 
 		}

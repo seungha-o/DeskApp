@@ -1,7 +1,8 @@
 package com.kh.wefer.payment.model.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,12 +19,40 @@ public class Payment extends Conference implements java.io.Serializable {
 	private String annual_id;
 	private String annual_content;
 	private String annual_kind;
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_stddate;
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_enddate; 
+	private Date write_date;
 	
 
+	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
+			java.sql.Date conference_date, String id, String payment_id, String payment_item, String payment_status,
+			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
+			com.kh.wefer.payment.model.domain.Conference conference, String annual_id, String annual_content,
+			String annual_kind, Date annual_stddate, Date annual_enddate, Date write_date) {
+		super(conference_id, conference_member, conference_title, conference_contents, conference_date, id);
+		this.payment_id = payment_id;
+		this.payment_item = payment_item;
+		this.payment_status = payment_status;
+		this.payment_members_count = payment_members_count;
+		this.payment_prestatus = payment_prestatus;
+		id = id2;
+		conference_id = conference_id2;
+		Conference = conference;
+		this.annual_id = annual_id;
+		this.annual_content = annual_content;
+		this.annual_kind = annual_kind;
+		this.annual_stddate = annual_stddate;
+		this.annual_enddate = annual_enddate;
+		this.write_date = write_date;
+	}
+	public Date getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(Date write_date) {
+		this.write_date = write_date;
+	}
 	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
 			java.sql.Date conference_date, String id, String payment_id, String payment_item, String payment_status,
 			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
@@ -83,7 +112,8 @@ public class Payment extends Conference implements java.io.Serializable {
 				+ payment_status + ", payment_members_count=" + payment_members_count + ", payment_prestatus="
 				+ payment_prestatus + ", id=" + id + ", conference_id=" + conference_id + ", Conference=" + Conference
 				+ ", annual_id=" + annual_id + ", annual_content=" + annual_content + ", annual_kind=" + annual_kind
-				+ ", annual_stddate=" + annual_stddate + ", annual_enddate=" + annual_enddate + "]";
+				+ ", annual_stddate=" + annual_stddate + ", annual_enddate=" + annual_enddate + ", write_date="
+				+ write_date + "]";
 	}
 	public String getPayment_id() {
 		return payment_id;

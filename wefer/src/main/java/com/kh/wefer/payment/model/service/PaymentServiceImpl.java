@@ -18,5 +18,10 @@ public class PaymentServiceImpl implements PaymentService {
 		return pmDao.paymentList();
 	}
 
+	@Override
+	public Payment paymentDetail(String payment_id) {
+		return pmDao.paymentDetail(payment_id);
+	}
+
 	
 }

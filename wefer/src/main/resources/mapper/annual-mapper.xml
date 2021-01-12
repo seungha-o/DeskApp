@@ -16,7 +16,7 @@
       <selectKey resultType="string" keyProperty="id" order="BEFORE">
          select id from member where id = #{id}
       </selectKey>
-		insert into annual ( annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
+		insert into annual (annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
 		values (#{annual_id},
 		#{annual_content},
 		#{annual_stddate},

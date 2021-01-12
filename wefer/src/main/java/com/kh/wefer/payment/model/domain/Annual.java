@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Annual implements java.io.Serializable {
 	private static final long serialVersionUID = 20001L; 
-	
+	private Date write_date;
 	private String annual_id;
 	private String annual_content;
 	private String annual_kind;
@@ -18,10 +18,28 @@ public class Annual implements java.io.Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_enddate;
 	
+	public Annual(Date write_date, String annual_id, String annual_content, String annual_kind, String id,
+			Date annual_stddate, Date annual_enddate) {
+		super();
+		this.write_date = write_date;
+		this.annual_id = annual_id;
+		this.annual_content = annual_content;
+		this.annual_kind = annual_kind;
+		this.id = id;
+		this.annual_stddate = annual_stddate;
+		this.annual_enddate = annual_enddate;
+	}
+	public Date getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(Date write_date) {
+		this.write_date = write_date;
+	}
 	@Override
 	public String toString() {
-		return "Annual [annual_id=" + annual_id + ", annual_content=" + annual_content + ", annual_kind=" + annual_kind
-				+ ", id=" + id + ", annual_stddate=" + annual_stddate + ", annual_enddate=" + annual_enddate + "]";
+		return "Annual [write_date=" + write_date + ", annual_id=" + annual_id + ", annual_content=" + annual_content
+				+ ", annual_kind=" + annual_kind + ", id=" + id + ", annual_stddate=" + annual_stddate
+				+ ", annual_enddate=" + annual_enddate + "]";
 	}
 	public Annual(String annual_id, String annual_content, String annual_kind, String id, Date annual_stddate,
 			Date annual_enddate) {

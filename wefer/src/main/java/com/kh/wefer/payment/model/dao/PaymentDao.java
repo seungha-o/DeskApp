@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.wefer.payment.model.domain.Annual;
 import com.kh.wefer.payment.model.domain.Payment;
 
 @Repository("pmDao")
@@ -19,5 +18,8 @@ public class PaymentDao {
 	}
 	public int insertPayment(Payment b) {
 		return sqlSession.insert("PaymentMapper.paymentInsert", b);
+	}
+	public Payment paymentDetail(String payment_id) {
+		return sqlSession.selectOne("PaymentMapper.paymentDetail", payment_id);
 	}
 }
