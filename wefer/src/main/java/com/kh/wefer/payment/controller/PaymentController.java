@@ -32,10 +32,12 @@ public class PaymentController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
-	public ModelAndView apprlist(Locale locale, ModelAndView mv) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		mv.addObject("pmlist", pmService.paymentList());
-		mv.setViewName("approval/apprlist");
+	public ModelAndView apprlist(Payment my_name, Locale locale, ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		
+			my_name.setId((String) session.getAttribute("loginId"));
+			mv.addObject("pmlist", pmService.paymentList(my_name));
+			mv.setViewName("approval/apprlist");
+	
 		return mv;
 	}
 
@@ -45,11 +47,8 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/aInsert.do")
-	public String annualInsert
-	(Annual a, Payment b, HttpSession session, HttpServletRequest request,
-			@RequestParam(name="annual_enddate", required = false)String end) {
-		System.out.println(a.getAnnual_enddate());
-		System.out.println(end);
+	public String annualInsert(Annual a, Payment b, HttpSession session, HttpServletRequest request,
+			@RequestParam(name = "annual_enddate", required = false) String end) {
 		try {
 			a.setId((String) session.getAttribute("loginId"));
 			b.setId((String) session.getAttribute("loginId"));
@@ -61,11 +60,13 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
-	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id,
-			 ModelAndView mv) {
-		System.out.println("payment_id: " + payment_id);
-		mv.addObject("payment_id", pmService.paymentDetail(payment_id));
-		mv.setViewName("approval/apprdetail");
+	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id, ModelAndView mv) {
+	
+			System.out.println("payment_id: " + payment_id);
+			mv.addObject("payment_id", pmService.paymentDetail(payment_id));
+			mv.setViewName("approval/apprdetail");
+
+		
 		return mv;
 	}
 

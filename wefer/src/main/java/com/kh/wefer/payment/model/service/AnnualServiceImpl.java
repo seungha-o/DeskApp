@@ -21,8 +21,6 @@ public class AnnualServiceImpl implements AnnualService {
 	@Override
 	public int insertAnnualPayment(Annual a, Payment b) {
 		String seq = aDao.seqAnnualPayment();
-		System.out.println("aaa: " + a.getId());
-		System.out.println("bbb: " + b.getId());
 		System.out.println("seq: "+ seq);
 		a.setAnnual_id(seq);
 		b.setAnnual_id(seq);

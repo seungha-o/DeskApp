@@ -13,8 +13,8 @@ public class PaymentDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<Payment> paymentList(){
-		return sqlSession.selectList("PaymentMapper.paymentList");
+	public List<Payment> paymentList(Payment my_name){
+		return sqlSession.selectList("PaymentMapper.paymentList",my_name);
 	}
 	public int insertPayment(Payment b) {
 		return sqlSession.insert("PaymentMapper.paymentInsert", b);

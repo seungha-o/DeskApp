@@ -14,14 +14,12 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentDao pmDao;
 	
 	@Override
-	public List<Payment> paymentList() {
-		return pmDao.paymentList();
+	public List<Payment> paymentList(Payment my_name) {
+		return pmDao.paymentList(my_name);
 	}
 
 	@Override
 	public Payment paymentDetail(String payment_id) {
 		return pmDao.paymentDetail(payment_id);
 	}
-
-	
 }
