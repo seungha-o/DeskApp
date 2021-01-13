@@ -23,5 +23,6 @@ public interface MemberService {
 
 	int updateProfile(Member m);
 
-	
+	Member personerProfileList(Member m);
+
 }

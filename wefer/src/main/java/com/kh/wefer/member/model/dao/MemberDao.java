@@ -54,6 +54,10 @@ public class MemberDao {
 	public int updateProfile(Member m) {
 		return sqlSession.update("Member.updateProfile", m);
 	}
+	public Member personerProfileList(Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Member.personerProfileList", m);
+	}
 	
 		
 	

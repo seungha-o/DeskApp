@@ -62,5 +62,12 @@ public class MemberServiceImpl implements MemberService{
 	public int updateProfile(Member m) {
 		return mDao.updateProfile(m);
 	}
+
+	@Override
+	public Member personerProfileList(Member m) {
+		return mDao.personerProfileList(m);
+	}
+
+
 	
 }

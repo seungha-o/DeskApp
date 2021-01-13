@@ -47,16 +47,21 @@ public class MemberController {
 	
 	//Profile 화면
 	 @RequestMapping(value ="/profile.do", method = RequestMethod.GET)
-	 public ModelAndView ProfileList(Locale locale, Member m, ModelAndView mv, HttpSession session, HttpServletRequest request)	 {		 
+	 public ModelAndView ProfileList( Member m, ModelAndView mv, HttpSession session, HttpServletRequest request)	 {		 
 		  session = request.getSession();
 		  String id = (String) session.getAttribute("loginId");
 		 mv.addObject("profileList",mService.profileList(id));
 		 mv.setViewName("member/profile");
 		 return mv;
 	  }
+	 // 주소록 사원 프로필정보 보여주기
 	 @RequestMapping(value ="/personerProfileList.do", method = RequestMethod.GET)
-	 public void PersonerProfileList(Locale locale, Member m, ModelAndView mv, @RequestParam(name="addrMemberId") String addrMember, HttpServletRequest request)	 {		 
+	 public ModelAndView PersonerProfileList( Member m, ModelAndView mv, @RequestParam(name="addrMemberId") String addrMember, HttpServletRequest request)	 {		 
 		 System.out.println(addrMember);
+		 m.setId(addrMember);
+		 mv.addObject("personerProfileList",mService.personerProfileList(m));
+		 mv.setViewName("member/personerProfileList");
+		 return mv;
 		
 	  }
 	 
