@@ -156,10 +156,17 @@
 										<c:forEach var="vo" items="${pmlist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
-												<td>${vo.id}</td>
-												<td>${vo.payment_item}</td>
+												<td>${vo.member.name}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
-												<td>${vo.conference.conference_date}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date}</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -171,25 +178,35 @@
 								<table class="checkbox-datatable table nowrap">
 									<thead>
 										<tr>
-											<th><div class="dt-checkbox">
-													<input type="checkbox" name="select_all" value="1"
-														id="example-select-all"> <span
-														class="dt-checkbox-label"></span>
-												</div></th>
-											<th>Name</th>
-											<th>Office</th>
-											<th>title</th>
-											<th>Date</th>
-										</tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.member.name}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
+												<td>${vo.payment_status}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date}</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
+											</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="vo" items="${pmlist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
-												<td>${vo.id}</td>
-												<td>${vo.payment_item}</td>
+												<td>${vo.member.name}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
-												<td>${vo.conference.conference_date}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date}</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -216,10 +233,17 @@
 										<c:forEach var="vo" items="${pmlist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
-												<td>${vo.id}</td>
-												<td>${vo.payment_item}</td>
+												<td>${vo.member.name}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
-												<td>${vo.conference.conference_date}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date}</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
 											</tr>
 										</c:forEach>
 									</tbody>

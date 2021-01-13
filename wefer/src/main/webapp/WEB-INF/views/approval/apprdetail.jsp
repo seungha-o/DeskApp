@@ -45,11 +45,25 @@
 	gtag('config', 'UA-119386393-1');
 </script>
 <script>
-	function check() {
-		if ($('.conf').css('display') == 'none') {
-			$('.conf').show();
+	function check0() {
+		if ($('#check0').css('display') == 'none') {
+			$('#check0').show();
 		} else {
-			$('.conf').hide();
+			$('#check0').hide();
+		}
+	}
+	function check1() {
+		if ($('#check1').css('display') == 'none') {
+			$('#check1').show();
+		} else {
+			$('#check1').hide();
+		}
+	}
+	function check2() {
+		if ($('#check2').css('display') == 'none') {
+			$('#check2').show();
+		} else {
+			$('#check2').hide();
 		}
 	}
 </script>
@@ -71,8 +85,10 @@
 
 .check {
 	float: right;
-	width: 100px;
 	padding: 10px !important;
+	visibility: hidden;
+	margin-left: 10px;
+	
 }
 
 .name {
@@ -109,24 +125,32 @@
 				<div class="pd-20 card-box mb-30">
 					<div>
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item pt-20 pb-20">
-								<div class="card card-box check">
-									<div class="card-header name">김땡땡</div>
-									<div class="card-body" id="check" onclick="check()">
-										<div class="conf">
-											<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+							<li class="list-group-item pt-20 pb-20"><c:if
+									test="${not empty payment_id.s_member_id0}">
+									<div class="card card-box check" style="visibility: visible;">
+										<div class="card-header name">
+											${payment_id.s_member_id0}</div>
+										<div class="card-body" onclick="check0()">
+											<div class="conf" id="check0">
+												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="card card-box check">
-									<div class="card-header name">김땡땡</div>
-									<div class="card-body" id="check" onclick="check()">
-										<div class="conf">
-											<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+								</c:if> <c:if test="${not empty payment_id.s_member_id1}">
+									<div class="card card-box check" style="visibility: visible;">
+										<div class="card-header name">${payment_id.s_member_id1}</div>
+												<input class="card-body" type="checkbox" id="check1" value="1">
+									</div>
+								</c:if> <c:if test="${not empty payment_id.s_member_id2}">
+									<div class="card card-box check" style="visibility: visible;">
+										<div class="card-header name">${payment_id.s_member_id2}</div>
+										<div class="card-body" onclick="check2()">
+											<div class="conf" id="check2">
+												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+											</div>
 										</div>
 									</div>
-								</div>
-							</li>
+								</c:if></li>
 							<li class="list-group-item pt-20 pb-20">
 								<div class="container">
 									<h6 class="weight-400 d-flex">
@@ -163,18 +187,19 @@
 								<div class="container">
 									<h6 class="weight-400 d-flex">
 										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-										  <c:if test = "${payment_id.conference.conference_title != null}">
+										<c:if test="${payment_id.conference.conference_title != null}">
 										${payment_id.conference.conference_title}
 										</c:if>
 									</h6>
-									 <c:choose>
-									 <c:when test = "${payment_id.conference.conference_contents == null}">
-									 <td>${payment_id.annual_content}</td>
-									 </c:when>
-									 <c:otherwise>
-												<td>${payment_id.conference.conference_contents}</td>
-											</c:otherwise>
-									 </c:choose>
+									<c:choose>
+										<c:when
+											test="${payment_id.conference.conference_contents == null}">
+											<td>${payment_id.annual_content}</td>
+										</c:when>
+										<c:otherwise>
+											<td>${payment_id.conference.conference_contents}</td>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</li>
 							<li class="list-group-item pt-20 pb-20">

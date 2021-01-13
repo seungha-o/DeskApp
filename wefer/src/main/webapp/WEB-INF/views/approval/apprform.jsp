@@ -330,7 +330,7 @@
 												.append(
 														'<div class="prj-member-list" style="line-height: 2; margin-right:10px; float: left;">'
 																+ member_name
-																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="prj_member_id" value="'+members_id+'"><div>');
+																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="s_member_id'+i+'" value="'+members_id+'"><div>');
 									}
 									$('#Medium-modal').modal('toggle');
 									$('.modal-backdrop').remove();

@@ -41,6 +41,14 @@
 		<result property="dept_name" column="dept_name" />
 	</resultMap>
 	
+	<resultMap type="Payment_confirm" id="resultpayment_confirm"> 
+		<id property="payment_confirm_id" column="payment_confirm_id"/>
+		<result property="payment_id" column="annual_id" />
+		<result property="s_member_id0" column="s_member_id0" />
+		<result property="s_member_id1" column="s_member_id1" />
+		<result property="s_member_id2" column="s_member_id2" />
+	</resultMap>
+	
 	<resultMap type="Payment" id="resultPayment">
 		<id property="payment_id" column="payment_id"></id>
 		<result property="payment_item" column="payment_item" />
@@ -56,11 +64,15 @@
 		<result property="annual_stddate" column="annual_stddate" />
 		<result property="annual_enddate" column="annual_enddate" />
 		<result property="write_date" column="write_date" />
+		<result property="s_member_id0" column="s_member_id0" />
+		<result property="s_member_id1" column="s_member_id1" />
+		<result property="s_member_id2" column="s_member_id2" />
 		<collection property="Conference"
 			resultMap="resultConference"></collection>
 		<collection property="Member"
 			resultMap="resultMember"></collection>
-			
+		<collection property="Payment_confirm"
+			resultMap="resultpayment_confirm"></collection>
 
 	</resultMap>
 
@@ -108,13 +120,14 @@
 	<select id="paymentDetail" parameterType="string"
 		resultMap="resultPayment" resultType="Payment">
 		select * from payment p
-		left outer
-		join conference c
+		left outer join conference c
 		on c.conference_id = p.conference_id
-		left outer join
-		annual a
-		on a.annual_id = p.annual_id where payment_id = #{payment_id}
+		left outer join annual a
+		on a.annual_id = p.annual_id 
+        left outer join payment_confirm pc
+		on pc.payment_id = p.payment_id
+        where p.payment_id =  #{payment_id}
 	</select>
 
-
+	
 </mapper>
