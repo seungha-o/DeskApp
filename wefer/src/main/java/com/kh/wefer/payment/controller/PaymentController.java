@@ -56,6 +56,7 @@ public class PaymentController {
 			a.setId((String) session.getAttribute("loginId"));
 			b.setId((String) session.getAttribute("loginId"));
 			aService.insertAnnualPayment(a, b);
+			pcService.insertPaymentConfirm(payment_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
