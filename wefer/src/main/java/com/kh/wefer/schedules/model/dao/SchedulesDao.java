@@ -19,7 +19,25 @@ public class SchedulesDao {
 		return sqlSession.insert("Schedules.insertSchedules",schd);
 	}
 
-	public List<Schedules> schedulesList(String test1) {
-		return sqlSession.selectList("Schedules.schedulesList",test1);
+
+	
+	public int updateSchedules(Schedules schd) {
+		return sqlSession.update("Schedules.updateSchedules",schd);
+	}
+
+	public void deleteSchedules(String scid) {
+		sqlSession.delete("Schedules.deleteSchedules",scid);
+	}
+
+	public List<Schedules> schedulesList() {
+		return sqlSession.selectList("Schedules.schedulesList");
+	}
+
+	public List<Schedules> schedulesstList(String type) {
+		return sqlSession.selectList("Schedules.schedulesstList",type);
+	}
+
+	public List<Schedules> schedulesdeptList(String type) {
+		return sqlSession.selectList("Schedules.schedulesdeptList",type);
 	}
 }

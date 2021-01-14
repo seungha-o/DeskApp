@@ -19,8 +19,27 @@ public class SchedulesServiceImpl implements SchedulesService {
 	public int insertSchedules(Schedules schd) {
 		return schdDao.insertSchedules(schd);
 	}
+
 	@Override
-	public List<Schedules> schedulesList(String test1){
-		return schdDao.schedulesList(test1);
+	public void updateSchedules(Schedules schd) {		
+		schdDao.updateSchedules(schd);
 	}
+	@Override
+	public void deleteSchedules(String scid) {
+		schdDao.deleteSchedules(scid);
+	}
+	@Override
+	public List<Schedules> schedulesList() {
+		return schdDao.schedulesList();
+	}
+	@Override
+	public List<Schedules> schedulesstList(String type) {
+		return schdDao.schedulesstList(type);
+	}
+	@Override
+	public List<Schedules> schedulesdeptList(String type) {
+		return schdDao.schedulesdeptList(type);
+	}
+	
+
 }

@@ -71,31 +71,82 @@ public class ScheduleController {
 	@Autowired
 	private SchedulesService schdservice;
 
-	// 일정게시
-
+	// 일정표시
 	@RequestMapping(value = "/schedule.do", method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView mv) {
+	public ModelAndView home(ModelAndView mv,@RequestParam(name="type",required = false,defaultValue = "all")String type) {
 
-		mv.addObject("list",schdservice.schedulesList("test1"));
+		
+		if(type.equals("1")) {
+			type ="1";
+			mv.addObject("list", schdservice.schedulesdeptList(type));
+			
+		}else if(type.equals("2")) {
+			type ="2";
+
+			mv.addObject("list", schdservice.schedulesdeptList(type));
+			
+		}else if(type.equals("3")) {
+			type ="3";
+
+			mv.addObject("list", schdservice.schedulesdeptList(type));
+		}else if(type.equals("회사")) {
+			type ="회사";
+			mv.addObject("list", schdservice.schedulesstList(type));
+		}else if(type.equals("all")) {
+			mv.addObject("list", schdservice.schedulesList());
+			
+		}
+		
 		mv.setViewName("schedules/schedule");
 		return mv;
 	}
 
-	// 일정추가
+	@RequestMapping(value = "/delete_schedule.do")
+	public ModelAndView deleteSchedules(@RequestParam(name = "scid") String scid, ModelAndView mv) {
 
-	@ResponseBody
-	@RequestMapping(value = "/insertSchedules", method = RequestMethod.POST)
-	public Map<Object, Object> insertSchedules(@RequestBody Schedules schd) throws Exception {
-		Map<Object, Object> map = new HashMap<Object, Object>();
-
-		schdservice.insertSchedules(schd);
-
-		return map;
+		schdservice.deleteSchedules(scid);
+		mv.setViewName("redirect:schedule.do");
+		return mv;
 	}
 
-	@RequestMapping(value = "/a.do", method = RequestMethod.POST)
-	public ModelAndView submitsc(ModelAndView mv, Schedules vo) {
-		schdservice.insertSchedules(vo);
+	// 일정수정
+	@RequestMapping(value = "/update_schedule.do", method = RequestMethod.POST)
+	public ModelAndView submitsc2(ModelAndView mv, Schedules schd) {
+
+		String color = schd.getDept_no();
+
+		if (color.equals("1")) {
+			schd.setSchedules_color("#FF0000");
+			
+		} else if (color.equals("2")) {
+			schd.setSchedules_color("#228B22");
+			
+		} else if (color.equals("3")) {
+			schd.setSchedules_color("#0000FF");
+		}
+		schdservice.updateSchedules(schd);
+
+		mv.setViewName("redirect:schedule.do");
+		return mv;
+	}
+	
+	// 일정 추가
+	@RequestMapping(value = "/add_schedule.do", method = RequestMethod.POST)
+	public ModelAndView submitsc(ModelAndView mv, Schedules schd) {
+
+		String color = schd.getDept_no();
+
+		if (color.equals("1")) {
+			schd.setSchedules_color("#FF0000");
+			
+		} else if (color.equals("2")) {
+			schd.setSchedules_color("#228B22");
+			
+		} else if (color.equals("3")) {
+			schd.setSchedules_color("#0000FF");
+		}
+		schdservice.insertSchedules(schd);
+
 		mv.setViewName("redirect:schedule.do");
 		return mv;
 	}

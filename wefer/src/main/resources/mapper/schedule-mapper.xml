@@ -3,8 +3,8 @@
 <mapper namespace="Schedules"> <!-- DAO에서 접근할때 사용되는 이름임 -->
 	<resultMap type="Schedules" id="resultSchedules"> <!-- type = "xml의 별칭" -->
 		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
-		<id property="id" column="id"></id>
-		<result property="schedules_id" column="schedules_id" />
+		<id property="schedules_id" column="schedules_id"></id>
+		<result property="id" column="id" />
 		<result property="schedules_status" column="schedules_status" />
 		<result property="schedules_std_date" column="schedules_std_date" />
 		<result property="schedules_end_date" column="schedules_end_date" />
@@ -14,16 +14,32 @@
 		<result property="dept_no" column="dept_no" />
 	</resultMap>
 	
-	<select id="schedulesList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
-		SELECT * FROM SCHEDULES where id =#{test1}
+	<!-- 일정조회  -->
+	<select id="schedulesList"  resultType="arraylist" resultMap="resultSchedules">
+		SELECT * FROM SCHEDULES
+	</select>
+		<select id="schedulesdeptList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
+		SELECT * FROM SCHEDULES where dept_no =#{type}
+	</select>
+			<select id="schedulesstList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
+		SELECT * FROM SCHEDULES where schedules_status =#{type}
 	</select>
 	
+	<!-- 일정등록  -->
 	<insert id="insertSchedules" parameterType="Schedules" flushCache="true" statementType="PREPARED">
 		INSERT INTO SCHEDULES VALUES(Schedules_SEQ.NEXTVAL,#{schedules_status},#{schedules_std_date},#{schedules_end_date},#{schedules_name},
 			#{schedules_content},#{schedules_color},#{id},#{dept_no}
 		)
-
-	
 	</insert>
 	
+	<!-- 일정수정  -->
+	<update id="updateSchedules" parameterType="Schedules" flushCache="true" statementType="PREPARED">
+		UPDATE SCHEDULES SET schedules_std_date=#{schedules_std_date},schedules_end_date=#{schedules_end_date},schedules_name=#{schedules_name},
+			schedules_content=#{schedules_content} WHERE schedules_id=#{schedules_id}
+	</update>
+	
+	<!-- 일정삭제  -->
+	<delete id="deleteSchedules" parameterType="string" flushCache="true" statementType="PREPARED">
+		delete schedules where schedules_id = #{scid}
+	</delete>
 </mapper>
