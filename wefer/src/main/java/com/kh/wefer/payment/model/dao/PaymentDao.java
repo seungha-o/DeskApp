@@ -16,10 +16,15 @@ public class PaymentDao {
 	public List<Payment> paymentList(Payment my_name){
 		return sqlSession.selectList("PaymentMapper.paymentList",my_name);
 	}
+	public Payment paymentDetail(String payment_id) {
+		return sqlSession.selectOne("PaymentMapper.paymentDetail", payment_id);
+	}
+	
 	public int insertPayment(Payment b) {
 		return sqlSession.insert("PaymentMapper.paymentInsert", b);
 	}
-	public Payment paymentDetail(String payment_id) {
-		return sqlSession.selectOne("PaymentMapper.paymentDetail", payment_id);
+	public String seqPayment() {
+		String seqPayment = sqlSession.selectOne("PaymentMapper.seqPayment");
+		return seqPayment;
 	}
 }

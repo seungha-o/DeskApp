@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="Payment_confirmMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
-	<resultMap type="Payment_confirm" id="resultpayment_confirm"> 
+	<resultMap type="Payment" id="resultpayment_confirm"> 
 		<id property="payment_confirm_id" column="payment_confirm_id"/>
 		<result property="payment_id" column="annual_id" />
 		<result property="s_member_id0" column="s_member_id0" />
@@ -10,18 +10,14 @@
 		<result property="s_member_id2" column="s_member_id2" />
 	</resultMap>
 	
-	<insert id = "selectMember" parameterType="Payment_confirm" flushCache="true" statementType="PREPARED">
+	<insert id = "selectMember" parameterType="Payment" flushCache="true" statementType="PREPARED">
 		insert into payment_confirm (payment_confirm_id,payment_id,s_member_id0,s_member_id1,s_member_id2 )
 		values (
 		SEQ_PAYMENT_CONFIRM.nextval,
-		(#{payment_id}-1),
+		#{payment_id},
 		#{s_member_id0},
 		#{s_member_id1},
 		#{s_member_id2}
 		)
 	</insert>
-	
-	<select id = "seqPaymentConfrim" resultType="string">
-	select SEQ_PAYMENT.nextval from dual
-	</select>
 </mapper>

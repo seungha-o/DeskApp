@@ -108,8 +108,8 @@
 		</selectKey>
 		insert into payment (payment_id, payment_members_count, id,
 		conference_id, annual_id)
-		values (SEQ_PAYMENT.nextval,
-
+		values (#{payment_id},
+		
 		#{payment_members_count},
 		<!-- #{payment_prestatus}, -->
 		#{id},
@@ -128,6 +128,9 @@
 		on pc.payment_id = p.payment_id
         where p.payment_id =  #{payment_id}
 	</select>
-
+	
+	<select id = "seqPayment" resultType="string">
+	select SEQ_PAYMENT.nextval from dual
+	</select>
 	
 </mapper>

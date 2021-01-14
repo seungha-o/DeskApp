@@ -50,34 +50,29 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/aInsert.do")
-	public String annualInsert(Payment_confirm payment_id,  Annual a, Payment b, HttpSession session, HttpServletRequest request,
+	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, HttpServletRequest request,
 			@RequestParam(name = "annual_enddate", required = false) String end) {
 		try {
 			a.setId((String) session.getAttribute("loginId"));
 			b.setId((String) session.getAttribute("loginId"));
+			System.out.println(pc.getS_member_id0());
+			System.out.println(pc.getS_member_id1());
+			System.out.println(pc.getS_member_id2());
 			aService.insertAnnualPayment(a, b);
-			pcService.insertPaymentConfirm(payment_id);
+			//pcService.insertPaymentConfirm(payment_id);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return "redirect:aInsert2.do";
-	}
-	@RequestMapping(value = "/aInsert2.do")
-	public String annualInsert(Payment_confirm payment_id) {
-		try {
-			pcService.insertPaymentConfirm(payment_id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		}	
 		return "redirect:approval.do";
 	}
+	
 	@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
 	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id, ModelAndView mv) {
 	
-			System.out.println("payment_id: " + payment_id);
+			//System.out.println("payment_id: " + payment_id);
 			mv.addObject("payment_id", pmService.paymentDetail(payment_id));
 			mv.setViewName("approval/apprdetail");
-			System.out.println(pmService.paymentDetail(payment_id));
+			//System.out.println(pmService.paymentDetail(payment_id));
 		return mv;
 	}
 
