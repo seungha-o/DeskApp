@@ -2,6 +2,9 @@ package com.kh.wefer.project.model.domain;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ProjectDetail {
 //	PROJECT_DATAIL_ID         NOT NULL VARCHAR2(2000) 
 //	PROJECT_DATAIL_TITLE      NOT NULL VARCHAR2(2000) 

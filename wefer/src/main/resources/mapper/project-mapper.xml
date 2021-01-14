@@ -13,7 +13,40 @@
 		<result property="project_std_date" column="project_std_date"/>
 		<result property="project_end_date" column="project_end_date"/>
 		<result property="project_status" column="project_status"/>
+		<result property="project_color" column="project_color"/>
+		
 	</resultMap>
+	
+	<resultMap type="ProjectSub" id="resultProjectSub">
+		<id property="project_sub_id" column="project_sub_id"/>
+		<result property="project_sub_title" column="project_sub_title"/>
+		<result property="project_sub_std_date" column="project_sub_std_date"/>
+		<result property="project_sub_end_date" column="project_sub_end_date"/>
+		<result property="project_sub_important" column="project_sub_important"/>
+		<result property="project_sub_status" column="project_sub_status"/>
+		<result property="project_id" column="project_id"/>
+	<!-- 	<collection property="projectList" resultMap="resultProject">
+		</collection> -->
+	</resultMap>
+	
+	<resultMap type="ProjectMember" id="resultProjectMember">
+		<id property="project_member_id" column="project_member_id"/>
+		<result property="project_id" column="project_id"/>
+		<result property="project_sub_id" column="project_sub_id"/>
+		<result property="id" column="id"/>
+		<result property="project_member_grade" column="project_member_grade"/>
+		
+	</resultMap>
+
+	
+	
+<!--private String project_sub_id;
+	private String project_sub_title;
+	private String project_sub_std_date;
+	private String project_sub_end_date;
+	private String project_sub_important;
+	private String project_sub_status;
+	private String project_id; -->
 	
 	<!-- 프로젝트 전체 조회 -->
 	<select id="selectList" resultType="arraylist"
@@ -21,12 +54,21 @@
 		SELECT * FROM PROJECT
 	</select>
 	
-		<!-- 게시글 삽입 -->
-	<insert id="insertBoard" parameterType="string"
-		flushCache="true" statementType="PREPARED">
-		INSERT INTO PROJECT VALUES(
-		SEQ_PROJECT.NEXTVAL,
-		#{project_title}, #{project_std_date},#{project_end_date},'중요'
-		)
+		<!-- 프로잭트 삽입 -->
+	<insert id="projectInsert" flushCache="true" statementType="PREPARED" parameterType="Project">
+		insert into project(PROJECT_ID,PROJECT_TITLE,PROJECT_STD_DATE,PROJECT_END_DATE,PROJECT_STATUS,PROJECT_COLOR)
+		values (WEFER_PRJ_SEQ.NEXTVAL,#{project_title},#{project_std_date},#{project_end_date},#{project_status},#{project_color})
+		
+	</insert>
+	<!-- 서브 프로젝트 삽입 -->
+	<insert id="projectSubInsert" flushCache="true" statementType="PREPARED" parameterType="ProjectSub">
+		insert into project_sub(PROJECT_SUB_ID, PROJECT_SUB_TITLE, PROJECT_SUB_STD_DATE, PROJECT_SUB_END_DATE, PROJECT_SUB_IMPORTANT, PROJECT_SUB_STATUS, PROJECT_ID) 
+		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, '진행예정', WEFER_PRJ_SEQ.CURRVAL)
+	</insert>
+
+		<!-- 프로젝트 멤버 삽입 -->
+	<insert id="projectSubMember" flushCache="true" statementType="PREPARED" parameterType="ProjectMember">
+		insert into project_member(PROJECT_MEMBER_ID, PROJECT_ID, PROJECT_SUB_ID, ID, PROJECT_MEMBER_GRADE) 
+		values (WEFER_PRJ_MEMBER_SEQ.NEXTVAL, WEFER_PRJ_SEQ.CURRVAL, WEFER_PRJ_SUB_SEQ.CURRVAL, #{id}, #{project_member_grade})
 	</insert>
 </mapper>

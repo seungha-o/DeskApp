@@ -33,7 +33,7 @@
 	
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/core.css">
+	href="./resources/vendors/styles/core.css?after">
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
@@ -110,7 +110,7 @@
 													<div class="form-group row">
 														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 명</label>
 														<div class="col-sm-12 col-md-10">
-															<input id="project_name" class="form-control project_name" name="project_name" type="text" placeholder="프로젝트 주제를 입력해 주세요">
+															<input id="project_title" class="form-control project_title" name="project_title" type="text" placeholder="프로젝트 주제를 입력해 주세요">
 														</div>
 													</div>
 										
@@ -142,9 +142,32 @@
 													<hr>
 
 													<div class="form-group row">
-														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 역할</label>
+														<label class="col-sm-12 col-md-2 col-form-label">작업 명</label>
 														<div class="col-sm-12 col-md-10">
 															<input id="project_sub_title"  class="form-control project_sub_title" type="text" name="project_sub_title" placeholder="Johnny Brown">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">시작일</label>
+														<div class="col-sm-12 col-md-10">
+															<input id="datepicker3" class="form-control project_std_date" name="project_std_dates" placeholder="Select Date" type="text">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
+														<div class="col-sm-12 col-md-10">
+															<input id="datepicker4"  class="form-control project_end_date" name="project_end_dates" placeholder="Select Date" type="text">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">중요도</label>
+														<div class="col-sm-12 col-md-10">
+															<select id="important" class="custom-select col-12">
+																<option value="" selected="selected">중요도를 골라주세요</option>
+																<option value="높음">높음</option>
+																<option value="낮음">낮음</option>
+																<option value="중간">중간</option>
+															</select>
 														</div>
 													</div>
 
@@ -424,6 +447,7 @@
 	//두개짜리 제어 연결된거 만들어주는 함수
 	datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
 
+	//두번 째 두개짜리 제어 연결된거 만들어주는 함수
 	/*
 	 * 달력 생성기
 	 * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
@@ -434,6 +458,7 @@
 	 * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
 	 * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
 	 */
+
 	function datePickerSet(sDate, eDate, flag) {
 
 		//시작 ~ 종료 2개 짜리 달력 datepicker	
@@ -441,6 +466,7 @@
 				&& eDate.length > 0) {
 			var sDay = sDate.val();
 			var eDay = eDate.val();
+			
 
 			if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
 				var sdp = sDate.datepicker().data("datepicker");
@@ -448,6 +474,8 @@
 
 				var edp = eDate.datepicker().data("datepicker");
 				edp.selectDate(new Date(eDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+				
+				
 			}
 
 			//시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
@@ -464,6 +492,8 @@
 					datePickerSet(sDate, eDate);
 				}
 			});
+			
+			
 
 			//종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
 			if (!isValidStr(sDay)) {
@@ -479,7 +509,7 @@
 					datePickerSet(sDate, eDate);
 				}
 			});
-
+			
 			//한개짜리 달력 datepicker
 		} else if (!isValidStr(sDate)) {
 			var sDay = sDate.val();
@@ -502,7 +532,97 @@
                     return false;
             }
         }
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+		function datePickerSets(sDate2, eDate2, flag) {
+
+			//시작 ~ 종료 2개 짜리 달력 datepicker	
+			if (!isValidStr(sDate2) && !isValidStr(eDate2) && sDate2.length > 0
+					&& eDate2.length > 0) {
+				var sDay2 = sDate2.val();
+				var eDay2 = eDate2.val();
+				var std_date = $("#datepicker1").val();
+				var end_date = $("#datepicker2").val();
+				console.log(std_date);
+				console.log(end_date);
+			
+				
+
+				if (flag && !isValidStr(sDay2) && !isValidStr(eDay2)) { //처음 입력 날짜 설정, update...			
+					var sdp2 = sDate2.datepicker().data("datepicker");
+					sdp2.selectDate(new Date(sDay2.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+					var edp2 = eDate2.datepicker().data("datepicker");
+					edp2.selectDate(new Date(eDay2.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+					
+					
+				}
+
+				//시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+						
+				
+				
+				sDate2.datepicker({
+					language : 'en',
+					dateFormat : 'yyyy-mm-dd',
+					minDate : new Date(std_date.replace(/-/g, "/")),
+					maxDate : new Date(end_date.replace(/-/g, "/")),
+					autoClose : true,
+					onSelect : function() {
+						datePickerSets(sDate2, eDate2);
+					}
+				});
+				
+				
+
+				//종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+				
+					
+					
+						
+				eDate2.datepicker({
+					language : 'en',
+					dateFormat : 'yyyy-mm-dd',
+					minDate : new Date(sDay2.replace(/-/g, "/")),
+					maxDate : new Date(end_date.replace(/-/g, "/")),
+					autoClose : true,
+					onSelect : function() {
+						datePickerSets(sDate2, eDate2);
+					}
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+
+				//한개짜리 달력 datepicker
+			} 
+
+	            function isValidStr(str) {
+	                if (str == null || str == undefined || str == "")
+	                    return true;
+	                else
+	                    return false;
+	            }
+	        }
 	 
+	
 	/*  function choose(a) {
 		 var member_id = this.lastChild;
 		
@@ -513,7 +633,11 @@
 			
 		} */
 		
-
+	$("#datepicker2").focusout(function() {
+		var prj_std = $("#datepicker1").val();
+		var prj_etd = $("#datepicker2").val();
+		datePickerSets($("#datepicker3"), $("#datepicker4"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+	});
 		
 		$(document).on("click",".add-person1", function() {
 			console.log($(this).children(".member_id").val());
@@ -560,7 +684,7 @@
 		});
 		
 /* 		$('#prj-save').click(function() {
-				$('#project_name').val('');
+				$('#project_title').val('');
 				$('#datepicker1').val('');
 				$('#datepicker2').val('');
 				$('#project_sub_title').val('');
@@ -572,7 +696,7 @@
 		});
 		 */
 		$('#prj-clear').click(function() {
-			$('#project_name').val('');
+			$('#project_title').val('');
 			$('#datepicker1').val('');
 			$('#datepicker2').val('');
 			$('#project_sub_title').val('');
@@ -583,35 +707,53 @@
 		
 		
 		 $('#prj-add-person').click(function() {
-			var project_name = $('.project_name').val();
+			var project_title = $('.project_title').val();
 			var project_std_date = $('.project_std_date').val();
 			var project_end_date = $('.project_end_date').val();
 			var project_sub_title = $('.project_sub_title').val();
 			var prj_member_list = $('.prj-member-list').get();
 			var member_id_group = $("input[name=prj_member_id][type=hidden]").get();
+			var project_sub_std_date = $("input[name=project_std_dates][type=text]").val();
+			var project_sub_end_date = $("input[name=project_end_dates][type=text]").val();
+			var important = $("#important option:selected").val();
+			if(important == "" || important == null){
+				alert("중요도를 선택해 주세요")
+			}
+
+			console.log(project_sub_std_date);
+			console.log(project_sub_end_date);
+			
 			
 		
 			
 			
-			if(project_name == ""||project_std_date == ""||project_end_date == ""||project_sub_title == ""||prj_member_list.length == 0){
+			if(project_title == ""||project_std_date == ""||project_end_date == ""||project_sub_title == ""||project_sub_std_date == ""||project_sub_end_date == ""||prj_member_list.length == 0){
 				alert("항목을 모두 입력해 주세요");
 			}else{
 				var i = 0;
-			$('#prj-member-result').append('<div class="prj-sub-group"><div class="prj-sub">'+project_sub_title+'<input type="hidden" name="sub_members" value="'+project_sub_title+'"></div></div>');
+			$('#prj-member-result').append('<div class="prj-sub-group"></div>');
+			$('.prj-sub-group').last().append('<div class="prj-sub">'+project_sub_title+'<input type="hidden" name="project_sub_title" value="'+project_sub_title+'"></div>');
+			
 			for(i = 0; i < prj_member_list.length; i++){
 				var sub_member = $(prj_member_list[i]).text();
 				var sub_members = sub_member.replace(/\x/g,'');
 				var prj_member_id = $(member_id_group[i]).val();
 				
 				
-			$('.prj-sub-group').last().append('<div class="prj-sub-member">'+sub_members+'<input type="hidden" name="prj_members_id" value="'+prj_member_id+'"></div>');
+			$('.prj-sub-group').last().append('<div class="prj-sub-member">'+sub_members+'<input type="hidden" name="id" value="'+prj_member_id+'"></div>');
 				
 			}
+			$('.prj-sub-group').last().append('<div class="prj-sub-dates">'+project_sub_std_date+'<input type="hidden" name="project_sub_std_date" value="'+project_sub_std_date+'"></div>');
+			$('.prj-sub-group').last().append('<div class="prj-sub-dates">'+project_sub_end_date+'<input type="hidden" name="project_sub_end_date" value="'+project_sub_end_date+'"></div>');
+			$('.prj-sub-group').last().append('<div class="importants">'+important+'<input type="hidden" name="project_sub_important" value="'+important+'"></div>');
+			
 			$('.prj-sub-group').last().append('<input type="hidden" name="prj_members_id_count" value="'+i+'"></div>')
 			
-			$('.prj-sub-group').last().app
+			
 			$('.prj-sub-group').last().append('<a class="del-sub-group" href="javascript:void(0);">x</a>');
 			$('#project_sub_title').val('');
+			$('input[name=project_std_dates][type=text]').val('');
+			$('input[name=project_end_dates][type=text]').val('');
 			$('.prj-member-list').remove();
 			}
 			

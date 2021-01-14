@@ -1,5 +1,8 @@
 package com.kh.wefer.project.model.domain;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ProjectReComment {
 //	PROJECT_RECOMMENT_ID      NOT NULL VARCHAR2(2000) 
 //	PROJECT_RECOMMENT_CONTENT          VARCHAR2(2000) 
