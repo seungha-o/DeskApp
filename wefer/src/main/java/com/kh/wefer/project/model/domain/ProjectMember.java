@@ -1,6 +1,14 @@
 package com.kh.wefer.project.model.domain;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
+import com.kh.wefer.member.model.domain.Member;
+import com.oracle.webservices.internal.api.databinding.DatabindingMode;
+
+import lombok.Data;
 
 //CREATE TABLE project_member (
 //	project_member_id	varchar2(2000)	NULL,
@@ -11,7 +19,7 @@ import org.springframework.stereotype.Component;
 //    foreign key(project_sub_id) references project_sub(project_sub_id),
 //    foreign key(project_id) references project(project_id)
 //);
-
+@Data
 @Component
 public class ProjectMember {
 	private String project_member_id;
@@ -20,70 +28,24 @@ public class ProjectMember {
 	private String id;
 	private int project_member_grade;
 	
-	public ProjectMember() {
-		// TODO Auto-generated constructor stub
-	}
+	private String project_title;
+	private Date project_std_date;
+	private Date project_end_date;
+	private String project_status;
+	private String project_color;
+
+	private String project_sub_title;
+	private String project_sub_std_date;
+	private String project_sub_end_date;
+	private String project_sub_important;
+	private String project_sub_status;
+	
+	private Member member;
+	private Project project;
+	private ProjectSub projectSub;
+
 	
 	
 
-	public ProjectMember(String project_member_id, String project_id, String project_sub_id, String id,
-			int project_member_grade) {
-		super();
-		this.project_member_id = project_member_id;
-		this.project_id = project_id;
-		this.project_sub_id = project_sub_id;
-		this.id = id;
-		this.project_member_grade = project_member_grade;
-	}
-
-
-
-	public String getProject_member_id() {
-		return project_member_id;
-	}
-
-	public void setProject_member_id(String project_member_id) {
-		this.project_member_id = project_member_id;
-	}
-
-	public String getProject_id() {
-		return project_id;
-	}
-
-	public void setProject_id(String project_id) {
-		this.project_id = project_id;
-	}
-
-	public String getProject_sub_id() {
-		return project_sub_id;
-	}
-
-	public void setProject_sub_id(String project_sub_id) {
-		this.project_sub_id = project_sub_id;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public int getProject_member_grade() {
-		return project_member_grade;
-	}
-
-	public void setProject_member_grade(int project_member_grade) {
-		this.project_member_grade = project_member_grade;
-	}
-
-	@Override
-	public String toString() {
-		return "ProjectMember [project_member_id=" + project_member_id + ", project_id=" + project_id
-				+ ", project_sub_id=" + project_sub_id + ", id=" + id + ", project_member_grade=" + project_member_grade
-				+ "]";
-	}
-	
 	
 }

@@ -15,10 +15,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ProjectDao pDao;
 
-	@Override
-	public List<Project> selectList() {
-		return pDao.selectList();
-	}
 
 	@Override
 	public void projectInsert(Project p) {
@@ -28,7 +24,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void projectSubInsert(ProjectSub ps) {
-		System.out.println("µé¾î¿Ô´Ù");
+		System.out.println("ï¿½ï¿½ï¿½Ô´ï¿½");
 		pDao.projectSubInsert(ps);
 		
 	}
@@ -37,6 +33,16 @@ public class ProjectServiceImpl implements ProjectService {
 	public void projectSubMember(ProjectMember pm) {
 		pDao.projectSubMember(pm);
 		
+	}
+
+	@Override
+	public List<Project> projectList(ProjectMember pm) {
+		return pDao.projectList(pm);
+	}
+
+	@Override
+	public List<ProjectMember> projectSubList(String project_id) {
+		return pDao.projectSubList(project_id);
 	}
 
 

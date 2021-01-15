@@ -15,9 +15,7 @@ public class ProjectDao {
 
 	@Autowired
 	private SqlSession sqlSession;
-	public List<Project> selectList() {
-		return sqlSession.selectList("Project.selectList");
-	}
+
 	
 	public int projectInsert(Project p) {
 		 return sqlSession.insert("Project.projectInsert", p);
@@ -34,5 +32,15 @@ public class ProjectDao {
 	public int projectSubMember(ProjectMember pm) {
 		return sqlSession.insert("Project.projectSubMember", pm);		
 	}
+
+	public List<Project> projectList(ProjectMember pm) {
+		return sqlSession.selectList("Project.projectList", pm);	
+		
+	}
+
+	public List<ProjectMember> projectSubList(String project_id) {
+		return sqlSession.selectList("Project.projectSubList", project_id);	
+	}
+
 
 }

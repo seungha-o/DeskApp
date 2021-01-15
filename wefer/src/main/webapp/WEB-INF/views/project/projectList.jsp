@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,6 +61,7 @@
 .prj-sub{
 	display: inline;
 	margin-right: 10px;
+	
 }
 </style>
 <title>Insert title here</title>
@@ -263,17 +265,21 @@
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">프로젝트</th>
-									<th scope="col">참여인원</th>
 									<th scope="col">마감일</th>
+									<th scope="col">상태</th>
 									<th scope="col">진행도</th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:if test="${not empty projectLists}">
+								<c:forEach items="${projectLists}" var="pvo" varStatus="s">	
+								
 								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
+									<th scope="row"><div style="width: 10px; height: 30px; background-color:${pvo.project.project_color};"></div></th>
+									<td><a href="#" onclick = "window.location='projectDetail.do?id=${pvo.project.project_id}'">${pvo.project.project_title}</a></td>
+									<td>${pvo.project.project_end_date}</td>
+									<td>${pvo.project.project_status}</td>
+									
 									<td>
 										<div class="progress mb-20">
 											<div
@@ -283,34 +289,13 @@
 										</div>
 									</td>
 								</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${empty projectLists}">	
 								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-									<td>
-										<div class="progress mb-20">
-											<div
-												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-												role="progressbar" style="width: 50%" aria-valuenow="0"
-												aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</td>
+									<td colspan="5"><h2>진행중인 프로젝트가 없습니다.</h2></td>
 								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
-									<td>
-										<div class="progress mb-20">
-											<div
-												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-												role="progressbar" style="width: 50%" aria-valuenow="0"
-												aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</td>
-								</tr>
+							</c:if>
 							</tbody>
 						</table>
 						<div class="collapse-box collapse" id="basic-table">
@@ -352,11 +337,7 @@
 
 				</div>
 			</div>
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a
-					href="https://github.com/dropways" target="_blank">Ankit
-					Hingarajiya</a>
-			</div>
+			
 		</div>
 	</div>
 	<!-- js -->

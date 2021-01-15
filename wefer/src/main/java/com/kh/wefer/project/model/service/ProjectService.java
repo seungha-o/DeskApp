@@ -9,13 +9,17 @@ import com.kh.wefer.project.model.domain.ProjectSub;
 public interface ProjectService {
 
 
-	List<Project> selectList();
+
 
 	void projectInsert(Project p);
 
 	void projectSubInsert(ProjectSub ps);
 
 	void projectSubMember(ProjectMember pm);
+
+	List<Project> projectList(ProjectMember pm);
+
+	List<ProjectMember> projectSubList(String project_id);
 
 
 

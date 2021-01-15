@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +26,25 @@ import com.kh.wefer.project.model.service.ProjectService;
 public class ProjectController {
 	@Autowired
 	private ProjectService pService;
-
+	
+	//프로젝트 리스트 출력
 	@RequestMapping(value = "/projectlist.do", method = RequestMethod.GET)
-	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv) {
-		
+	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv, ProjectMember pm) {
+		String id = "test1";
+		pm.setId(id);
+		List<Project> projectLists = new ArrayList<Project>();
+		projectLists = pService.projectList(pm);
+		System.out.println(projectLists.toString());
+		mv.addObject("projectLists", projectLists);
 		mv.setViewName("project/projectList");
+		return mv;
+	}
+	@RequestMapping(value = "/projectDetail.do", method = RequestMethod.GET)
+	public ModelAndView projectDetail(@RequestParam(name="id", required = false) String project_id, HttpServletRequest request, ModelAndView mv, ProjectMember pm, ProjectSub ps, Project p) {
+		System.out.println(project_id);
+		System.out.println(pService.projectSubList(project_id));
+		mv.addObject("projectSubList", pService.projectSubList(project_id));
+		mv.setViewName("project/projectDetail");
 		return mv;
 	}
 	
@@ -174,10 +189,26 @@ public class ProjectController {
 
 					
 				}
+				
+				String std = project_sub_std_dates2.get(i);
+				String end = project_sub_end_dates2.get(i);
+				Date tempDate = null;
+				Date tempDate2 = null;
+				
+				SimpleDateFormat datetransfer = new SimpleDateFormat("yyyy-mm-dd");
+				tempDate = datetransfer.parse(std);
+				
+				tempDate2 = datetransfer.parse(end);
+				
+				
+				System.out.println("aaa" + tempDate);
+				System.out.println("bbb" + tempDate2);
+				
+				
 				ps.setProject_sub_title(prj_sub_title.get(i));
 				ps.setProject_sub_important(prj_sub_importants.get(i));
-				ps.setProject_sub_std_date(project_sub_std_dates2.get(i));
-				ps.setProject_sub_end_date(project_sub_end_dates2.get(i));
+				ps.setProject_sub_std_date(tempDate);
+				ps.setProject_sub_end_date(tempDate2);
 				ps.setProject_sub_status(prjStatus2);
 				pService.projectSubInsert(ps);
 				

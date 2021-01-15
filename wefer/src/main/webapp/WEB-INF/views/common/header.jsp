@@ -251,21 +251,27 @@
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-house-1"></span><span class="mtext">My Page</span>
+							<span class="micon dw dw-house-1"></span><span class="mtext">마이페이지</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="#" onclick="location.href='/wefer/profile.do'" class="dropdown-toggle">
-							<span class="mtext">내 정보 조회</span>
-								</a>
-							</li>
+							<li><a href="#" onclick="location.href='/wefer/profile.do'">내 정보</a></li>
 							<li><a href="index1.html">내 일정관리</a></li>
 							<li><a href="index2.html">내 근태조회</a></li>
 						</ul>
 					</li>
-					<li class="dropdown">
-						<a href = "#" onclick="location.href='/wefer/approval.do'" class="dropdown-toggle">
-							<span class="micon dw dw-edit2"></span><span class="mtext">전자결재</span>
+					<li>
+						<a href="javascript:;" onclick="location.href='/wefer/approval.do'" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-calendar1"></span><span class="mtext">전자결재</span>
 						</a>
+					</li>
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle" data-option="off">
+							<span class="micon dw dw-list3"></span><span class="mtext">프로젝트</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="#" onclick="location.href='/wefer/projectlist.do'">진행중인 프로젝트</a></li>
+							<li><a href="#">종료된 프로젝트</a></li>
+						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">

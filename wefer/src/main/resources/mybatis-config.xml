@@ -8,6 +8,11 @@
 		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
 		<typeAlias type ="com.kh.wefer.member.model.domain.Dept" alias="Dept"/>
 		<typeAlias type ="com.kh.wefer.project.model.domain.Project" alias="Project"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectComment" alias="ProjectComment"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectDetail" alias="ProjectDetail"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectMember" alias="ProjectMember"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectReComment" alias="ProjectReComment"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectSub" alias="ProjectSub"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment" alias="Payment"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Conference" alias="Conference"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Annual" alias="Annual"/>
@@ -17,6 +22,7 @@
 	</typeAliases>
 	<mappers> <!-- 쿼리문이 있는 xml등록 -->
 		<mapper resource="mapper/member-mapper.xml"/>
+		<mapper resource="mapper/project-mapper.xml"/>
 		<mapper resource="mapper/payment-mapper.xml"/>
 		<mapper resource="mapper/annual-mapper.xml"/>
 	 <mapper resource="mapper/schedule-mapper.xml"/>
