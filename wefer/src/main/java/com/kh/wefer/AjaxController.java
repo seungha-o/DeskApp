@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.kh.wefer.attendance.model.domain.Attendance;
+import com.kh.wefer.attendance.model.service.AttendanceService;
 import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.member.model.service.MemberService;
 
@@ -19,6 +21,8 @@ import com.kh.wefer.member.model.service.MemberService;
 public class AjaxController {
 	@Autowired 
 	private MemberService mService;
+	@Autowired
+	private AttendanceService aService;
 	@ResponseBody
 	@PostMapping("/memeberList")
 	public Object restController() {
@@ -71,4 +75,21 @@ public class AjaxController {
 		System.out.println(list);
 		return list;
 	}
+	
+		@ResponseBody
+		@RequestMapping(value="/searchattendancelist.do")
+		public Object searchattendancelist(
+				@RequestParam(name="startdate" ,defaultValue = "") String startdate,
+				@RequestParam(name="enddate" ,defaultValue = "") String enddate
+				) {
+			
+			List<Attendance> list = new ArrayList<Attendance>();
+			try {
+				list = aService.searchattendancelist(startdate,enddate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println(list);
+			return list;
+		}
 }
