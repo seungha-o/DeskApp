@@ -18,10 +18,10 @@
 	<select id="schedulesList"  resultType="arraylist" resultMap="resultSchedules">
 		SELECT * FROM SCHEDULES
 	</select>
-		<select id="schedulesdeptList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
+	<select id="schedulesDeptList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
 		SELECT * FROM SCHEDULES where dept_no =#{type}
 	</select>
-			<select id="schedulesstList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
+	<select id="schedulesStList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
 		SELECT * FROM SCHEDULES where schedules_status =#{type}
 	</select>
 	

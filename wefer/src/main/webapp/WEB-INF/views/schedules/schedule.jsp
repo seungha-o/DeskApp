@@ -123,16 +123,12 @@ $(function(){
 				<div class="pd-20 card-box mb-30">
 					<div class="calendar-wrap">
 						<div class="radio-wrap">
-<!-- 							<input type="radio" value="회사일정" name="deptName"><label for="dept_com">회사일정</label>&nbsp;&nbsp;
-							<input type="radio" value="인사팀" name="deptName"><label for="dept1">인사팀</label>&nbsp;&nbsp;
-							<input type="radio" value="경영팀" name="deptName"><label for="dept2">경영팀</label>&nbsp;&nbsp; 
-							<input type="radio" value="개발팀" name="deptName"><label for="dept3">개발팀</label>&nbsp;&nbsp;
-							<input type="radio" value="전체" name="deptName"><label for="dept_all">전체일정</label>&nbsp;&nbsp; -->
-							<a href ="schedule.do?type=회사">회사일정</a>&nbsp;&nbsp;
-						    <a href ="schedule.do?type=1">인사팀</a>&nbsp;&nbsp;
-							<a href ="schedule.do?type=2">경영팀</a>&nbsp;&nbsp;
-							<a href ="schedule.do?type=3">개발팀</a>&nbsp;&nbsp;
-							<a href ="schedule.do?type=all">전체일정</a>
+							<br>
+							&nbsp;<a href ="schedule.do?type=회사" style="font-weight: bold;">회사일정</a>&nbsp;&nbsp;
+						    <a href ="schedule.do?type=1" style="font-weight: bold;">인사팀</a>&nbsp;&nbsp;
+							<a href ="schedule.do?type=2" style="font-weight: bold;">경영팀</a>&nbsp;&nbsp;
+							<a href ="schedule.do?type=3" style="font-weight: bold;">개발팀</a>&nbsp;&nbsp;
+							<a href ="schedule.do?type=all" style="font-weight: bold;">전체일정</a>
 						</div>
 						<div id='calendar'></div>
 					</div>
@@ -266,9 +262,9 @@ $(function(){
 				editable: true,
 				// header
 				header: {
-					left: 'title',
-					center: 'month,agendaWeek,agendaDay',
-					right: 'today prev,next'
+					left: '',
+					center: 'prev title next',
+					right: 'today month,agendaWeek,agendaDay'
 				},
 				events: [
 					   <c:forEach var="vo" items="${list}" varStatus="status">

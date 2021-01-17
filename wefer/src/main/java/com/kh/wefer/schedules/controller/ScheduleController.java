@@ -73,30 +73,23 @@ public class ScheduleController {
 
 	// 일정표시
 	@RequestMapping(value = "/schedule.do", method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView mv,@RequestParam(name="type",required = false,defaultValue = "all")String type) {
+	public ModelAndView home(ModelAndView mv,@RequestParam(name="type", required = false, defaultValue = "all")String type) {
 
-		
 		if(type.equals("1")) {
 			type ="1";
-			mv.addObject("list", schdservice.schedulesdeptList(type));
-			
+			mv.addObject("list", schdservice.schedulesDeptList(type));		
 		}else if(type.equals("2")) {
 			type ="2";
-
-			mv.addObject("list", schdservice.schedulesdeptList(type));
-			
+			mv.addObject("list", schdservice.schedulesDeptList(type));		
 		}else if(type.equals("3")) {
 			type ="3";
-
-			mv.addObject("list", schdservice.schedulesdeptList(type));
+			mv.addObject("list", schdservice.schedulesDeptList(type));
 		}else if(type.equals("회사")) {
 			type ="회사";
-			mv.addObject("list", schdservice.schedulesstList(type));
+			mv.addObject("list", schdservice.schedulesStList(type));
 		}else if(type.equals("all")) {
 			mv.addObject("list", schdservice.schedulesList());
-			
 		}
-		
 		mv.setViewName("schedules/schedule");
 		return mv;
 	}

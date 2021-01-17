@@ -5,18 +5,18 @@ import java.util.List;
 import com.kh.wefer.schedules.model.domain.Schedules;
 
 public interface SchedulesService {
-	// ÀÏÁ¤Ãß°¡
+	
+	// ì¼ì •ì¶”ê°€
 	int insertSchedules(Schedules schd);
 	
-	// ÀÏÁ¤¸®½ºÆ®
+	// ì¼ì •ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	List<Schedules> schedulesList();
-	List<Schedules> schedulesstList(String type);
-	List<Schedules> schedulesdeptList(String type);
+	List<Schedules> schedulesStList(String type);
+	List<Schedules> schedulesDeptList(String type);
 
-
-	// ÀÏÁ¤ ¼öÁ¤
+	// ì¼ì •ìˆ˜ì •
 	void updateSchedules(Schedules schd);
 	
-	// ÀÏÁ¤ »èÁ¦
+	// ì¼ì •ì‚­ì œ
 	void deleteSchedules(String scid);
 }

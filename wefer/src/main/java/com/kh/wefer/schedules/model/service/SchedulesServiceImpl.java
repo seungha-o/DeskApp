@@ -33,12 +33,12 @@ public class SchedulesServiceImpl implements SchedulesService {
 		return schdDao.schedulesList();
 	}
 	@Override
-	public List<Schedules> schedulesstList(String type) {
-		return schdDao.schedulesstList(type);
+	public List<Schedules> schedulesStList(String type) {
+		return schdDao.schedulesStList(type);
 	}
 	@Override
-	public List<Schedules> schedulesdeptList(String type) {
-		return schdDao.schedulesdeptList(type);
+	public List<Schedules> schedulesDeptList(String type) {
+		return schdDao.schedulesDeptList(type);
 	}
 	
 

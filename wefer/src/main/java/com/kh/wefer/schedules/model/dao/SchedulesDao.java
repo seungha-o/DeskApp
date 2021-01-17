@@ -19,8 +19,6 @@ public class SchedulesDao {
 		return sqlSession.insert("Schedules.insertSchedules",schd);
 	}
 
-
-	
 	public int updateSchedules(Schedules schd) {
 		return sqlSession.update("Schedules.updateSchedules",schd);
 	}
@@ -33,11 +31,11 @@ public class SchedulesDao {
 		return sqlSession.selectList("Schedules.schedulesList");
 	}
 
-	public List<Schedules> schedulesstList(String type) {
-		return sqlSession.selectList("Schedules.schedulesstList",type);
+	public List<Schedules> schedulesStList(String type) {
+		return sqlSession.selectList("Schedules.schedulesStList",type);
 	}
 
-	public List<Schedules> schedulesdeptList(String type) {
-		return sqlSession.selectList("Schedules.schedulesdeptList",type);
+	public List<Schedules> schedulesDeptList(String type) {
+		return sqlSession.selectList("Schedules.schedulesDeptList",type);
 	}
 }
