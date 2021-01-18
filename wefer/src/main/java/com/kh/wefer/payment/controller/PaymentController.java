@@ -29,8 +29,6 @@ public class PaymentController {
 	private AnnualService aService;
 	@Autowired
 	private PaymentService pmService;
-	@Autowired
-	private Payment_confrimService pcService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -40,7 +38,6 @@ public class PaymentController {
 			my_name.setId((String) session.getAttribute("loginId"));
 			mv.addObject("pmlist", pmService.paymentList(my_name));
 			mv.setViewName("approval/apprlist");
-			//System.out.println(pmService.paymentList(my_name));
 		return mv;
 	}
 
@@ -49,7 +46,7 @@ public class PaymentController {
 		return "approval/apprform";
 	}
 
-	@RequestMapping(value = "/aInsert.do")
+	@RequestMapping("/aInsert.do")
 	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, HttpServletRequest request,
 			@RequestParam(name = "annual_enddate", required = false) String end) {
 		try {

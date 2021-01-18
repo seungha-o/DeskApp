@@ -139,7 +139,11 @@
 								</c:if> <c:if test="${not empty payment_id.s_member_id1}">
 									<div class="card card-box check" style="visibility: visible;">
 										<div class="card-header name">${payment_id.s_member_id1}</div>
-												<input class="card-body" type="checkbox" id="check1" value="1">
+												<div class="card-body" onclick="check1()">
+											<div class="conf" id="check1">
+												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
+											</div>
+										</div>
 									</div>
 								</c:if> <c:if test="${not empty payment_id.s_member_id2}">
 									<div class="card card-box check" style="visibility: visible;">
@@ -207,12 +211,12 @@
 									<label for="content">comment</label>
 									<form name="commentInsertForm">
 										<div class="input-group">
-											<input type="hidden" name="bno" value="${detail.bno}" /> <input
-												type="text" class="form-control" id="content" name="content"
-												placeholder="내용을 입력하세요."> <span
-												class="input-group-btn">
+											<input type="hidden" name="payment_id" value="${payment_id.payment_id}" />
+											 <input type="text" class="form-control" id="contents" name="contents"
+												placeholder="내용을 입력하세요.">
+												 <span class="input-group-btn">
 												<button class="btn btn-default" type="button"
-													name="commentInsertBtn">등록</button>
+													name="commentInsertBtn" >등록</button>
 											</span>
 										</div>
 									</form>
