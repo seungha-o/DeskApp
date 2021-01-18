@@ -34,7 +34,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv, HttpSession session, HttpServletRequest request) {
 		String loginUserName = (String) session.getAttribute("loginId");
 		mv.addObject("loginId", loginUserName);

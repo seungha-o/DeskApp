@@ -75,14 +75,8 @@
 
 		</div>
 		<div class="header-right">
-		<input class="btn btn-success" type="button" value="출근" id = "commute" onclick='change();'>
-			<div class="dashboard-setting user-notification">
-				<div class="dropdown">
-					<a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">
-						<i class="dw dw-settings2"></i>
-					</a>
-				</div>
-			</div>
+		<!-- <input class="btn btn-success" type="button" value="출근" id = "commute" onclick='change();'> -->
+			
 			<div class="user-notification">
 				<div class="dropdown">
 					<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
@@ -238,7 +232,7 @@
 
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="#" onclick="location.href='/wefer/'">
+			<a href="#" onclick="location.href='/wefer/home.do'">
 				<img src="./resources/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
 				<img src="./resources/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
 			</a>

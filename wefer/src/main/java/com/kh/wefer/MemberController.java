@@ -103,7 +103,7 @@ public class MemberController {
 		return "member/sessiontest";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping("/")
 	public String goLogin(Locale locale, Model model) {
 		return "member/login";
 	}
@@ -115,12 +115,12 @@ public class MemberController {
 		try {
 			Member result = mService.login(m);	
 			if(result == null) {
-				mv.setViewName("redirect:login");
+				mv.setViewName("redirect:");
 				
 			}else {
 				session.setAttribute("loginId", result.getId()); 
 				session.setAttribute("dept_no", result.getDept_no()); 
-				mv.setViewName("member/sessiontest");			
+				mv.setViewName("redirect:home.do");			
 			}				
 		}catch (Exception e) {
 		 e.printStackTrace();

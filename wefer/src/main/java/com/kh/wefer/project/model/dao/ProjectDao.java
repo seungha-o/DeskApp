@@ -42,5 +42,38 @@ public class ProjectDao {
 		return sqlSession.selectList("Project.projectSubList", project_id);	
 	}
 
+	public List<ProjectMember> projectSubMemberList(String project_id) {
+		return sqlSession.selectList("Project.projectSubMemberList", project_id);	
+	}
+
+	public int projectDelete(Project p) {
+		return sqlSession.delete("Project.projectDelete", p);
+	}
+
+	public int updateProject(Project p) {
+		System.out.println("´Ù¿À"+p.toString());
+		return sqlSession.update("Project.updateProject", p);
+	}
+
+	public int updateTitleProject(Project p) {
+		return sqlSession.update("Project.updateTitleProject", p);
+	}
+
+	public int projectSubDelete(ProjectSub ps) {
+		return sqlSession.delete("Project.projectSubDelete", ps);
+	}
+
+	public List<Project> projectDate(String project_id) {
+		return sqlSession.selectList("Project.projectDate", project_id);
+	}
+
+	public int projectSubAdd(ProjectSub ps) {
+		return sqlSession.insert("Project.projectSubAdd", ps);
+	}
+
+	public int projectSubAddMember(ProjectMember pm) {
+		return sqlSession.insert("Project.projectSubAddMember", pm);
+	}
+
 
 }

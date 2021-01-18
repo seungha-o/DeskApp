@@ -40,9 +40,9 @@ public class ProjectMember {
 	private String project_sub_important;
 	private String project_sub_status;
 	
-	private Member member;
-	private Project project;
-	private ProjectSub projectSub;
+	private List<Member> members;
+	private List<Project> project;
+
 
 	
 	

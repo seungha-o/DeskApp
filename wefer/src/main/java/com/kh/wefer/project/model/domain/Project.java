@@ -22,6 +22,9 @@ public class Project {
 	private Date project_end_date;
 	private String project_status;
 	private String project_color;
+	private String id;
+	private List<Member> members;
+	private List<ProjectMember> projectMembers;
 
 	
 	

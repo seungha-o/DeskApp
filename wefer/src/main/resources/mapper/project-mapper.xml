@@ -14,6 +14,8 @@
 		<result property="project_end_date" column="project_end_date"/>
 		<result property="project_status" column="project_status"/>
 		<result property="project_color" column="project_color"/>
+		<collection property="projectMembers" resultMap="resultProjectMember" ofType="ProjectMember">
+		</collection>
 		
 	</resultMap>
 	
@@ -24,10 +26,18 @@
 		<result property="project_sub_end_date" column="project_sub_end_date"/>
 		<result property="project_sub_important" column="project_sub_important"/>
 		<result property="project_sub_status" column="project_sub_status"/>
+		<result property="project_color" column="project_color"/>
 		<result property="project_id" column="project_id"/>
-		<collection property="project" resultMap="resultProject">
+		<collection property="project" resultMap="resultProject" ofType="Project">
+		</collection> 
+		<collection property="projectMembers" resultMap="resultProjectMember" ofType="ProjectMember">
+		</collection> 
+		<collection property="members" resultMap="resultMember" ofType="Member">
 		</collection> 
 	</resultMap>
+	
+	
+	
 	
 	<resultMap type="ProjectMember" id="resultProjectMember">
 		<id property="project_member_id" column="project_member_id"/>
@@ -47,12 +57,11 @@
 		<result property="project_sub_end_date" column="project_sub_end_date"/>
 		<result property="project_sub_important" column="project_sub_important"/>
 		<result property="project_sub_status" column="project_sub_status"/>
-		<collection property="project" resultMap="resultProject">
+
+
+		<collection property="members" resultMap="resultMember" ofType="Member">
 		</collection> 
-		<collection property="projectSub" resultMap="resultProjectSub">
-		</collection> 
-		<collection property="member" resultMap="resultMember">
-		</collection> 
+
 		
 	</resultMap>
 	
@@ -87,19 +96,69 @@
 	
 	<!-- 프로젝트 전체 조회 -->
 	<select id="projectList" resultType="arraylist"
-		resultMap="resultProjectMember" parameterType="ProjectMember">
+		resultMap="resultProject" parameterType="Project">
 		select project.* 
 		from project, project_member 
 		where project.project_id = project_member.project_id and project_member.id = #{id}
 	</select>
+	<!-- 프로젝트 삭제 -->
+	<delete id="projectDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="Project">
+		delete from project where project_id = #{project_id}
+	</delete>
+	<!-- 프로젝트 삭제 -->
+	<delete id="projectSubDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="ProjectSub">
+		delete from project_sub where project_sub_id = #{project_sub_id}
+	</delete>
+	
+	<!-- 프로젝트 수정 -->
+	<update id="updateProject" flushCache="true" statementType="PREPARED" timeout="20" parameterType="Project">
+		update project 
+		set project_title = #{project_title},
+		project_std_date = #{project_std_date},
+		project_end_date = #{project_end_date},
+		project_status = #{project_status}
+		where
+		project_id = #{project_id}
+	</update>
+	<!-- 프로젝트 수정 -->
+	<update id="updateTitleProject" flushCache="true" statementType="PREPARED" timeout="20" parameterType="Project">
+		update project 
+		set project_title = #{project_title}
+		where
+		project_id = #{project_id}
+	</update>
 	
 	<!-- 프로젝트 작업 조회 -->
 	<select id="projectSubList" resultType="arraylist"
-		resultMap="resultProjectMember" parameterType="string">
-		select PROJECT_MEMBER.id, project_sub.*, project.project_title, project.project_color, member.name from PROJECT_MEMBER, project_sub, project, member 
-		where PROJECT_MEMBER.project_id = project_sub.project_id and PROJECT_MEMBER.project_id = project.project_id 
-		and project_member.id = member.id and project_sub.project_id = #{project_id} 
+		resultMap="resultProjectSub" parameterType="string">
+		   select 
+		   ps.*, 
+		   pm.id, 
+		   p.project_color, 
+		   m.name 
+		   from project_sub ps, PROJECT_MEMBER pm,  member m, project p 
+		   where ps.project_sub_id = pm.project_sub_id 
+		   and p.project_id  = pm.project_id 
+		   and pm.id = m.id 
+		   and ps.project_id = #{project_id}  
 	</select>
+
+	<!-- 프로젝트 날짜 조회 -->
+	<select id="projectDate" resultType="arraylist"
+		resultMap="resultProject" parameterType="string">
+		   select
+		   project_id, 
+		   project_std_date,
+		   project_end_date
+		   from project
+		   where project_id = #{project_id}  
+	</select>
+
+	<!-- select id="projectSubMemberList" resultType="arraylist"
+		resultMap="resultProjectMember" parameterType="string">
+		select member.name from PROJECT_MEMBER, member, project_sub 
+		where project_member.id = member.id and project_member.project_sub_id = project_sub.project_sub_id and project_sub.project_id = #{project_id} 
+	</select> -->
 		<!-- 프로잭트 삽입 -->
 	<insert id="projectInsert" flushCache="true" statementType="PREPARED" parameterType="Project">
 		insert into project(PROJECT_ID,PROJECT_TITLE,PROJECT_STD_DATE,PROJECT_END_DATE,PROJECT_STATUS,PROJECT_COLOR)
@@ -111,10 +170,22 @@
 		insert into project_sub(PROJECT_SUB_ID, PROJECT_SUB_TITLE, PROJECT_SUB_STD_DATE, PROJECT_SUB_END_DATE, PROJECT_SUB_IMPORTANT, PROJECT_SUB_STATUS, PROJECT_ID) 
 		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, '진행예정', WEFER_PRJ_SEQ.CURRVAL)
 	</insert>
-
+	
 		<!-- 프로젝트 멤버 삽입 -->
 	<insert id="projectSubMember" flushCache="true" statementType="PREPARED" parameterType="ProjectMember">
 		insert into project_member(PROJECT_MEMBER_ID, PROJECT_ID, PROJECT_SUB_ID, ID, PROJECT_MEMBER_GRADE) 
 		values (WEFER_PRJ_MEMBER_SEQ.NEXTVAL, WEFER_PRJ_SEQ.CURRVAL, WEFER_PRJ_SUB_SEQ.CURRVAL, #{id}, #{project_member_grade})
 	</insert>
+	<!-- 서브 프로젝트 추가-->
+	<insert id="projectSubAdd" flushCache="true" statementType="PREPARED" parameterType="ProjectSub">
+		insert into project_sub(PROJECT_SUB_ID, PROJECT_SUB_TITLE, PROJECT_SUB_STD_DATE, PROJECT_SUB_END_DATE, PROJECT_SUB_IMPORTANT, PROJECT_SUB_STATUS, PROJECT_ID) 
+		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, '진행예정', #{project_id})
+	</insert>
+			<!-- 프로젝트 멤버 추가 -->
+	<insert id="projectSubAddMember" flushCache="true" statementType="PREPARED" parameterType="ProjectMember">
+		insert into project_member(PROJECT_MEMBER_ID, PROJECT_ID, PROJECT_SUB_ID, ID, PROJECT_MEMBER_GRADE) 
+		values (WEFER_PRJ_MEMBER_SEQ.NEXTVAL, #{project_id}, WEFER_PRJ_SUB_SEQ.CURRVAL, #{id}, #{project_member_grade})
+	</insert>
+
+
 </mapper>

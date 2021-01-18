@@ -21,6 +21,26 @@ public interface ProjectService {
 
 	List<ProjectMember> projectSubList(String project_id);
 
+	List<ProjectMember> projectSubMemberList(String project_id);
+
+	int projectDelete(Project p);
+
+	int updateProject(Project p);
+
+	int updateTitleProject(Project p);
+
+	int projectSubDelete(ProjectSub ps);
+
+	List<Project> projectDate(String project_id);
+
+	int projectSubAdd(ProjectSub ps);
+
+	int projectSubAddMember(ProjectMember pm);
+
+	int projectSubUpdate(ProjectSub ps);
+
+	int projectSubUpdateInsertMember(ProjectMember pm);
+
 
 
 }

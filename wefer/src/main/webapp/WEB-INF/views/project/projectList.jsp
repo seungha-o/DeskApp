@@ -91,15 +91,14 @@
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix mb-20">
-							
-							<div class="pull-left">
-								<h4 class="text-blue h4">"정현봉"님의 진행중인 프로젝트</h4>
-							</div>
+						<div class="clearfix mb-20">	
 							<div class="pull-right">
 								<a href="#" class="btn-block" data-toggle="modal" data-target="#bd-example-modal-lg" type="button">
 									프로젝트 생성
 								</a>
+								
+								
+								<!-- 프로젝트 생성 모달  -->
 								<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-lg modal-dialog-centered">
 										<div class="modal-content">
@@ -240,7 +239,10 @@
 														<button type="button" id="prj-add-person"
 															name="prj-add-person" class="btn btn-light">추가하기</button>
 													</div>
-													<div id="prj-member-result"></div>
+													<div class="form-group row">
+														<div class="prj-member-result" style="margin-left:135px; "></div>
+												
+													</div>
 												</div>
 												<div class="modal-footer">
 													<input type="button" class="btn btn-secondary" value="닫기" id="prj-clear" name="prj-clear">
@@ -255,50 +257,108 @@
 								
 							</div>
 						</div>
-
-
-						
-						
-						
-						<table class="table">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">프로젝트</th>
-									<th scope="col">마감일</th>
-									<th scope="col">상태</th>
-									<th scope="col">진행도</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:if test="${not empty projectLists}">
-								<c:forEach items="${projectLists}" var="pvo" varStatus="s">	
-								
-								<tr>
-									<th scope="row"><div style="width: 10px; height: 30px; background-color:${pvo.project.project_color};"></div></th>
-									<td><a href="#" onclick = "window.location='projectDetail.do?id=${pvo.project.project_id}'">${pvo.project.project_title}</a></td>
-									<td>${pvo.project.project_end_date}</td>
-									<td>${pvo.project.project_status}</td>
+	
+					
+							<div class="col-mds-8 col-sm-12" style="margin: 0 auto; width: 100% !important;">
+								<div class="blog-list">
+									<ul>
+									<c:if test="${not empty projectLists}">
+										<c:forEach items="${projectLists}" var="pvo" varStatus="s">	
+										<li style="height: 300px;">
+											<div style="height: 100%;" class="row no-gutters">
+												<div onclick = "window.location='projectDetail.do?id=${pvo.project_id}'" class="col-lg-4 col-md-12 col-sm-12" style="background-color:${pvo.project_color};">
+													
+												</div>
+												<div class="col-lg-8 col-sm-12" style="padding-left: 50px; padding-top: 50px; padding-bottom:20px; height: 100%">
+														
+													
+															<h2 onclick = "window.location='projectDetail.do?id=${pvo.project_id}'" id="prj-set-title">${pvo.project_title}</h2>
+															<div style="margin-top: 25px;">${pvo.project_std_date} ~ ${pvo.project_end_date}
+															<input type="hidden" name="p_std" value="${pvo.project_std_date}">
+															<input type="hidden" name="p_end" value="${pvo.project_end_date}">
+															</div>
+															<div style="margin-top: 25px;">${pvo.project_status}</div>
+															
+															<div style="margin-top: 15px;">
+																<div class="progress mb-20" style="width: 300px;">
+																	<div
+																		class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+																		role="progressbar" style="width: 50%;" aria-valuenow="0"s
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+														<div style="margin-top: 10px;  padding-right:30px; float: right;">
+																<input type="hidden" name="prj-id" value="${pvo.project_id}">
+																<button type="button" data-toggle="modal" data-target="#bd-example-modal-lg2" class="btn btn-primary prj-update" style="width:50px; height: 30px; padding: 0; font-size: 14px; font-weight: 500; mar">수정</button>	
+																					
+																<button type="button" class="btn btn-danger prj-del" style="width:50px; height: 30px; padding: 0; margin-right:20px; font-size: 14px; font-weight: 500; float: left;">삭제</button>
+															
+														</div>
+														
+														
+													
+													
+												</div>
+											</div>
+										</li>
 									
-									<td>
-										<div class="progress mb-20">
-											<div
-												class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-												role="progressbar" style="width: 50%" aria-valuenow="0"
-												aria-valuemin="0" aria-valuemax="100"></div>
+									</c:forEach>
+									</c:if>
+									</ul>
+								</div>
+							</div>
+						
+						 <c:if test="${empty projectLists}">	
+								
+							<div><h2>진행중인 프로젝트가 없습니다.</h2></div>
+								
+							</c:if>
+
+						
+						
+						<!-- 프로젝트 수정 모달 -->
+								<div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-lg modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" id="myLargeModalLabel">프로젝트 수정</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+											</div>
+												<form action = "projectUpdate.do" method="post">
+											<div class="modal-body">
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">프로젝트 명</label>
+														<div class="col-sm-12 col-md-10">
+															<input id="project_update_title" class="form-control project_update_title" name="project_update_title" type="text" placeholder="프로젝트 주제를 입력해 주세요">
+															<input type='hidden' name='prj_update_id'>
+														</div>
+													</div>
+										
+	
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">시작일</label>
+														<div class="col-sm-12 col-md-10">
+															<input id="datepicker5" class="form-control project_std_update_date" name="project_std_update_date" placeholder="Select Date" type="text">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-12 col-md-2 col-form-label">종료일</label>
+														<div class="col-sm-12 col-md-10">
+															<input id="datepicker6"  class="form-control project_end_update_date" name="project_end_update_date" placeholder="Select Date" type="text">
+														</div>
+													</div>
+													
+												</div>
+ 												<div class="modal-footer">
+													<button id="prj-update-save" type="submit" class="btn btn-primary">저장하기</button>
+												</div> 
+											</form>
+
 										</div>
-									</td>
-								</tr>
-								</c:forEach>
-							</c:if>
-							<c:if test="${empty projectLists}">	
-								<tr>
-									<td colspan="5"><h2>진행중인 프로젝트가 없습니다.</h2></td>
-								</tr>
-							</c:if>
-							</tbody>
-						</table>
-						<div class="collapse-box collapse" id="basic-table">
+									</div>
+								</div>
+							
+<%-- 						<div class="collapse-box collapse" id="basic-table">
 							<div class="code-box">
 								<div class="clearfix">
 									<a href="javascript:;"
@@ -332,7 +392,7 @@
 								</code>
 								</pre>
 							</div>
-						</div>
+						</div> --%>
 					</div>
 
 				</div>
@@ -427,6 +487,7 @@
 
 	//두개짜리 제어 연결된거 만들어주는 함수
 	datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+	datePickerSet($("#datepicker5"), $("#datepicker6"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
 
 	//두번 째 두개짜리 제어 연결된거 만들어주는 함수
 	/*
@@ -602,6 +663,9 @@
 	                    return false;
 	            }
 	        }
+		
+		
+
 	 
 	
 	/*  function choose(a) {
@@ -701,9 +765,7 @@
 				alert("중요도를 선택해 주세요")
 			}
 
-			console.log(project_sub_std_date);
-			console.log(project_sub_end_date);
-			
+	
 			
 		
 			
@@ -712,7 +774,7 @@
 				alert("항목을 모두 입력해 주세요");
 			}else{
 				var i = 0;
-			$('#prj-member-result').append('<div class="prj-sub-group"></div>');
+			$('.prj-member-result').append('<div class="prj-sub-group"></div>');
 			$('.prj-sub-group').last().append('<div class="prj-sub">'+project_sub_title+'<input type="hidden" name="project_sub_title" value="'+project_sub_title+'"></div>');
 			
 			for(i = 0; i < prj_member_list.length; i++){
@@ -738,7 +800,7 @@
 			$('.prj-member-list').remove();
 			}
 			
-			console.log($("input[type=color]").val());
+		
 		})
 		
 		
@@ -753,8 +815,65 @@
 			
 		})
 		
-	
+
+		$(".prj-del").click(function(){
+			var projectP = $(this).parent();
+			var projectDiv = projectP.find('input[name=prj-id]').val();
+			console.log(projectDiv);
+		    if(confirm("정말 삭제하시겠습니까 ?") == true){
+				$.ajax({
+					url : "${pageContext.request.contextPath}/projectDelete.do",
+					method : "POST",
+					data : {
+						project_id : projectDiv
+					},
+					success : function(data) {
+						alert(data);
+						projectP.parent().parent().parent().remove();
+					},
+					error : function(request, status,
+							error) {
+
+						alert("code:" + request.status
+								+ "\n" + "message:"
+								+ request.responseText
+								+ "\n" + "error:"
+								+ error);
+					}
+				});
+		    }
+		    else{
+		        return ;
+		    }
+		});
+
+		$('.prj-update').click(function() {
+			var projectP = $(this).parent().parent(); 
+			var prj_title = projectP.find('h2').text();
+			var prj_std_date = projectP.find('input[name=p_std]').val();
+			var prj_end_date = projectP.find('input[name=p_end]').val();
+			var prj_status = projectP.find('div[id=prj-set-status]').text();
+			var prj_id = projectP.find('input[name=prj-id]').val();
+			$("#project_update_title").val(prj_title);
+			$("#datepicker5").val(prj_std_date);
+			$("#datepicker6").val(prj_end_date);
+			if($('input[name=prj_update_id]').val() != null){
+				$('input[name=prj_update_id]').val(prj_id)
+							
+			}else{
+				$('input[name=prj_update_id]').val(prj_id)
+			}
+			
+			console.log(prj_title);
+			console.log(prj_status);
+			})
 		
+	
+		/*  $("#prj-add-member").click(function() {
+			
+			
+		});
+		 */
 		
 		
 		

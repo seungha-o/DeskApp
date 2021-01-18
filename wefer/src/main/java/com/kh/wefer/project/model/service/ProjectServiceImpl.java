@@ -45,11 +45,68 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.projectSubList(project_id);
 	}
 
+	@Override
+	public List<ProjectMember> projectSubMemberList(String project_id) {
+		return pDao.projectSubMemberList(project_id);
+	}
 
+	@Override
+	public int projectDelete(Project p) {
+		return pDao.projectDelete(p);
+	}
 
+	@Override
+	public int updateProject(Project p) {
+		return pDao.updateProject(p);
+	}
+
+	@Override
+	public int updateTitleProject(Project p) {
+		return pDao.updateTitleProject(p);
+	}
+
+	@Override
+	public int projectSubDelete(ProjectSub ps) {
+		return pDao.projectSubDelete(ps);
+	}
+
+	@Override
+	public List<Project> projectDate(String project_id) {
+		return pDao.projectDate(project_id);
+	}
+
+	@Override
+	public int projectSubAdd(ProjectSub ps) {
+		return pDao.projectSubAdd(ps);
+	}
+
+	@Override
+	public int projectSubAddMember(ProjectMember pm) {
+		return pDao.projectSubAddMember(pm);
+	}
 
 	
-	
-	
+	//프로젝트 수정부
+	@Override
+	public int projectSubUpdate(ProjectSub ps) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int projectSubUpdateInsertMember(ProjectMember pm) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 }
+
+
+
+
+	
+	
+	
+	
+

@@ -989,6 +989,11 @@ pre code {
     -webkit-box-flex: 0;
     flex: 0 0 66.666667%;
     max-width: 66.666667%; }
+    .col-mds-8 {
+    -ms-flex: 0 0 100%;
+    -webkit-box-flex: 0;
+    flex: 0 0 100%;
+    max-width: 100%; }
   .col-md-9 {
     -ms-flex: 0 0 75%;
     -webkit-box-flex: 0;
