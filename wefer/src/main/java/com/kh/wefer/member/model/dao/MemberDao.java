@@ -54,8 +54,8 @@ public class MemberDao {
 	public int updateProfile(Member m) {
 		return sqlSession.update("Member.updateProfile", m);
 	}
+	//주소록의 사원 연락처 보여주기
 	public Member personerProfileList(Member m) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("Member.personerProfileList", m);
 	}
 	

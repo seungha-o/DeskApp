@@ -109,7 +109,9 @@
 	<!-- Profile 페이지 연락처 조회 -->
 	<select id="ProfileList" resultType="Member"
 		parameterType="string">
-		select * from member where id=#{id}
+		select id, name, decode(dept_no ,1,'인사팀',2, '경영팀',3, '개발팀') 부서명
+ 		,position , email, birth, phone, address  from member where id = #{id}
+		
 	</select>
 	
 

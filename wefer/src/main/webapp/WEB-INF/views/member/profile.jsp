@@ -139,7 +139,7 @@
 											<a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Timeline</a>
 										</li>						
 										<li class="nav-item"> 
-											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 수정을 원하면   Click 해주세요 </a>
+											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 수정  </a>
 										</li>
 									</ul>
 									<div class="tab-content">
