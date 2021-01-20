@@ -303,8 +303,17 @@
 			        console.log('Info: connection opened.');
 			    };
 				// 데이터를 전달 받았을때 
-				sock.onmessage = onMessage;
-
+				
+				sock.onmessage = function (event) {
+				        console.log("ReceiveMessage:", event.data+'\n');
+				        let $socketAlert = $('div#socketAlert');
+				        $socketAlert.html(event.data);
+				        $socketAlert.css('display', 'block');
+				        
+				        setTimeout( function() {
+				        	$socketAlert.css('display', 'none');
+				        }, 3000);
+				    };
 				// 데이터를 보냈을 때
 
 				// 세션에서 이미지 읽기
@@ -355,7 +364,7 @@
 
 	// 실시간 알림 받았을 시
 	function onMessage(evt) {
-		 console.log("ReceiveMessage:", evt.data+'\n');
+		console.log("ReceiveMessage:", evt.data+'\n');
 		var data = evt.data;
 		// toast
 		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
