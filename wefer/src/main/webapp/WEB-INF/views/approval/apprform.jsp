@@ -90,8 +90,9 @@
 									<option value="no">Choose...</option>
 									<option value="반차">반차</option>
 									<option value="월차">월차</option>
-								</select> <input id="ann" class="form-control kind" type="text"
+								</select> <input id="ann" type="text"
 									placeholder="제목을 입력하세요" />
+								 <input type = "hidden" name = "annual_kind" id="k" type="text" placeholder="제목을 입력하세요" />
 							</div>
 						</div>
 						<div id="annDate_one" style="display: none">
@@ -177,11 +178,52 @@
 					</div>
 					<input type="button" id="savebutton"
 						class="pd-20 btn btn-primary btn-lg" style="float: right;"
-						value="결재작성" />
+						value="결재작성" /> 
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	
+	<script type="text/javascript">
+		// 참조자한테 소켓보내기
+		$('#prj-add-project').on('click', function(evt) {
+			evt.preventDefault();
+			if (socket.readyState !== 1)
+				return;
+			let msg = $('input.member_id').val();
+			socket.send(msg);
+		});
+		
+	
+		// notifySend
+		$('#notifySendBtn').click(function(e){
+			let modal = $('.ref').has(e.target);
+			let type = '70';
+			let target = modal.find('.modal-body input').val();
+			//let content = modal.find('.modal-body textarea').val();
+			//let url = '${contextPath}/member/notify.do';
+			// db저장	
+			$.ajax({
+				type: 'post',
+				url: '${contextPath}/notify/saveNotify.do',
+				dataType: 'text',
+				data: {
+					target: target,
+				//	content: content,
+					type: type,
+				//	url: url
+				},
+				success: function(){
+					socket.send("관리자,"+target+);	// 소켓에 전달
+				}
+			});
+			//modal.find('.modal-body textarea').val('');	// textarea 지우기
+		});
+
+	</script>
+
+
 	<script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
@@ -347,10 +389,14 @@
 			var x = document.getElementById("payment_item").value;
 			if (x == "반차") {
 				$(".kind").val("[반차] 휴가신청서입니다.");
+				$("#k").val();
+				$("#k").val("반차");
 				$("#annDate_one").show();
 				$("#annDate_two").hide();
 			} else {
 				$(".kind").val("[월차] 휴가신청서입니다.");
+				$("#k").val();
+				$("#k").val("월차");
 				$("#annDate_one").show();
 				$("#annDate_two").show();
 			}

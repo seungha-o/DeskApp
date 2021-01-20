@@ -20,6 +20,7 @@
 		<typeAlias type ="com.kh.wefer.schedules.model.domain.Schedules" alias="Schedules"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment_confirm" alias="Payment_confirm"/>
 		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment_rep" alias="Payment_rep"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Notify" alias="Notify"/>
 	</typeAliases>
 	<mappers> <!-- 쿼리문이 있는 xml등록 -->
 		<mapper resource="mapper/member-mapper.xml"/>
@@ -30,5 +31,6 @@
 	 <mapper resource="mapper/payment_confirm-mapper.xml"/>
 	 <mapper resource="mapper/attendance-mapper.xml"/>
 	 <mapper resource="mapper/payment_rep-mapper.xml"/>
+	 <mapper resource="mapper/notify-mapper.xml"/>
 	</mappers>
 </configuration>

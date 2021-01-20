@@ -1,6 +1,7 @@
 package com.kh.wefer.payment.controller;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,21 +13,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wefer.HomeController;
 import com.kh.wefer.payment.model.domain.Annual;
+import com.kh.wefer.payment.model.domain.Notify;
 import com.kh.wefer.payment.model.domain.Payment;
 import com.kh.wefer.payment.model.domain.Payment_confirm;
 import com.kh.wefer.payment.model.service.AnnualService;
+import com.kh.wefer.payment.model.service.NotifyService;
 import com.kh.wefer.payment.model.service.PaymentService;
 import com.kh.wefer.payment.model.service.Payment_confrimService;
+
 
 @Controller
 public class PaymentController {
 
 	@Autowired
 	private AnnualService aService;
+	@Autowired
+	private NotifyService ntService;
 	@Autowired
 	private PaymentService pmService;
 	
@@ -71,6 +78,15 @@ public class PaymentController {
 			mv.setViewName("approval/apprdetail");
 			//System.out.println(pmService.paymentDetail(payment_id));
 		return mv;
+	}
+	
+	// notify DB¿˙¿Â
+	@RequestMapping("notify/saveNotify.do")
+	@ResponseBody
+	public void saveNotify(@RequestParam Map<String,String> param) throws Exception {
+		Notify vo = new Notify();
+		vo.setN_target(param.get("target"));
+		ntService.insertNotify(vo);
 	}
 
 }
