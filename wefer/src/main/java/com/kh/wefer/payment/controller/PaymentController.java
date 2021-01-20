@@ -41,9 +41,9 @@ public class PaymentController {
 
 	@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
 	public ModelAndView apprlist(Payment my_name, Locale locale, ModelAndView mv, HttpSession session, HttpServletRequest request) {
-		
 			my_name.setId((String) session.getAttribute("loginId"));
 			mv.addObject("pmlist", pmService.paymentList(my_name));
+			mv.addObject("pmrclist", pmService.paymentReciveList(my_name));
 			mv.setViewName("approval/apprlist");
 		return mv;
 	}

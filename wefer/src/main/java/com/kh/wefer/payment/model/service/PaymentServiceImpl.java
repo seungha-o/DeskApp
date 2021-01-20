@@ -17,6 +17,10 @@ public class PaymentServiceImpl implements PaymentService {
 	public List<Payment> paymentList(Payment my_name) {
 		return pmDao.paymentList(my_name);
 	}
+	@Override
+	public List<Payment> paymentReciveList(Payment my_name) {
+		return pmDao.paymentReciveList(my_name);
+	}
 
 	@Override
 	public Payment paymentDetail(String payment_id) {

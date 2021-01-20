@@ -78,26 +78,22 @@
 				<div class="tab">
 					<ul class="nav nav-pills  centered" role="tablist">
 						<li class="pd-20 card-box">
-							<h5 class="nav-link active " data-toggle="tab" href="#home5"
+							<h5 class="nav-link active " data-toggle="tab" href="#recive"
 								role="tab" aria-selected="true">수신받은 결재</h5>
 						</li>
 						<li class="pd-20 card-box">
-							<h5 class="nav-link " data-toggle="tab" href="#profile5"
+							<h5 class="nav-link " data-toggle="tab" href="#sent"
 								role="tab" aria-selected="false">발신한 결재</h5>
 						</li>
 						<li class="pd-20 card-box">
-							<h5 class="nav-link " data-toggle="tab" href="#contact5"
-								role="tab" aria-selected="false">수신참조된 결재</h5>
-						</li>
-						<li class="pd-20 card-box">
-							<h5 class="nav-link" data-toggle="tab" href="#con5" role="tab"
+							<h5 class="nav-link" data-toggle="tab" href="#all" role="tab"
 								aria-selected="false">모든 결재</h5>
 						</li>
 					</ul>
 
 					<div class="tab-content">
 
-						<div class="tab-pane fade show active" id="home5" role="tabpanel">
+						<div class="tab-pane fade show active" id="recive" role="tabpanel">
 
 							<div class="pd-20 card-box list ">
 								<table class="checkbox-datatable table nowrap">
@@ -115,7 +111,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="vo" items="${pmlist}">
+	<!-- 수신받음 -->					<c:forEach var="vo" items="${pmrclist}"> 
 											<tr>
 												<td>${vo.conference.conference_title}</td>
 												<td>${vo.member.name}</td>
@@ -136,7 +132,45 @@
 							</div>
 						</div>
 
-						<div class="tab-pane fade" id="profile5" role="tabpanel">
+						<div class="tab-pane fade" id="sent" role="tabpanel">
+							<div class="pd-20 card-box list ">
+								<table class="checkbox-datatable table nowrap">
+									<thead>
+										<tr>
+											<th><div class="dt-checkbox">
+													<input type="checkbox" name="select_all" value="1"
+														id="example-select-all"> <span
+														class="dt-checkbox-label"></span>
+												</div></th>
+											<th>Name</th>
+											<th>Office</th>
+											<th>title</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									<tbody>
+	<!-- 내가 발신한거 -->				<c:forEach var="vo" items="${pmlist}">
+											<tr>
+												<td>${vo.conference.conference_title}</td>
+												<td>${vo.member.name}</td>
+												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
+												<td>${vo.payment_status}</td>
+												<c:choose>
+											 	<c:when test="${vo.conference.conference_date == null}">
+													<td>${vo.write_date}</td>
+												</c:when> 
+												<c:otherwise>
+												<td>${vo.conference.conference_date}</td> 
+											</c:otherwise>
+											</c:choose>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+				
+<!-- 전체 -->						<div class="tab-pane fade" id="all" role="tabpanel">
 							<div class="pd-20 card-box list ">
 								<table class="checkbox-datatable table nowrap">
 									<thead>
@@ -168,32 +202,7 @@
 											</c:otherwise>
 											</c:choose>
 											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="contact5" role="tabpanel">
-							<div class="pd-20 card-box list ">
-								<table class="checkbox-datatable table nowrap">
-									<thead>
-										<tr>
-												<td>${vo.conference.conference_title}</td>
-												<td>${vo.member.name}</td>
-												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
-												<td>${vo.payment_status}</td>
-												<c:choose>
-											 	<c:when test="${vo.conference.conference_date == null}">
-													<td>${vo.write_date}</td>
-												</c:when> 
-												<c:otherwise>
-												<td>${vo.conference.conference_date}</td> 
-											</c:otherwise>
-											</c:choose>
-											</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="vo" items="${pmlist}">
+										<c:forEach var="vo" items="${pmrclist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
 												<td>${vo.member.name}</td>
@@ -209,42 +218,6 @@
 											</c:choose>
 											</tr>
 										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="con5" role="tabpanel">
-							<div class="pd-20 card-box list ">
-								<table class="checkbox-datatable table nowrap">
-									<thead>
-										<tr>
-											<th><div class="dt-checkbox">
-													<input type="checkbox" name="select_all" value="1"
-														id="example-select-all"> <span
-														class="dt-checkbox-label"></span>
-												</div></th>
-											<th>Name</th>
-											<th>Office</th>
-											<th>title</th>
-											<th>Date</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="vo" items="${pmlist}">
-											<tr>
-												<td>${vo.conference.conference_title}</td>
-												<td>${vo.member.name}</td>
-												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
-												<td>${vo.payment_status}</td>
-												<c:choose>
-											 	<c:when test="${vo.conference.conference_date == null}">
-													<td>${vo.write_date}</td>
-												</c:when> 
-												<c:otherwise>
-												<td>${vo.conference.conference_date}</td> 
-											</c:otherwise>
-											</c:choose>
-											</tr>
 										</c:forEach>
 									</tbody>
 								</table>

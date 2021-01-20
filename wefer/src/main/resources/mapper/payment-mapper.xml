@@ -22,7 +22,7 @@
 		<result property="annual_enddate" column="annual_enddate" />
 	</resultMap>
 
-<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
+	<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
 		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
 		<id property="id" column="id"></id>
 		<result property="password" column="password" />
@@ -40,15 +40,15 @@
 		<result property="manage" column="manage" />
 		<result property="dept_name" column="dept_name" />
 	</resultMap>
-	
-	<resultMap type="Payment_confirm" id="resultpayment_confirm"> 
-		<id property="payment_confirm_id" column="payment_confirm_id"/>
+
+	<resultMap type="Payment_confirm" id="resultpayment_confirm">
+		<id property="payment_confirm_id" column="payment_confirm_id" />
 		<result property="payment_id" column="annual_id" />
 		<result property="s_member_id0" column="s_member_id0" />
 		<result property="s_member_id1" column="s_member_id1" />
 		<result property="s_member_id2" column="s_member_id2" />
 	</resultMap>
-	
+
 	<resultMap type="Payment" id="resultPayment">
 		<id property="payment_id" column="payment_id"></id>
 		<result property="payment_item" column="payment_item" />
@@ -69,8 +69,7 @@
 		<result property="s_member_id2" column="s_member_id2" />
 		<collection property="Conference"
 			resultMap="resultConference"></collection>
-		<collection property="Member"
-			resultMap="resultMember"></collection>
+		<collection property="Member" resultMap="resultMember"></collection>
 		<collection property="Payment_confirm"
 			resultMap="resultpayment_confirm"></collection>
 
@@ -82,24 +81,53 @@
 		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
 		p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
-		left outer join conference c
+		left outer
+		join conference c
 		on
 		c.conference_id = p.conference_id
-		left outer join annual a
+		left outer join
+		annual a
 		on
 		a.annual_id = p.annual_id
 		left outer join member m
 		on
-		m.id = p.id
+		m.id =
+		p.id
 		where exists (select 1
 		from member
 		where member.id = p.id
-		and member.id =
+		and
+		member.id =
 		#{id}
 		)
 
 	</select>
 
+	<select id="receive-paymentList" resultType="arraylist"
+		parameterType="string" resultMap="resultPayment">
+		select c.conference_title, p.id,
+		p.payment_item,
+		p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id,
+		p.payment_id, p.write_date,m.name
+		from payment p
+		left outer join
+		conference c
+		on
+		c.conference_id = p.conference_id
+		left outer join annual
+		a
+		on
+		a.annual_id = p.annual_id
+		left outer join member m
+		on
+		m.id = p.id
+		where p.payment_id in (select pc.payment_id
+		from payment_confirm pc
+		where pc.S_MEMBER_ID0 = #{id}
+		or pc.S_MEMBER_ID1 =#{id} or pc.S_MEMBER_ID2 =#{id}
+		)
+	</select>
 	<insert id="paymentInsert" parameterType="Payment"
 		flushCache="true" statementType="PREPARED">
 		<selectKey resultType="string" keyProperty="id"
@@ -120,17 +148,19 @@
 	<select id="paymentDetail" parameterType="string"
 		resultMap="resultPayment" resultType="Payment">
 		select * from payment p
-		left outer join conference c
+		left outer
+		join conference c
 		on c.conference_id = p.conference_id
-		left outer join annual a
-		on a.annual_id = p.annual_id 
-        left outer join payment_confirm pc
+		left outer join
+		annual a
+		on a.annual_id = p.annual_id
+		left outer join payment_confirm pc
 		on pc.payment_id = p.payment_id
-        where p.payment_id =  #{payment_id}
+		where p.payment_id = #{payment_id}
 	</select>
-	
-	<select id = "seqPayment" resultType="string">
-	select SEQ_PAYMENT.nextval from dual
+
+	<select id="seqPayment" resultType="string">
+		select SEQ_PAYMENT.nextval from dual
 	</select>
-	
+
 </mapper>
