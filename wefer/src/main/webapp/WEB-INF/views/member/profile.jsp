@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <meta charset="UTF-8">
 <title>ProfileForm</title>
 
@@ -31,12 +32,17 @@
 	href="./resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/style.css">
+	
+<!-- Calendar CSS -->
+<link rel="stylesheet" type="text/css"
+	href="./resources/src/plugins/fullcalendar/fullcalendar.css">
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async
 	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 <script>
+$(function(){
 	window.dataLayer = window.dataLayer || [];
 	function gtag() {
 		dataLayer.push(arguments);
@@ -44,6 +50,43 @@
 	gtag('js', new Date());
 
 	gtag('config', 'UA-119386393-1');
+	
+  document.addEventListener('DOMContentLoaded', function() {
+	 
+    var calendarEl = document.getElementById('calendar');
+	
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid' ],
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+      },
+      locale : "en",
+      //defaultDate: "2019-08-22",
+      navLinks: true, // can click day/week names to navigate views
+      businessHours: true, // display business hours
+      /* editable: false, */
+      editable: true,   
+      eventLimit: false,
+      events: [
+    	  <c:forEach var="vo" items="${list}" varStatus="status">
+		   {	
+			   title : "${vo.annual_content}",
+			   title1:"${vo.annual_content}",
+		  		start : "${vo.annual_stddate}", 
+		  		end : "${vo.annual_enddate}" ,
+		  		content:"${vo.annual_content}",
+				dept:"${vo.annual_kind}",
+				scid:"${vo.annual_id}"
+		  		  },
+		       </c:forEach> 	
+
+      ],eventColor: '#28305c'
+    });
+
+    calendar.render();
+}); 	
+})
 </script>
 </head>
 <style>
@@ -61,11 +104,6 @@
 }
 </style>
 <body>
-
-
-
-
-
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
@@ -150,6 +188,10 @@
 													<div class="timeline-month">
 														<h5>August, 2020</h5>
 													</div>
+													<div class="calendar-wrap">
+														<div id='calendar'></div>
+													</div>
+													
 													<div class="profile-timeline-list">
 														<ul>
 															<li>
@@ -292,6 +334,85 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	$(function() {
+		jQuery(function() {
+			// page is ready
+			jQuery('#calendar').fullCalendar({
+				themeSystem: 'bootstrap4',
+				// emphasizes business hours
+				businessHours: false,
+				defaultView: 'month',
+				// event dragging & resizing
+				editable: true,
+				// 일정표시할 때 시간 보여줄지 말지 결정함.
+				
+				displayEventTime : false,
+				// header
+				header: {
+					left: '',
+					center: 'prev title next',
+					right: 'today month,agendaWeek,agendaDay'
+				},
+				events: [
+					   <c:forEach var="vo" items="${list}" varStatus="status">
+					   {	
+						   title : "${vo.annual_content}",
+						   title1:"${vo.annual_content}",
+					  		start : "${vo.annual_stddate}", 
+					  		end : "${vo.annual_enddate}" ,
+					  		content:"${vo.annual_content}",
+							dept:"${vo.annual_kind}",
+							scid:"${vo.annual_id}"
+					  		  },
+					       </c:forEach>
+			
+				],
+				dayClick: function() {
+					jQuery('#modal-view-event-add').modal();
+
+				},
+				eventClick: function(events, jsEvent, view) {
+					//jQuery('#modal-view-event').modal();
+					var evtt =events.title1;
+					$("#schedules_name").val(evtt);
+					$("#schedules_std_date").val(events.start);
+					$("#schedules_end_date").val(events.end);
+					$("#schedules_content").val(events.content);
+					$("#schedules_color").val(events.className).prop("selected", true);
+					$("#dept_no").val(events.dept).prop("selected", true);
+					$("#scid").val(events.scid);
+					$("#hcid").val(events.scid);
+
+					
+					jQuery('#modal-view-event').modal();
+					$("#schedules_name").val(evtt);
+			/* 		 eventClick: function (event, jsEvent, view) {
+						    editEvent(event);
+						  } */
+				},
+			})
+	});
+              $("#add_schedule").submit(function(){
+            	   var sValue = $("#schedules_std_date").val();
+            	   var eValue = $("#schedules_end_date").val();
+                   $("#schedules_std_date").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
+                   $("#schedules_end_date").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
+              })
+              $("#update_schedule").submit(function(){
+            	   var sValue = $("#schedules_std_date").val();
+            	   var eValue = $("#schedules_end_date").val();
+                   $("#schedules_std_date").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
+                   $("#schedules_end_date").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
+              })
+              
+              // 현재 변경된 데이터 셋팅
+          
+           });
+	
+	</script>
+		<!-- js -->
+
 
 
 	<!-- js -->
@@ -305,6 +426,10 @@
 	<!-- bootstrap-touchspin js -->
 	<script src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
 	<script src="./resources/vendors/scripts/advanced-components.js"></script>
+	<!-- calendar js  -->
+	<script src="./resources/src/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script src="./resources/src/locale/ko.js"></script>
+	
 </body>
 </html>
 

@@ -71,7 +71,7 @@ public class ScheduleController {
 	@Autowired
 	private SchedulesService schdservice;
 
-	// 일정표시
+	// 일정표시(회사,부서)
 	@RequestMapping(value = "/schedule.do", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv,@RequestParam(name="type", required = false, defaultValue = "all")String type) {
 
@@ -93,7 +93,7 @@ public class ScheduleController {
 		mv.setViewName("schedules/schedule");
 		return mv;
 	}
-
+	// 일정삭제(회사,부서)
 	@RequestMapping(value = "/delete_schedule.do")
 	public ModelAndView deleteSchedules(@RequestParam(name = "scid") String scid, ModelAndView mv) {
 
@@ -105,14 +105,14 @@ public class ScheduleController {
 	// 일정수정
 	@RequestMapping(value = "/update_schedule.do", method = RequestMethod.POST)
 	public ModelAndView submitsc2(ModelAndView mv, Schedules schd) {
-
+		System.out.println(schd.getSchedules_std_date()+"+"+schd.getSchedules_end_date());
 		String color = schd.getDept_no();
 
 		if (color.equals("1")) {
 			schd.setSchedules_color("#FF0000");
 			
 		} else if (color.equals("2")) {
-			schd.setSchedules_color("#228B22");
+			schd.setSchedules_color("#33cc59");
 			
 		} else if (color.equals("3")) {
 			schd.setSchedules_color("#0000FF");
@@ -133,7 +133,7 @@ public class ScheduleController {
 			schd.setSchedules_color("#FF0000");
 			
 		} else if (color.equals("2")) {
-			schd.setSchedules_color("#228B22");
+			schd.setSchedules_color("#33cc59");
 			
 		} else if (color.equals("3")) {
 			schd.setSchedules_color("#0000FF");

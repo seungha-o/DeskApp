@@ -7,7 +7,6 @@
 	response.setContentType("text/html; charset=UTF-8");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,10 +90,9 @@
 									<option value="no">Choose...</option>
 									<option value="반차">반차</option>
 									<option value="월차">월차</option>
-								</select> <input id="ann" class="form-control kind" type="text" placeholder="제목을 입력하세요" /> 
-								<input
-									type="hidden" name="annual_kind" id="k" type="text"
+								</select> <input id="ann" type="text"
 									placeholder="제목을 입력하세요" />
+								 <input type = "hidden" name = "annual_kind" id="k" type="text" placeholder="제목을 입력하세요" />
 							</div>
 						</div>
 						<div id="annDate_one" style="display: none">
@@ -172,7 +170,7 @@
 							<div class="fr-box fr-basic fr-top" role="application">
 								<div class="fr-wrapper show-placeholder" dir="auto"
 									style="overflow: scroll;">
-									<textarea name="annual_content"
+									<textarea name="annual_content" id="smartEditor"
 										style="width: 100%; height: 412px;"></textarea>
 								</div>
 							</div>
@@ -190,20 +188,17 @@
 	<script type="text/javascript">
 		// 참조자한테 소켓보내기
 		$('#prj-add-project').on('click', function(evt) {
-			console.log('수신자 클릭하면');
 			evt.preventDefault();
 			if (socket.readyState !== 1)
 				return;
 			let msg = $('input.member_id').val();
 			socket.send(msg);
 		});
-	
+		
 	
 		// notifySend
-		/*$('#prj-add-project').click(function(e){
-			console.log(socket);
+		$('#notifySendBtn').click(function(e){
 			let modal = $('.ref').has(e.target);
-			console.log(modal);
 			let type = '70';
 			let target = modal.find('.modal-body input').val();
 			//let content = modal.find('.modal-body textarea').val();
@@ -220,16 +215,16 @@
 				//	url: url
 				},
 				success: function(){
-					socket.send("관리자,"+target);	// 소켓에 전달
+					socket.send("관리자,"+target+);	// 소켓에 전달
 				}
 			});
 			//modal.find('.modal-body textarea').val('');	// textarea 지우기
-		});*/
+		});
 
 	</script>
 
 
-<!-- 	<script type="text/javascript">
+	<script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors,
@@ -242,16 +237,18 @@
 				bUseModeChanger : false
 			}
 		});
-	</script> -->
+		$(function() {
+			$("#savebutton").click(
+					function() {
+						oEditors.getById["smartEditor"].exec(
+								"UPDATE_CONTENTS_FIELD", []);
+						$("#frm").submit();
+					});
+		})
+	</script>
 
 	<script type="text/javascript">
-		$(function() {
-			$("#savebutton").click(function() {
-				$("#frm").submit();
-			});
-		})
-		$
-				.ajax({
+		$.ajax({
 					url : "${pageContext.request.contextPath}/memeberList",
 					type : "POST",
 					contentType : "application/json; charset=utf-8;",

@@ -22,8 +22,8 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-
- <!--	<beans:bean id="replyEchochoHandler"
+	<!-- 웹소켓 핸들러 
+	<beans:bean id="replyEchochoHandler"
 		class="com.kh.wefer.socket.ReplyEchoHandler" />
 
 	<websocket:handlers>
@@ -34,7 +34,7 @@
 				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>-->
-
+ <!-- websocket -->
     <beans:bean id="echoHandler" class="com.kh.wefer.socket.ReplyEchoHandler" />
     <beans:bean id="chatHandler" class="com.kh.wefer.socket.ReplyEchoHandler" />
  	<websocket:handlers>

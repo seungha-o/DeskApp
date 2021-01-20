@@ -3,6 +3,7 @@ package com.kh.wefer.schedules.model.domain;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,13 +11,16 @@ public class Schedules implements java.io.Serializable {
 	private static final long serialVersionUID = 20001L;
 	private String schedules_id;
 	private String schedules_status;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private String schedules_std_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private String schedules_end_date;
 	private String schedules_name;
 	private String schedules_content;
 	private String schedules_color;
 	private String id;
 	private String dept_no;
+	
 	public String getSchedules_id() {
 		return schedules_id;
 	}
@@ -73,9 +77,5 @@ public class Schedules implements java.io.Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-
-
-	
+	}	
 }

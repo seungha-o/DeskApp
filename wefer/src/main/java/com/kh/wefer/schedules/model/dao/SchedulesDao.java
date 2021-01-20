@@ -1,6 +1,11 @@
 
 package com.kh.wefer.schedules.model.dao;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,6 +21,7 @@ public class SchedulesDao {
 	private SqlSession sqlSession;
 
 	public int insertSchedules(Schedules schd) {
+		
 		return sqlSession.insert("Schedules.insertSchedules",schd);
 	}
 

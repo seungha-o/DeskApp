@@ -23,8 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.wefer.member.model.domain.AnnualSc;
 import com.kh.wefer.member.model.domain.Member;
+import com.kh.wefer.member.model.service.AnnualScService;
+import com.kh.wefer.member.model.service.AnnualScServiceImpl;
 import com.kh.wefer.member.model.service.MemberService;
+import com.kh.wefer.payment.model.service.AnnualService;
+import com.kh.wefer.schedules.model.service.SchedulesService;
 
 @Controller
 public class MemberController {
@@ -32,6 +37,11 @@ public class MemberController {
 	@Autowired
 	private MemberService mService; // impl���ִ� serviceȣ��
 	
+	@Autowired
+	private AnnualScServiceImpl aScService;
+	@Autowired
+	private SchedulesService schdservice;
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 //	@RequestMapping(value = "/profile.do", method = RequestMethod.GET)
@@ -50,6 +60,7 @@ public class MemberController {
 	 public ModelAndView ProfileList( Member m, ModelAndView mv, HttpSession session, HttpServletRequest request)	 {		 
 		  session = request.getSession();
 		  String id = (String) session.getAttribute("loginId");
+			mv.addObject("list",aScService.selectAnnualList(id));
 		 mv.addObject("profileList",mService.profileList(id));
 		 mv.setViewName("member/profile");
 		 return mv;
@@ -158,6 +169,43 @@ public class MemberController {
 	public ModelAndView delete(@RequestParam(name="id") String id,ModelAndView mv) {
 		mService.delete(id);
 		mv.setViewName("redirect:memberlist.do");
+		return mv;
+	}
+	@RequestMapping("/schdmanagement.do")
+	public ModelAndView schdmanagement(ModelAndView mv,HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		mv.addObject("list",aScService.selectAnnualList(id));
+		mv.setViewName("/member/schdmanagement");
+		return mv;
+	}
+	@RequestMapping("/update_scheduleSc.do")
+	public ModelAndView update_scheduleSc(ModelAndView mv,AnnualSc vo) {
+		if(vo.getAnnual_kind().equals("")||vo.getAnnual_kind()==null) {
+			vo.setAnnual_kind("월차");
+		}
+		aScService.updatescheduleSc(vo);
+		mv.setViewName("redirect:schdmanagement.do");
+		return mv;
+	}
+	@RequestMapping("/insert_scheduleSc.do")
+	public ModelAndView insert_scheduleSc(ModelAndView mv,AnnualSc vo,HttpSession session) {
+		if(vo.getAnnual_kind().equals("")||vo.getAnnual_kind()==null) {
+			vo.setAnnual_kind("월차");
+		}
+		String id = (String) session.getAttribute("loginId");
+		vo.setId(id);
+		System.out.println(vo.getAnnual_stddate());
+		System.out.println(vo.getannual_enddate());
+		aScService.insertscheduleSc(vo);
+		mv.setViewName("redirect:schdmanagement.do");
+		return mv;
+	}
+	@RequestMapping("/hi.do")
+	public ModelAndView hi(ModelAndView mv,AnnualSc vo,HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		mv.addObject("list",aScService.selectAnnualList(id));
+		mv.addObject("list2",schdservice.schedulesList());
+		mv.setViewName("/member/hi");
 		return mv;
 	}
 	
