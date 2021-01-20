@@ -7,6 +7,7 @@
 	response.setContentType("text/html; charset=UTF-8");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -188,17 +189,20 @@
 	<script type="text/javascript">
 		// 참조자한테 소켓보내기
 		$('#prj-add-project').on('click', function(evt) {
+			console.log('수신자 클릭하면');
 			evt.preventDefault();
 			if (socket.readyState !== 1)
 				return;
 			let msg = $('input.member_id').val();
 			socket.send(msg);
 		});
-		
+	
 	
 		// notifySend
-		$('#notifySendBtn').click(function(e){
+		/*$('#prj-add-project').click(function(e){
+			console.log(socket);
 			let modal = $('.ref').has(e.target);
+			console.log(modal);
 			let type = '70';
 			let target = modal.find('.modal-body input').val();
 			//let content = modal.find('.modal-body textarea').val();
@@ -215,11 +219,11 @@
 				//	url: url
 				},
 				success: function(){
-					socket.send("관리자,"+target+);	// 소켓에 전달
+					socket.send("관리자,"+target);	// 소켓에 전달
 				}
 			});
 			//modal.find('.modal-body textarea').val('');	// textarea 지우기
-		});
+		});*/
 
 	</script>
 

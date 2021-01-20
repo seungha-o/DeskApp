@@ -298,7 +298,10 @@
 			function() {
 				sock = new SockJS("<c:url value="/echo-ws"/>");
 				socket = sock;
-
+				//연결
+				sock.onopen = function () {
+			        console.log('Info: connection opened.');
+			    };
 				// 데이터를 전달 받았을때 
 				sock.onmessage = onMessage;
 
@@ -352,6 +355,7 @@
 
 	// 실시간 알림 받았을 시
 	function onMessage(evt) {
+		 console.log("ReceiveMessage:", evt.data+'\n');
 		var data = evt.data;
 		// toast
 		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
