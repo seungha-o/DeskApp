@@ -6,6 +6,9 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+
+import lombok.Data;
+@Data
 @Component
 public class Member implements java.io.Serializable {
 	private static final long serialVersionUID = 20001L;

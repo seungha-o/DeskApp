@@ -25,4 +25,9 @@ public interface MemberService {
 
 	Member personerProfileList(Member m);
 
+
+	List<Member> pwCheck(Member m);
+
+	void updatePw(Member m);
+
 }

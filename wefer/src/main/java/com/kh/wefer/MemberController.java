@@ -1,6 +1,7 @@
 package com.kh.wefer;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -58,11 +60,17 @@ public class MemberController {
 	//Profile 화면
 	 @RequestMapping(value ="/profile.do", method = RequestMethod.GET)
 	 public ModelAndView ProfileList( Member m, ModelAndView mv, HttpSession session, HttpServletRequest request)	 {		 
-		  session = request.getSession();
-		  String id = (String) session.getAttribute("loginId");
-			mv.addObject("list",aScService.selectAnnualList(id));
-		 mv.addObject("profileList",mService.profileList(id));
-		 mv.setViewName("member/profile");
+		 if(session == null) {
+			 session = request.getSession();		 
+			 String id = (String) session.getAttribute("loginId");
+			 mv.addObject("profileList",mService.profileList(id));
+			 mv.setViewName("member/profile");
+		 }else {
+			 String id = (String) session.getAttribute("loginId");
+			 mv.addObject("profileList",mService.profileList(id));
+			 mv.setViewName("member/profile");
+			 
+		 }
 		 return mv;
 	  }
 	 // 주소록 사원 프로필정보 보여주기
@@ -85,6 +93,55 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		 return mv;
+	 }
+	 //pw 변경
+	 @RequestMapping(value = "/UpdatePwProfile.do", method = RequestMethod.POST)
+	 public ModelAndView UpdatePwProfile(Member m, ModelAndView mv,HttpServletRequest request, 
+			 @RequestParam(name="id") String id, @RequestParam(name="passwordck") String passwordck,
+			 @RequestParam(name="password") String password, HttpServletResponse response, HttpSession session)	 {	
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
+		 String sessionId = (String) session.getAttribute("loginId");
+		 System.out.println(sessionId);
+		 System.out.println(passwordck);
+		 System.out.println(password);
+		 PrintWriter out = null;	
+		 m.setId(sessionId);
+		 m.setPassword(passwordck);
+		 List<Member> pw = new ArrayList<Member>();
+		 pw = mService.pwCheck(m);
+				 
+		 if(pw.size()>0) {
+			 if(passwordck.equals(pw.get(0).getPassword())) {
+				 m.setPassword(password);
+				 mService.updatePw(m);
+				
+				 mv.setViewName("redirect:profile.do");
+			 }else {
+				  System.out.println("비번다름");
+				  	try {
+						out = response.getWriter();
+						out.append("<script>alert('비밀번호가 틀립니다.');location.href='profile.do'</script>");
+						out.flush();
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}			
+			 } 
+		 }else {
+			 try {
+				 System.out.println("비번 못가져옴");
+				out = response.getWriter();
+				out.append("<script>alert('비밀번호가 틀립니다.');location.href='profile.do'</script>");
+				out.flush();
+				out.close();
+			 } catch (IOException e) {
+				e.printStackTrace();
+			}
+			 
+		 }
 		 return mv;
 	 }
 //	//Profile 화면에서 본인이 수정  ajax안씀 

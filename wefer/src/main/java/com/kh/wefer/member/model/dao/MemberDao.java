@@ -58,7 +58,13 @@ public class MemberDao {
 	public Member personerProfileList(Member m) {
 		return sqlSession.selectOne("Member.personerProfileList", m);
 	}
-	
-		
+	// pw 변경
+	public int updatePw(Member m) {	
+		return sqlSession.update("Member.updatePw" ,m);	
+	}
+	// pw 체크
+	public List<Member> pwCheck(Member m) { 
+		return sqlSession.selectList("Member.pwCheck" ,m);	
+	}
 	
 }

@@ -109,12 +109,10 @@
 	<!-- Profile 페이지 연락처 조회 -->
 	<select id="ProfileList" resultType="Member"
 		parameterType="string">
-		select id, name, decode(dept_no ,1,'인사팀',2, '경영팀',3, '개발팀') 부서명
+		select id, name, decode(dept_no ,1,'인사팀',2, '경영팀',3, '개발팀') as dept_name
  		,position , email, birth, phone, address  from member where id = #{id}
 		
 	</select>
-	
-
 	
 	<!-- Profile 페이지 연락처 정보 수정 -->
 	<update id="updateProfile" parameterType="Member" flushCache="true" statementType="PREPARED">
@@ -127,4 +125,21 @@
 	AND 
 	password=#{password}
 	</update>
+	
+	<!-- Profile password 변경 -->
+	<update id="updatePw" parameterType="Member" flushCache="true" statementType="PREPARED">
+	UPDATE Member SET 
+	password=#{password}
+	WHERE 
+	id=#{id} 
+	
+	</update>
+	
+	<select id="pwCheck" parameterType="Member" resultType="arraylist" resultMap="resultMember">
+	select password 
+	from member 
+	where id=#{id} 
+	and password=#{password}
+	</select>
+	
 </mapper>

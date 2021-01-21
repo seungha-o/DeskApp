@@ -145,7 +145,7 @@ $(function(){
 									</div>
 								</div>
 							</div>
-							<h5 class="text-center h5 mb-0">"${profileList.name}"</h5>
+							<h5 class="text-center h5 mb-0">${profileList.name}</h5>
 							<p class="text-center text-muted font-14">Lorem ipsum dolor sit amet</p>
 							<div class="profile-info">
 								<h5 class="mb-20 h5 text-blue">연락처 정보</h5>
@@ -153,15 +153,15 @@ $(function(){
 								
 									<li>
 										<span>Email 주소:</span>
-										"${profileList.email}"
+										${profileList.email}
 									</li>
 									<li>
 										<span>핸드폰 번호:</span>
-										"${profileList.phone}"
+										${profileList.phone}
 									</li>
 									<li>
 										<span>주소:</span>										
-										"${profileList.address}"
+										${profileList.address}
 									</li>
 							
 								</ul>
@@ -178,6 +178,9 @@ $(function(){
 										</li>						
 										<li class="nav-item"> 
 											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">사원 개인 정보 수정  </a>
+										</li>
+										<li class="nav-item"> 
+											<a class="nav-link" data-toggle="tab" href="#modify" role="tab">비밀번호 변경   </a>
 										</li>
 									</ul>
 									<div class="tab-content">
@@ -286,7 +289,7 @@ $(function(){
 															</div>
 															<div class="form-group">
 																<label>부서명</label>
-																<input class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.dept_no}">
+																<input class="form-control form-control-lg" type="text" readonly="readonly" value ="${profileList.dept_name}">
 															</div>
 															<div class="form-group">
 																<label>직책</label>
@@ -296,10 +299,7 @@ $(function(){
 																<label>Email</label>
 																<input name="email" class="form-control form-control-lg" type="email" value ="${profileList.email}">
 															</div>
-															<div class="form-group">
-																<label>생년월일</label>
-																<input class="form-control form-control-lg date-picker" type="text" readonly="readonly" value ="${profileList.birth}">
-															</div>													
+																										
 															<div class="form-group">
 																<label>핸드폰 번호</label>
 																<input name="phone" class="form-control form-control-lg" type="text" value ="${profileList.phone}">
@@ -322,6 +322,35 @@ $(function(){
 											</div>
 										</div>
 										<!-- Setting Tab End -->
+										
+										<!-- password Modify Tab start-->										
+										<div class="tab-pane fade height-100-p" id="modify" role="tabpanel">
+											<div class="profile-setting">
+												<form name ="passModiForm" id ="frm" action ="UpdatePwProfile.do" method = "post">
+													<ul class="profile-edit-list row">
+														<li class="weight-500 col-md-6">
+															<h4 class="text-blue h5 mb-20">비밀번호 변경 </h4>
+														
+															<input name="id" class="form-control form-control-lg" type="hidden" value ="${profileList.id}">				
+															
+															<div class="form-group">
+																<label>기존 비밀번호 </label>
+																<input name="passwordck" class="form-control form-control-lg" type="password" placeholder="기존 비밀번호">
+															</div>
+															<div class="form-group">
+																<label>새로운 비밀번호 </label>
+																<input name="password" class="form-control form-control-lg" type="password" placeholder="새로운 비밀번호">
+															</div>
+															<div class="form-group mb-0">
+																<input type="submit" class="btn btn-primary" value="비밀번호 변경">
+															</div>
+														</li>
+													</ul>
+												</form>
+											</div>
+										</div>
+										<!-- password Modify  Tab End -->
+																													
 									</div>
 								</div>
 							</div>
