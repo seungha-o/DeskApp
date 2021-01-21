@@ -101,7 +101,6 @@ public class ScheduleController {
 		mv.setViewName("redirect:schedule.do");
 		return mv;
 	}
-
 	// 일정수정
 	@RequestMapping(value = "/update_schedule.do", method = RequestMethod.POST)
 	public ModelAndView submitsc2(ModelAndView mv, Schedules schd) {
@@ -116,6 +115,10 @@ public class ScheduleController {
 			
 		} else if (color.equals("3")) {
 			schd.setSchedules_color("#0000FF");
+		}
+		
+		if(schd.getSchedules_status().equals("회사")) {
+			schd.setSchedules_color("#FFBF00");
 		}
 		schdservice.updateSchedules(schd);
 
@@ -137,6 +140,11 @@ public class ScheduleController {
 			
 		} else if (color.equals("3")) {
 			schd.setSchedules_color("#0000FF");
+		}
+		
+		if(schd.getSchedules_status().equals("회사")) {
+			schd.setSchedules_color("#FFBF00");
+			schd.setDept_no("0");
 		}
 		schdservice.insertSchedules(schd);
 

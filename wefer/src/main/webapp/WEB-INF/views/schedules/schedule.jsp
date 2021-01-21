@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -12,14 +12,27 @@
 <!-- Basic Page Info -->
 <meta charset="utf-8">
 <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
-<!-- <style>
-.fc-event-time{
-   display : none;
+<style>
+.fc-event-time {
+	display: none;
 }
-.fc-time{
-   display : none;
+
+.fc-time {
+	display: none;
 }
-</style> -->
+
+.fc td, .fc th {
+	border-style: none;
+}
+
+.portlet.calendar .fc-event {
+	border: 15px solid red;
+}
+
+.fc-event {
+	border-width: 15px;
+}
+</style>
 
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
@@ -40,60 +53,17 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/core.css">
-<link rel="stylesheet" type="text/css" href="./resources/vendors/styles/icon-font.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/src/plugins/fullcalendar/fullcalendar.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/style.css">
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+<script async
+	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 
-<script>
-$(function(){
-	window.dataLayer = window.dataLayer || [];
-	function gtag() {
-		dataLayer.push(arguments);
-	}
-	gtag('js', new Date());
-
-	gtag('config', 'UA-119386393-1');
-	
-  document.addEventListener('DOMContentLoaded', function() {
-	 
-    var calendarEl = document.getElementById('calendar');
-	
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid' ],
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-      },
-      locale : "en",
-      //defaultDate: "2019-08-22",
-      navLinks: true, // can click day/week names to navigate views
-      businessHours: true, // display business hours
-      /* editable: false, */
-      editable: false,   
-      eventLimit: false,
-      events: [
-
-     <c:forEach var="vo" items="${list}" varStatus="status">
- {	
-		   title : "${vo.schedules_name}",
-		   backgroundColor :"",
-		   start : "${vo.schedules_std_date}",
-		   end : "${vo.schedules_end_date}",
-		   
-		   },
-     </c:forEach>
-      ],eventColor: '#28305c'
-    });
-
-    calendar.render();
-}); 	
-})
-</script>
 
 </head>
 <body>
@@ -118,42 +88,40 @@ $(function(){
 				</div>
 				<div class="pd-20 card-box mb-30">
 					<div class="calendar-wrap">
-					<table class="tb">
-						<tr>
-							<th>
-								<div style="width: 10px; height: 20px; background-color:#E6E6E6;"></div>
-							</th>
-							<td>	
-								<a href ="schedule.do?type=all" style="font-weight: bold; margin:10px">전체일정</a>&nbsp;&nbsp;
-							</td>
-							<th>
-								<div style="width: 10px; height: 20px; background-color:#FFBF00;"></div>
-							</th>
-							<td>
-								<a href ="schedule.do?type=회사" style="font-weight: bold; margin:10px">회사일정</a>&nbsp;&nbsp;
-							</td>
-							
-							<th>
-								<div style="width: 10px; height: 20px; background-color:#FF0000;">
-								</div>
-							</th>
-							<td>    
-							    <a href ="schedule.do?type=1" style="font-weight: bold; margin:10px">인사팀</a>&nbsp;&nbsp;
-							</td>
-							<th>
-								<div style="width: 10px; height: 20px; background-color:#33cc59;"></div>
-							</th>
-							<td>    
-								<a href ="schedule.do?type=2" style="font-weight: bold; margin:10px">경영팀</a>&nbsp;&nbsp;
-							</td>
-							<th>
-								<div style="width: 10px; height: 20px; background-color:#0000FF;"></div>
-							</th>
-							<td>	
-								<a href ="schedule.do?type=3" style="font-weight: bold; margin:10px">개발팀</a>&nbsp;&nbsp;
-							</td>
-						</tr>
-					</table>
+						<table class="tb">
+							<tr>
+								<th>
+									<div
+										style="width: 10px; height: 20px; background-color: #E6E6E6;"></div>
+								</th>
+								<td><a href="schedule.do?type=all"
+									style="font-weight: bold; margin: 10px">전체일정</a>&nbsp;&nbsp;</td>
+								<th>
+									<div
+										style="width: 10px; height: 20px; background-color: #FFBF00;"></div>
+								</th>
+								<td><a href="schedule.do?type=회사"
+									style="font-weight: bold; margin: 10px">회사일정</a>&nbsp;&nbsp;</td>
+								<th>
+									<div
+										style="width: 10px; height: 20px; background-color: #FF0000;"></div>
+								</th>
+								<td><a href="schedule.do?type=1"
+									style="font-weight: bold; margin: 10px">인사팀</a>&nbsp;&nbsp;</td>
+								<th>
+									<div
+										style="width: 10px; height: 20px; background-color: #33cc59;"></div>
+								</th>
+								<td><a href="schedule.do?type=2"
+									style="font-weight: bold; margin: 10px">경영팀</a>&nbsp;&nbsp;</td>
+								<th>
+									<div
+										style="width: 10px; height: 20px; background-color: #0000FF;"></div>
+								</th>
+								<td><a href="schedule.do?type=3"
+									style="font-weight: bold; margin: 10px">개발팀</a>&nbsp;&nbsp;</td>
+							</tr>
+						</table>
 						<div id='calendar'></div>
 					</div>
 					<!--일정수정 -->
@@ -175,11 +143,13 @@ $(function(){
 												name="schedules_name" id="schedules_name">
 										</div>
 										<div class="form-group">
-											<label>시작일</label> <input type='text' class="datetimepicker form-control" id="schedules_std_date"
+											<label>시작일</label> <input type='text'
+												class="datetimepicker form-control" id="schedules_std_date"
 												name="schedules_std_date" autocomplete="off">
 										</div>
 										<div class="form-group">
-											<label>종료일</label> <input type='text' class="datetimepicker form-control" id="schedules_end_date"
+											<label>종료일</label> <input type='text'
+												class="datetimepicker form-control" id="schedules_end_date"
 												name="schedules_end_date" autocomplete="off">
 										</div>
 										<div class="form-group">
@@ -188,14 +158,14 @@ $(function(){
 												id="schedules_content"></textarea>
 										</div>
 										<div class="form-group">
-											<label>부서명</label> <select class="form-control"
-												name="dept_no" id="dept_no">
-												<option value="1">인사팀</option>
-												<option value="2">경영팀</option>
-												<option value="3">개발팀</option>
+											<label>일정 구분</label> <select class="form-control"
+												required="required" name="schedules_status">
+												<c:if test="${position eq '부장'&&dept_no eq '1'}">
+													<option value="회사">회사</option>
+												</c:if>
+												<option value="부서" selected="selected">부서</option>
 											</select>
 										</div>
-
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary">저장</button>
 											<input type="hidden" id="hcid" name="scid">
@@ -205,11 +175,10 @@ $(function(){
 										</div>
 									</div>
 								</form>
-
 							</div>
 						</div>
 					</div>
-<!------------------------------------------------------------------------------------------------------------------------------------------------>
+					<!------------------------------------------------------------------------------------------------------------------------------------------------>
 					<!-- 일정 추가 모달 -->
 					<div id="modal-view-event-add"
 						class="modal modal-top fade calendar-modal">
@@ -222,19 +191,18 @@ $(function(){
 										<input type="hidden" name="schedules_id" value="0"> <input
 											type="hidden" name="id" class="rid" value="test1">
 										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
-										<input type="text" name="schedules_status" value="회사">
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
 												name="schedules_name">
 										</div>
 										<div class="form-group">
 											<label>시작일</label> <input type='text'
-												class="datetimepicker form-control" id="schedules_std_date"
+												class="datetimepicker form-control" id="schedules_std_date1"
 												name="schedules_std_date" autocomplete="off">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text'
-												class="datetimepicker form-control" id="schedules_end_date"
+												class="datetimepicker form-control" id="schedules_end_date1"
 												name="schedules_end_date" autocomplete="off">
 										</div>
 										<div class="form-group">
@@ -242,15 +210,19 @@ $(function(){
 											<textarea class="form-control" name="schedules_content"></textarea>
 										</div>
 										<div class="form-group">
-											<label>부서명</label> <select class="form-control"
-												name="dept_no">
-												<option value="1">인사팀</option>
-												<option value="2">경영팀</option>
-												<option value="3">개발팀</option>
-											</select>
+											<input type="text" name="dept_no" id="dept">
 										</div>
 										<div class="form-group">
 											<input type="hidden" value="color" name="schedules_color">
+										</div>
+										<div class="form-group">
+											<label>일정 구분</label> <select class="form-control"
+												required="required" name="schedules_status">
+												<c:if test="${position eq '부장'&&dept_no eq '1'}">
+													<option value="회사">회사</option>
+												</c:if>
+												<option value="부서" selected="selected">부서</option>
+											</select>
 										</div>
 										<div class="modal-footer">
 											<button type="submit" class="btn btn-primary">저장</button>
@@ -270,14 +242,34 @@ $(function(){
 
 	<!-- js -->
 	<script>
+	
+	$(function(){
+	
+		$("#dept").val("${dept_no}");
+		
+	})
+	
+	
+	
+
+
 	$(function() {
 		jQuery(function() {
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-119386393-1');
 			// page is ready
 			jQuery('#calendar').fullCalendar({
 				themeSystem: 'bootstrap4',
 				// emphasizes business hours
 				businessHours: false,
 				defaultView: 'month',
+			      plugins: [ 'interaction', 'dayGrid' ],
+
 				/* // event dragging & resizing */
 				editable: false,
 				// 일정표시할 때 시간 보여줄지 말지 결정함.
@@ -289,6 +281,7 @@ $(function(){
 					center: 'prev title next',
 					right: 'today month,agendaWeek,agendaDay'
 				},
+				
 				events: [
 					   <c:forEach var="vo" items="${list}" varStatus="status">
 					   {	
@@ -298,39 +291,61 @@ $(function(){
 					  		className:"${vo.schedules_color}",
 					  		content:"${vo.schedules_content}",
 							backgroundColor : "${vo.schedules_color}",
+							borderColor:'white',
 							dept:"${vo.dept_no}",
 							scid:"${vo.schedules_id}"
 					  		  },
 					       </c:forEach>
-					  		  
-			
 				],
-				dayClick: function() {
-					jQuery('#modal-view-event-add').modal();
-
+				dayClick: function(date,jsEvent, view) {			
+					$.ajax({
+						url:"/wefer/checkuserid.do",
+						data:{"id":"${loginId}","dept":"${dept_no}"},
+						success:function(res){
+							if(res==1){
+								jQuery('#modal-view-event-add').modal();
+			                    var yyyy=date.format("YYYY-MM-DD HH:mm");
+								$("#schedules_std_date1").val(yyyy);	
+							}else{
+								alert("등록은 부장직급만 가능합니다");
+							}
+						}
+					})
 				},
 				eventClick: function(events, jsEvent, view) {
-					//jQuery('#modal-view-event').modal();
-					var evtt =events.title;
-					$("#schedules_name").val(evtt);
-					$("#schedules_std_date").val(events.start);
-					$("#schedules_end_date").val(events.end);
-					$("#schedules_content").val(events.content);
-					$("#schedules_color").val(events.className).prop("selected", true);
-					$("#dept_no").val(events.dept).prop("selected", true);
-					$("#scid").val(events.scid);
-					$("#hcid").val(events.scid);
+					$.ajax({
+						url:"/wefer/checkuserid2.do",
+						data:{"id":"${loginId}","dept":"${dept_no}","dept2":events.dept},
+						success:function(res){
+							if(res==1){
+								var evtt =events.title;
+								$("#schedules_name").val(evtt);
+								$("#schedules_std_date").val(events.start);
+								$("#schedules_end_date").val(events.end);
+								$("#schedules_content").val(events.content);
+								$("#schedules_color").val(events.className).prop("selected", true);
+								$("#dept_no").val(events.dept).prop("selected", true);
+								$("#scid").val(events.scid);
+								$("#hcid").val(events.scid);
 
-					jQuery('#modal-view-event').modal();
-					$("#schedules_name").val(evtt);
+								jQuery('#modal-view-event').modal();
+								$("#schedules_name").val(evtt);
+							}else{
+								
+								alert("일정수정은 해당 부서의 부장직급만 가능합니다");
+							}
+						}
+					})
+					
+					//jQuery('#modal-view-event').modal();	
 				},
 			})
 	});
                $("#add_schedule").submit(function(){
-            	   var sValue = $("#schedules_std_date").val();
-            	   var eValue = $("#schedules_end_date").val();
-                   $("#schedules_std_date").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
-                   $("#schedules_end_date").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
+            	   var sValue = $("#schedules_std_date1").val();
+            	   var eValue = $("#schedules_end_date1").val();
+                   $("#schedules_std_date1").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
+                   $("#schedules_end_date1").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
               })
               $("#update_schedule").submit(function(){
             	   var sValue = $("#schedules_std_date").val();

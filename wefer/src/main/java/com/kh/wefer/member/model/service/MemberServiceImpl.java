@@ -1,5 +1,6 @@
 package com.kh.wefer.member.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member personerProfileList(Member m) {
 		return mDao.personerProfileList(m);
+	}
+	@Override
+	public List<Member> checkuserid(String id) {
+		return mDao.checkuserid(id);
 	}
 
 	@Override

@@ -24,20 +24,17 @@
 	<select id="schedulesStList" parameterType="string" resultType="arraylist" resultMap="resultSchedules">
 		SELECT * FROM SCHEDULES where schedules_status =#{type}
 	</select>
-	
 	<!-- 일정등록  -->
 	<insert id="insertSchedules" parameterType="Schedules" flushCache="true" statementType="PREPARED">
 		INSERT INTO SCHEDULES VALUES(Schedules_SEQ.NEXTVAL,#{schedules_status},#{schedules_std_date},#{schedules_end_date},#{schedules_name},
 			#{schedules_content},#{schedules_color},#{id},#{dept_no}
 		)
 	</insert>
-	
 	<!-- 일정수정  -->
 	<update id="updateSchedules" parameterType="Schedules" flushCache="true" statementType="PREPARED">
 		UPDATE SCHEDULES SET schedules_std_date=#{schedules_std_date},schedules_end_date=#{schedules_end_date},schedules_name=#{schedules_name},
 			schedules_content=#{schedules_content} WHERE schedules_id=#{schedules_id}
 	</update>
-	
 	<!-- 일정삭제  -->
 	<delete id="deleteSchedules" parameterType="string" flushCache="true" statementType="PREPARED">
 		delete schedules where schedules_id = #{scid}

@@ -141,5 +141,8 @@
 	where id=#{id} 
 	and password=#{password}
 	</select>
+	<select id="checkuserid" parameterType="string" resultType="arraylist" resultMap="resultMember">
+		select position,dept_no from member where id=#{id}
+	</select>
 	
 </mapper>

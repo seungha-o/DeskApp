@@ -19,23 +19,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.wefer.member.model.domain.AnnualSc;
 import com.kh.wefer.member.model.domain.Member;
+import com.kh.wefer.member.model.service.AnnualScService;
 import com.kh.wefer.member.model.service.MemberService;
+import com.kh.wefer.schedules.model.service.SchedulesService;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
-
+	@Autowired
+	private AnnualScService aScService;
+	
+	@Autowired
+	private SchedulesService schdservice;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv, HttpSession session, HttpServletRequest request) {
 		String loginUserName = (String) session.getAttribute("loginId");
+		mv.addObject("list",aScService.selectAnnualList(loginUserName));
+		mv.addObject("list2",schdservice.schedulesList());
 		mv.addObject("loginId", loginUserName);
 		mv.setViewName("index");
 		return mv;

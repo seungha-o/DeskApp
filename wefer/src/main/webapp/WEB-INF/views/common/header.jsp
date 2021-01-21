@@ -236,7 +236,7 @@
 					<ul class="submenu">
 						<li><a href="#" onclick="location.href='/wefer/profile.do'">내
 								정보</a></li>
-						<li><a href="index1.html">내 일정관리</a></li>
+						<li><a href="schdmanagement.do">내 일정관리</a></li>
 						<li><a href="index2.html">내 근태조회</a></li>
 					</ul></li>
 				<li><a href="#"
@@ -261,7 +261,8 @@
 						<li><a href="basic-table.html">Basic Tables</a></li>
 						<li><a href="datatable.html">DataTables</a></li>
 					</ul></li>
-				<li><a href="schedule.do" class="dropdown-toggle no-arrow">
+					<c:if test="${dept_no eq '1'||position eq '부장' }">
+									<li><a href="schedule.do" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-calendar1"></span><span class="mtext">일정</span>
 				</a></li>
 

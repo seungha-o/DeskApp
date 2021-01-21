@@ -69,6 +69,7 @@ public class MemberController {
 			 String id = (String) session.getAttribute("loginId");
 			 mv.addObject("profileList",mService.profileList(id));
 			 mv.setViewName("member/profile");
+			mv.addObject("list",aScService.selectAnnualList(id));
 			 
 		 }
 		 return mv;
@@ -188,6 +189,8 @@ public class MemberController {
 			}else {
 				session.setAttribute("loginId", result.getId()); 
 				session.setAttribute("dept_no", result.getDept_no()); 
+				session.setAttribute("position",result.getPosition());
+				System.out.println(result.getPosition());
 				mv.setViewName("redirect:home.do");			
 			}				
 		}catch (Exception e) {
@@ -257,13 +260,27 @@ public class MemberController {
 		mv.setViewName("redirect:schdmanagement.do");
 		return mv;
 	}
-	@RequestMapping("/hi.do")
-	public ModelAndView hi(ModelAndView mv,AnnualSc vo,HttpSession session) {
-		String id = (String) session.getAttribute("loginId");
-		mv.addObject("list",aScService.selectAnnualList(id));
-		mv.addObject("list2",schdservice.schedulesList());
-		mv.setViewName("/member/hi");
-		return mv;
+	@ResponseBody
+	@RequestMapping("/checkuserid.do")
+	public int checkuserid(@RequestParam(name="id")String id,@RequestParam(name="dept")String dept) {
+		int result = 0;
+		List<Member>list = mService.checkuserid(id);
+		String resultid = list.get(0).getPosition();
+		if(resultid.equals("부장")) {
+			result =1;
+		}
+		return result; 
 	}
-	
+		@ResponseBody
+		@RequestMapping("/checkuserid2.do")
+		public int checkuserid2(@RequestParam(name="id")String id,@RequestParam(name="dept")String dept,@RequestParam(name="dept2")String dept2) {
+			int result = 0;
+			List<Member>list = mService.checkuserid(id);
+			String resultdept=list.get(0).getDept_no();
+			String resultid = list.get(0).getPosition();
+			if(resultid.equals("부장")&&resultdept.equals(dept2)) {
+				result =1;
+			}
+			return result; 
+		}
 }

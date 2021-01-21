@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -86,20 +85,20 @@
 										<h4 class="text-blue h4 mb-10">일정수정</h4>
 										<!-- 수정하세야 -->
 										<input type="hidden" name="annual_id" id="scid"> <input
-											type="hidden" name="id" value="${loginId}">
+											type="hidden" name="id" value="${loginId}" required="required">
 													<input type="hidden" name="write_date"> 
 										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
 										<div class="form-group">
 											<label>휴가사유</label> <input type="text" class="form-control"
-												name="annual_content" id="schedules_name">
+												name="annual_content" id="schedules_name" required="required">
 										</div>
 										<div class="form-group">
 											<label>시작일</label> <input type='text' class="datetimepicker form-control" id="schedules_std_date"
-												name="annual_stddate" autocomplete="off">
+												name="annual_stddate" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text' class="datetimepicker form-control" id="schedules_end_date"
-												name="annual_enddate" autocomplete="off">
+												name="annual_enddate" autocomplete="off" required="required">
 										</div>	
 										<div class="form-group">
 											<label>휴가구분</label> <select class="form-control"
@@ -139,19 +138,19 @@
 										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
 										<div class="form-group">
 											<label>휴가사유</label> <input type="text" class="form-control"
-												name="annual_content" id="schedules_name">
+												name="annual_content" id="schedules_name" required="required">
 										</div>
 										<div class="form-group">
 											<label>시작일</label> <input type='text' class="datetimepicker form-control" id="schedules_std_date1"
-												name="annual_stddate" autocomplete="off">
+												name="annual_stddate" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text' class="datetimepicker form-control" id="schedules_end_date1"
-												name="annual_enddate" autocomplete="off">
+												name="annual_enddate" autocomplete="off" required="required">
 										</div>	
 										<div class="form-group">
 											<label>휴가구분</label> <select class="form-control"
-												name="annual_kind" id="dept_no">
+												name="annual_kind" id="dept_no" required="required">
 												<option value="월차">월차</option>
 												<option value="반차">반차</option>
 											</select>
@@ -185,7 +184,6 @@
 				//event dragging & resizing
 				editable: false,
 				// 일정표시할 때 시간 보여줄지 말지 결정함.
-				
 				/* displayEventTime : false, */
 				
 				 axisFormat:'hh',
@@ -203,8 +201,8 @@
 				events: [
 					   <c:forEach var="vo" items="${list}" varStatus="status">
 					   {	
-						   title : "<휴가>  ${vo.annual_content}",
-						   title1:"${vo.annual_content}",
+						   title : "<휴가>",
+						  	 title1:"${vo.annual_content}",
 					  		start : "${vo.annual_stddate}", 
 					  		end : "${vo.annual_enddate}" ,
 					  		content:"${vo.annual_content}",
@@ -215,13 +213,14 @@
 			
 				],
 				dayClick: function(date,jsEvent, view) {
-					jQuery('#modal-view-event-add').modal();
-					var moment = $('#calendar').fullCalendar('getDate');
-                    var yyyy=moment.format("YYYY-MM-DD");
-                    alert(date.format());
-						alert(moment);
+					
 				},
+				borderColor:"white",
 				eventClick: function(events, jsEvent, view) {
+					
+					
+					
+					
 					//jQuery('#modal-view-event').modal();
 					var evtt =events.title1;
 					$("#schedules_name").val(evtt);
@@ -232,7 +231,6 @@
 					$("#dept_no").val(events.dept).prop("selected", true);
 					$("#scid").val(events.scid);
 					$("#hcid").val(events.scid);
-					
 					jQuery('#modal-view-event').modal();
 					$("#schedules_name").val(evtt);
 			/* 		 eventClick: function (event, jsEvent, view) {

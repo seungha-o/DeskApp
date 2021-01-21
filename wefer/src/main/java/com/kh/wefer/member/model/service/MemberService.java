@@ -1,5 +1,6 @@
 package com.kh.wefer.member.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.wefer.member.model.domain.Member;
@@ -25,6 +26,7 @@ public interface MemberService {
 
 	Member personerProfileList(Member m);
 
+	List<Member> checkuserid(String id);
 
 	List<Member> pwCheck(Member m);
 

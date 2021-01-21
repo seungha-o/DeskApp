@@ -1,5 +1,6 @@
 package com.kh.wefer.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -65,6 +66,9 @@ public class MemberDao {
 	// pw 체크
 	public List<Member> pwCheck(Member m) { 
 		return sqlSession.selectList("Member.pwCheck" ,m);	
+	}
+	public List<Member> checkuserid(String id) {
+		return sqlSession.selectList("Member.checkuserid",id);
 	}
 	
 }
