@@ -112,7 +112,7 @@
 				defaultView: 'month',
 				/* // event dragging & resizing */
 				editable: false,
-				// ÀÏÁ¤Ç¥½ÃÇÒ ¶§ ½Ã°£ º¸¿©ÁÙÁö ¸»Áö °áÁ¤ÇÔ.
+				// ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 				
 				displayEventTime : true,
 			      plugins: [ 'interaction', 'dayGrid' ],
@@ -126,7 +126,7 @@
 				events: [
 					   <c:forEach var="vo" items="${list}" varStatus="status">
 					   {	
-						   title : "<ÈÞ°¡>",
+						   title : "<íœ´ê°€>",
 						   title1:"${vo.annual_content}",
 					  		start : "${vo.annual_stddate}", 
 					  		end : "${vo.annual_enddate}" ,
@@ -189,7 +189,7 @@
                    $("#schedules_end_date").val(moment(eValue).format('YYYY-MM-DD'));
               })
               
-              // ÇöÀç º¯°æµÈ µ¥ÀÌÅÍ ¼ÂÆÃ
+              // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
               
            
           
