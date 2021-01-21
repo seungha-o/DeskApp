@@ -281,6 +281,11 @@ public class MemberController {
 			if(resultid.equals("부장")&&resultdept.equals(dept2)) {
 				result =1;
 			}
+			if(dept2.equals("0")) {
+				if(resultid.equals("부장")&&resultdept.equals("1")) {
+					result =1;
+				}
+			}
 			return result; 
 		}
 }

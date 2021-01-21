@@ -210,7 +210,7 @@
 											<textarea class="form-control" name="schedules_content"></textarea>
 										</div>
 										<div class="form-group">
-											<input type="text" name="dept_no" id="dept">
+											<input type="hidden" name="dept_no" id="dept">
 										</div>
 										<div class="form-group">
 											<input type="hidden" value="color" name="schedules_color">
@@ -327,7 +327,6 @@
 								$("#dept_no").val(events.dept).prop("selected", true);
 								$("#scid").val(events.scid);
 								$("#hcid").val(events.scid);
-
 								jQuery('#modal-view-event').modal();
 								$("#schedules_name").val(evtt);
 							}else{

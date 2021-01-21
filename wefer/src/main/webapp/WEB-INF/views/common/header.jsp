@@ -262,7 +262,7 @@
 						<li><a href="datatable.html">DataTables</a></li>
 					</ul></li>
 					<c:if test="${dept_no eq '1'||position eq '부장' }">
-									<li><a href="schedule.do" class="dropdown-toggle no-arrow">
+									<li><a href="schedule.do" class="dropdown-toggle no-arrow"></c:if>
 						<span class="micon dw dw-calendar1"></span><span class="mtext">일정</span>
 				</a></li>
 
