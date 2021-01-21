@@ -28,12 +28,12 @@ import com.kh.wefer.member.model.service.MemberService;
 @Controller
 public class HomeController {
 
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+
 	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv, HttpSession session, HttpServletRequest request) {
 		String loginUserName = (String) session.getAttribute("loginId");
@@ -42,5 +42,16 @@ public class HomeController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/chat.do", method = RequestMethod.GET)
+	public ModelAndView chat(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		String loginUserName = (String) session.getAttribute("loginId");
+		logger.info("Welcome " + loginUserName); 
+		
+		mv.addObject("loginId", loginUserName);
+		mv.setViewName("chat");
+		return mv;
+		
+	}
+
 	
 }

@@ -229,7 +229,7 @@
 	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
-				<li class="dropdown"><a href="javascript:;"
+				<li class="dropdown"><a href="#"
 					class="dropdown-toggle"> <span class="micon dw dw-house-1"></span><span
 						class="mtext">마이페이지</span>
 				</a>
@@ -239,12 +239,12 @@
 						<li><a href="index1.html">내 일정관리</a></li>
 						<li><a href="index2.html">내 근태조회</a></li>
 					</ul></li>
-				<li><a href="javascript:;"
+				<li><a href="#"
 					onclick="location.href='/wefer/approval.do'"
 					class="dropdown-toggle no-arrow"> <span
 						class="micon dw dw-calendar1"></span><span class="mtext">전자결재</span>
 				</a></li>
-				<li class="dropdown"><a href="javascript:;"
+				<li class="dropdown"><a href="#"
 					class="dropdown-toggle" data-option="off"> <span
 						class="micon dw dw-list3"></span><span class="mtext">프로젝트</span>
 				</a>
@@ -265,7 +265,7 @@
 						<span class="micon dw dw-calendar1"></span><span class="mtext">일정</span>
 				</a></li>
 
-				<li><a href="chat.html" class="dropdown-toggle no-arrow"> <span
+				<li><a href="#" onclick="location.href='/wefer/chat.do'" class="dropdown-toggle no-arrow"> <span
 						class="micon dw dw-chat3"></span><span class="mtext">채팅</span>
 				</a></li>
 				<li>
@@ -292,16 +292,29 @@
 	});
 </script>
 <script>
+
 	var socket = null;
 
 	$(document).ready(
 			function() {
 				sock = new SockJS("<c:url value="/echo-ws"/>");
 				socket = sock;
-
+				//연결
+				sock.onopen = function () {
+			        console.log('Info: connection opened.');
+			    };
 				// 데이터를 전달 받았을때 
-				sock.onmessage = onMessage;
-
+				
+				sock.onmessage = function (event) {
+				        console.log("ReceiveMessage:", event.data+'\n');
+				        let $socketAlert = $('div#socketAlert');
+				        $socketAlert.html(event.data);
+				        $socketAlert.css('display', 'block');
+				        
+				        setTimeout( function() {
+				        	$socketAlert.css('display', 'none');
+				        }, 3000);
+				    };
 				// 데이터를 보냈을 때
 
 				// 세션에서 이미지 읽기
@@ -352,6 +365,7 @@
 
 	// 실시간 알림 받았을 시
 	function onMessage(evt) {
+		console.log("ReceiveMessage:", evt.data+'\n');
 		var data = evt.data;
 		// toast
 		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
