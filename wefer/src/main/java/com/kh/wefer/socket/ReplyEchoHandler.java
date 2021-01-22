@@ -27,7 +27,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			System.out.println("커넥션됐니  :" + session);
 			sessions.add(session); // 로그인한 세션아이디가 들어감
 			//세션값을 불러온 0번째 중괄호에 session.getId()를 넣으라는 뜻임.
-			log(session.getId()+"연결됨 / 알림소켓 ");
+			//log(session.getId()+"연결됨 / 알림소켓 ");
 			
 //			String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 //			if(senderId!=null) {	// 로그인 값이 있는 경우만
@@ -39,10 +39,10 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 		@Override
 		protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 			System.out.println("핸들러 텍스트 메세지 :" + session + ":" + message.getPayload());
-			String senderId = getMemberId(session);
+			String sender = getMemberId(session);
 //			String senderId =session.getPrincipal().getName(); 
 			
-			log("senderId: "+ senderId);
+			//log("senderId: "+ sender);
 //			for (WebSocketSession sess:sessions) {
 //				sess.sendMessage(new TextMessage(senderId+ ":"+message));
 //			}
@@ -51,24 +51,24 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			
 			// 특정 유저에게 보내기
 			String msg = message.getPayload();
-			log("msg: "+ msg);
+			//log("msg: "+ msg);
 			if(msg != null) {
 				String[] strs = msg.split(",");
-				log(strs.toString());
-				log("strs.length: " + strs.length);
+				//log(strs.toString());
+				//log("strs.length: " + strs.length);
 				if(strs != null && strs.length == 2) {
 					
-					log("strs.length 2: " + strs.length);
+					//log("strs.length 2: " + strs.length);
 					
 					String cmd = strs[0];
 					String target = strs[1]; // m_id 저장
 					//String content = strs[2];
 					//String url = strs[3];
-					log("strs.length 3: " + strs.length);
+					//log("strs.length 3: " + strs.length);
 					
 					for(WebSocketSession sess : sessions){
-						log(senderId+"가 글을 1개 등록했습니다");
-						sess.sendMessage(new TextMessage(senderId+"님이"+ "<a href='./approval.do'>"+ "전자결재" +"</a>를 등록했습니다"));
+						//log(sender+"가 글을 1개 등록했습니다");
+						sess.sendMessage(new TextMessage( "<li><a href='./approval.do'>"+sender+"님이 전자결재를 등록했습니다</a></li>"));
 					}
 					
 //					WebSocketSession targetSession = users.get(target);  // 수신을 받을 세션 조회
@@ -107,15 +107,13 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			System.out.println(new Date() + " : " + logmsg);
 		}
 		
-		
-		
 		// 웹소켓에 id 가져오기
 	    // 접속한 유저의 http세션을 조회하여 id가져오기
 		private String getMemberId(WebSocketSession session) {
 			Map<String, Object> httpSession = session.getAttributes();
-			String m_id = (String) httpSession.get("loginId"); // 세션에 저장된 m_id 기준 조회
-			if(m_id==null) log("m_id가 왜 널이냐@@@@@@@@@@@@@@@@@@@@@@@");
-			return m_id==null? null: m_id;
+			String m_name = (String) httpSession.get("loginName"); // 세션에 저장된 m_id 기준 조회
+			if(m_name==null) log("m_name가 왜 널이냐@@@@@@@@@@@@@@@@@@@@@@@");
+			return m_name==null? null: m_name;
 			
 		}
 }

@@ -13,10 +13,10 @@ public class PaymentDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<Payment> paymentList(Payment my_name){ // 수신
+	public List<Payment> paymentList(Payment my_name){ 
 		return sqlSession.selectList("PaymentMapper.paymentList",my_name);
 	}
-	public List<Payment> paymentReciveList(Payment my_name){ //발신
+	public List<Payment> paymentReciveList(Payment my_name){ 
 		return sqlSession.selectList("PaymentMapper.receive-paymentList",my_name);
 	}
 	
@@ -30,5 +30,9 @@ public class PaymentDao {
 	public String seqPayment() {
 		String seqPayment = sqlSession.selectOne("PaymentMapper.seqPayment");
 		return seqPayment;
+	}
+
+	public int confirmCnt(Payment confirm_id) {
+		return sqlSession.update("PaymentMapper.confirmCnt", confirm_id);
 	}
 }

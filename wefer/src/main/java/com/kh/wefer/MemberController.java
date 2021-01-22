@@ -188,6 +188,7 @@ public class MemberController {
 				
 			}else {
 				session.setAttribute("loginId", result.getId()); 
+				session.setAttribute("loginName", result.getName()); 
 				session.setAttribute("dept_no", result.getDept_no()); 
 				session.setAttribute("position",result.getPosition());
 				System.out.println(result.getPosition());

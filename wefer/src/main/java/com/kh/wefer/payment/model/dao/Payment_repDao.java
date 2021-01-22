@@ -10,8 +10,13 @@ import com.kh.wefer.payment.model.domain.Payment_rep;
 
 @Repository("prDao")
 public class Payment_repDao {
-	@Autowired
+	@Autowired  
 	private SqlSession sqlSession;
+	
+	/*
+	 * public String name() { String name =
+	 * sqlSession.selectOne("Member.selectName"); return name; }
+	 */
 	
     public List<Payment_rep> commentList(Payment_rep payment_id) throws Exception{
         return sqlSession.selectList("Payment_rep.commentList", payment_id);

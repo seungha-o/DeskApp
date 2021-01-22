@@ -26,25 +26,23 @@ import com.kh.wefer.payment.model.service.NotifyService;
 import com.kh.wefer.payment.model.service.PaymentService;
 import com.kh.wefer.payment.model.service.Payment_confrimService;
 
-
 @Controller
 public class PaymentController {
 
 	@Autowired
 	private AnnualService aService;
 	@Autowired
-	private NotifyService ntService;
-	@Autowired
 	private PaymentService pmService;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
-	public ModelAndView apprlist(Payment my_name, Locale locale, ModelAndView mv, HttpSession session, HttpServletRequest request) {
-			my_name.setId((String) session.getAttribute("loginId"));
-			mv.addObject("pmlist", pmService.paymentList(my_name));
-			mv.addObject("pmrclist", pmService.paymentReciveList(my_name));
-			mv.setViewName("approval/apprlist");
+	public ModelAndView apprlist(Payment my_name, Locale locale, ModelAndView mv, HttpSession session,
+			HttpServletRequest request) {
+		my_name.setId((String) session.getAttribute("loginId"));
+		mv.addObject("pmlist", pmService.paymentList(my_name));
+		mv.addObject("pmrclist", pmService.paymentReciveList(my_name));
+		mv.setViewName("approval/apprlist");
 		return mv;
 	}
 
@@ -63,30 +61,36 @@ public class PaymentController {
 			System.out.println(pc.getS_member_id1());
 			System.out.println(pc.getS_member_id2());
 			aService.insertAnnualPayment(a, b);
-			//pcService.insertPaymentConfirm(payment_id);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
 		return "redirect:approval.do";
 	}
-	
+
 	@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
 	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id, ModelAndView mv) {
-	
-			//System.out.println("payment_id: " + payment_id);
-			mv.addObject("payment_id", pmService.paymentDetail(payment_id));
-			mv.setViewName("approval/apprdetail");
-			//System.out.println(pmService.paymentDetail(payment_id));
+		// System.out.println("글 번호: " + payment_id);
+		mv.addObject("payment_id", pmService.paymentDetail(payment_id));
+		mv.setViewName("approval/apprdetail");
+		// System.out.println(pmService.paymentDetail(payment_id));
+
 		return mv;
 	}
-	
-	// notify DB저장
-	@RequestMapping("notify/saveNotify.do")
-	@ResponseBody
-	public void saveNotify(@RequestParam Map<String,String> param) throws Exception {
-		Notify vo = new Notify();
-		vo.setN_target(param.get("target"));
-		ntService.insertNotify(vo);
+
+	@RequestMapping(value = "/confirm.do ", method = RequestMethod.GET)
+	public String apprForm(Payment confirm_id, ModelAndView mv, HttpSession session) {
+		try {
+			System.out.println("나와라");
+			confirm_id.setId((String) session.getAttribute("loginId"));
+
+			pmService.confirmCnt(confirm_id);
+			System.out.println(pmService.confirmCnt(confirm_id));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:approval.do";
 	}
 
 }

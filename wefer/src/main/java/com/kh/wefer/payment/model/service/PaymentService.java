@@ -8,5 +8,5 @@ public interface PaymentService {
 	public List<Payment> paymentList(Payment my_name);
 	public List<Payment> paymentReciveList(Payment my_name);
 	public Payment paymentDetail(String payment_id);
-	
+	public int confirmCnt(Payment confirm_id) ;
 }

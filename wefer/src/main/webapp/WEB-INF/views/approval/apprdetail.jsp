@@ -219,6 +219,8 @@
 													name="commentInsertBtn" >등록</button>
 											</span>
 										</div>
+												<button type="button" class="pd-20 btn btn-primary btn-lg"
+			style="float: right;" onclick="window.location='/wefer/confirm.do '">승인하기</button>
 									</form>
 								</div>
 								<div class="container">
@@ -229,13 +231,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a
-					href="https://github.com/dropways" target="_blank">Ankit
-					Hingarajiya</a>
-			</div>
 		</div>
 	</div>
+	
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script

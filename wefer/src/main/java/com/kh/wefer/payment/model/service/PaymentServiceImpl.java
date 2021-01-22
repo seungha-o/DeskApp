@@ -26,4 +26,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public Payment paymentDetail(String payment_id) {
 		return pmDao.paymentDetail(payment_id);
 	}
+	@Override
+	public int confirmCnt(Payment confirm_id) {
+		return pmDao.confirmCnt(confirm_id);
+	}
 }

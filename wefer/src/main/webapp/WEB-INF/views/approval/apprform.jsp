@@ -308,7 +308,7 @@
 														+ data[i].name
 														+ '('
 														+ data[i].position
-														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
 							} else if (data[i].dept_name == '경영팀') {
 								$('.gyeonyoung1')
 										.append(
@@ -318,7 +318,7 @@
 														+ data[i].name
 														+ '('
 														+ data[i].position
-														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
 							} else if (data[i].dept_name == '개발팀') {
 								$('.geabal1')
 										.append(
@@ -328,7 +328,7 @@
 														+ data[i].name
 														+ '('
 														+ data[i].position
-														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');
+														+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
 							}
 						}
 					},
