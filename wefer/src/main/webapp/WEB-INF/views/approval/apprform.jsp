@@ -191,16 +191,18 @@
 		$('#prj-add-project').on('click', function(evt) {
 			console.log('수신자 클릭하면');
 			var member_list = $(".setting-name").get();
-			var member_id = $(
+			console.log("member_list.length:" + member_list.length);
+			var members_id = $(
 			"input[name=members_id][type=hidden]")
 			.get();
+			console.log("members_id.length:" + members_id.length);
 			for (var i = 0; i < member_list.length; i++) {
-				console.log(members_id);
-				var i = $("#members_id").val();
-				console.log(i);
+				console.log("$(member_list[i]).val(): " + $(member_list[i]).val());
+				var memberId = $(members_id[i]).val();
+				console.log("memberId" + memberId);
 				if (socket) {
-					// websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
-					let socketMsg = "reply," + i;
+					// websocket에 보내기!! (reply,댓글작성자)
+					let socketMsg = "전자_결재," + memberId;
 					//+ "," + gBoardWriter + "," + gBno;
 					console.log("sssssssmsg>>", socketMsg)
 					socket.send(socketMsg);
@@ -262,8 +264,7 @@
 				$("#frm").submit();
 			});
 		})
-		$
-				.ajax({
+		$.ajax({
 					url : "${pageContext.request.contextPath}/memeberList",
 					type : "POST",
 					contentType : "application/json; charset=utf-8;",
@@ -373,7 +374,7 @@
 							} else {
 								if ($('.prj-member-list').length < 3) {
 									var member_list = $(".setting-name").get();
-									var member_id = $(
+									var members_id = $(
 											"input[name=members_id][type=hidden]")
 											.get();
 									console.log($('.prj-member-list').length);
@@ -381,13 +382,13 @@
 									for (var i = 0; i < member_list.length; i++) {
 										var member_name = $(member_list[i])
 												.text();
-										var members_id = $(member_id[i]).val();
-										console.log(members_id);
+										var member_id = $(members_id[i]).val();
+										console.log(member_id);
 										$('.fa-hover')
 												.append(
 														'<div class="prj-member-list" style="line-height: 2; margin-right:10px; float: left;">'
 																+ member_name
-																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="s_member_id'+i+'" value="'+members_id+'"><div>');
+																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="s_member_id'+i+'" value="'+member_id+'"><div>');
 									}
 									$('#Medium-modal').modal('toggle');
 									$('.modal-backdrop').remove();

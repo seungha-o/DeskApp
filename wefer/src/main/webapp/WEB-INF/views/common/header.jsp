@@ -86,11 +86,12 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="notification-list mx-h-350 customscroll">
-						
+						   <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 					</div>
 				</div>
 			</div>
 		</div>
+		 
 		<div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button"
@@ -287,107 +288,48 @@
 	</div>
 </div>
 <div class="mobile-menu-overlay"></div>
+
 <script>
 	$(document).ready(function() {
 		connect(); // 소켓연결
 	});
 </script>
 <script>
-
 	var socket = null;
+	$(document).ready( function() {
+	    connectWS();   
+	});
 
-	$(document).ready(
-			function() {
-				sock = new SockJS("<c:url value="/echo-ws"/>");
-				socket = sock;
-				//연결
-				sock.onopen = function () {
-			        console.log('Info: connection opened.');
-			    };
-				// 데이터를 전달 받았을때 
-				
-				sock.onmessage = function (event) {
-				        console.log("ReceiveMessage:", event.data+'\n');
-				        let $socketAlert = $('div#socketAlert');
-				        $socketAlert.html(event.data);
-				        $socketAlert.css('display', 'block');
-				        
-				        setTimeout( function() {
-				        	$socketAlert.css('display', 'none');
-				        }, 3000);
-				    };
-				// 데이터를 보냈을 때
-
-				// 세션에서 이미지 읽기
-				var profileImg = '${profileImg}';
-				if (profileImg == null || profileImg == "") {
-					$(".profile").attr("src",
-							"${contextPath}/resources/image/user.png")
-				} else { // null이 아닐경우
-					$(".profile").attr("src",
-							"data:image/png;base64, " + profileImg);
-				}
-
-				// 포인트 읽기
-				$.ajax({
-					type : "post",
-					async : "true",
-					dataType : "text",
-					data : {
-						m_id : '${m_id}' //data로 넘겨주기
-					},
-					url : "${contextPath}/point/selectNowPoint.do",
-					success : function(data, textStatus) {
-						if (data != '') {
-							$("#point").text(pointToNumFormat(data));
-						} else {
-							$("#point").text(0);
-						}
-					}
-				});
-
-				// 알림 카운트 받아오기
-				$.ajax({
-					type : "post",
-					async : "true",
-					dataType : "text",
-					data : {
-						m_id : '${m_id}' //data로 넘겨주기
-					},
-					url : "${contextPath}/member/selectNewNoticeCnt.do",
-					success : function(data, textStatus) {
-						if (data != '0') {
-							$("#newNoticeCnt").text(data);
-						}
-					}
-				});
-
-			});
-
-	// 실시간 알림 받았을 시
-	function onMessage(evt) {
-		console.log("ReceiveMessage:", evt.data+'\n');
-		var data = evt.data;
-		// toast
-		let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-		toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-		toast += "<small class='text-muted'></small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-		toast += "<span aria-hidden='true'>&times;</span></button>";
-		toast += "</div> <div class='toast-body'>" + data + "</div></div>";
-		$("#msgStack").append(toast);
-		$(".toast").toast({
-			"animation" : true,
-			"autohide" : false
-		});
-		//	 		$(".toast").toast({"animation": true, "autohide": true, "delay": 5000});
-		$('.toast').toast('show');
-		// 알림 카운트 추가
-		$("#newNoticeCnt").text($("#newNoticeCnt").text() * 1 + 1);
-	};
-</script>
+	function connectWS() {
+	    console.log("tttttttttttttt")
+	    var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
+	    console.log("tttttttttttttt 연결됨")
+	    socket = ws;
+	
+	    ws.onopen = function () {
+	        console.log('Info: connection opened.');
+	    };
+	
+	    ws.onmessage = function (event) {
+	        console.log("ReceiveMessage:", event.data+'\n');
+	        
+	        var $socketAlert = $('div#socketAlert');
+	        $socketAlert.html(event.data);
+	        $socketAlert.css('display', 'block');
+	        
+	    /*     setTimeout( function() {
+	           $socketAlert.css('display', 'none');
+	        }, 3000); */
+	    };
+	
+	    ws.onclose = function (event) { 
+	        console.log('Info: connection closed.');
+	    };
+	    ws.onerror = function (err) { console.log('Error:', err); };
+	}
+</script> 
 <script type="text/javascript">
-	$
-			.ajax({
+	$.ajax({
 				url : "${pageContext.request.contextPath}/memeberList",
 				type : "POST",
 				contentType : "application/json; charset=utf-8;",

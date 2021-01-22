@@ -22,18 +22,19 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-
- <!--	<beans:bean id="replyEchochoHandler"
+	<!-- websocket handler -->
+	<beans:bean id="replyEchochoHandler"
 		class="com.kh.wefer.socket.ReplyEchoHandler" />
 
 	<websocket:handlers>
 		<websocket:mapping handler="replyEchochoHandler"
 			path="/replyEcho" />
+				<!-- 로그인한 사용자의 id를 세션으로 올려줌 -->
 		<websocket:handshake-interceptors>
 			<beans:bean
 				class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
-	</websocket:handlers>-->
+	</websocket:handlers>
  
 <!--     <beans:bean id="echoHandler" class="com.kh.wefer.socket.ReplyEchoHandler" />
     <beans:bean id="chatHandler" class="com.kh.wefer.socket.ReplyEchoHandler" />
