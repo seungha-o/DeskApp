@@ -386,7 +386,7 @@ $(function(){
 				events: [
 					   <c:forEach var="vo" items="${list}" varStatus="status">
 					   {	
-						   title : "${vo.annual_content}",
+						   title : "<휴가>",
 						   title1:"${vo.annual_content}",
 					  		start : "${vo.annual_stddate}", 
 					  		end : "${vo.annual_enddate}" ,
