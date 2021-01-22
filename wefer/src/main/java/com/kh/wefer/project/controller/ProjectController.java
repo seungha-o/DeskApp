@@ -1,12 +1,16 @@
 package com.kh.wefer.project.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,10 +23,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectComment;
+import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
 import com.kh.wefer.project.model.domain.ProjectSub;
 import com.kh.wefer.project.model.service.ProjectService;
@@ -34,6 +44,8 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
+	
+	private static final String FILE_SERVER_PATH = "C:/spring_java/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/wefer/resources/projectFiles";
 	//프로젝트 리스트 출력
 	@RequestMapping(value = "/projectlist.do", method = RequestMethod.GET)
 	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv, ProjectMember pm, HttpSession session) {
@@ -83,19 +95,122 @@ public class ProjectController {
 
 	//작업출력
 	@RequestMapping(value = "/projectDetail.do", method = RequestMethod.GET)
-	public ModelAndView projectDetail(@RequestParam(name="id", required = false) String project_id, HttpServletRequest request, ModelAndView mv, ProjectMember pm, ProjectSub ps, Project p) {
+	public ModelAndView projectDetail(@RequestParam(name="id", required = false) String project_id, HttpServletRequest request,
+			ModelAndView mv, HttpSession session,HttpServletResponse response, ProjectMember pm, ProjectSub ps, Project p) {
 		System.out.println(project_id);
 		System.out.println(pService.projectSubList(project_id));
 		System.out.println(pService.projectDate(project_id));
-		mv.addObject("projectSubList", pService.projectSubList(project_id));
-		mv.addObject("projectDate", pService.projectDate(project_id));
-//		mv.addObject("projectSubMemberList", pService.projectSubMemberList(project_id));
-		mv.setViewName("project/projectDetail");
+		try {
+			request.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PrintWriter out = null;
+		
+		int result = 0;
+		String id = (String) session.getAttribute("loginId");
+		pm.setId(id);
+		pm.setProject_id(project_id);
+		List<ProjectMember> projectChk = new ArrayList<ProjectMember>();
+		projectChk = pService.projectChk(pm);
+		
+		for(int i=0; i<projectChk.size(); i++) {
+			if(id.equals(projectChk.get(i).getId().toString())) {
+				result = 1;
+				break;
+			}
+			
+		}
+		if(result == 1) {
+			mv.addObject("projectSubList", pService.projectSubList(project_id));
+			mv.addObject("projectDate", pService.projectDate(project_id));
+//			mv.addObject("projectSubMemberList", pService.projectSubMemberList(project_id));
+			mv.setViewName("project/projectDetail");
+		}else {
+			try {
+				out = response.getWriter();
+				out.append("<script>alert('프로인원에 포함되지 않았습니다.');location.href='projectlist.do'</script>");
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	
+		
+		
 		return mv;
 	}
+	//히스토리 화면이동
 	@RequestMapping(value = "/projectHistory.do", method = RequestMethod.GET)
-	public ModelAndView projectHistory(HttpServletRequest request, ModelAndView mv) {
-		mv.setViewName("project/projectHistory");
+	public ModelAndView projectHistory(HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, ModelAndView mv, ProjectMember pm, Member m, ProjectDetail pd,
+			@RequestParam(name="subid") String subid, @RequestParam(name="pid") String project_id) {
+		
+		try {
+			request.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+		String id = (String) session.getAttribute("loginId");
+		m.setId(id);
+		System.out.println(id);
+		PrintWriter out = null;
+		pm.setProject_sub_id(subid);
+		List<ProjectMember> projectMemChk = new ArrayList<ProjectMember>();
+		projectMemChk = pService.projectMemberChk(pm);
+		int result = 0;
+
+		for(int i = 0; i<projectMemChk.size(); i++) {
+			System.out.println(projectMemChk.get(i).getId());
+			String a = projectMemChk.get(i).getId();
+			if(id.equals(a)) {
+				result = 1;
+				break;
+			}
+		}
+		System.out.println(result);
+		if(result == 1) {
+			pd.setProject_id(project_id);
+			pd.setProject_sub_id(subid);
+			mv.addObject("projectHistoryList", pService.projectHistoryList(pd));
+			System.out.println(pService.projectHistoryList(pd));
+			System.out.println(pd);
+			mv.addObject("projectMemberImg",pService.projectMemberImg(m));
+			mv.addObject("projectSubList", pService.projectSubTitles(subid));
+			mv.addObject("projectDate", pService.projectDate(project_id));
+			mv.addObject("subid",subid);
+			mv.setViewName("project/projectHistory");	
+			System.out.println("redirect:projectHistory.do?subid="+subid+"&pid="+project_id+"");
+		}else {
+			try {
+				out = response.getWriter();
+				out.append("<script>alert('작업인원에 포함되지 않았습니다.');location.href='projectDetail.do?id="+project_id+"'</script>");
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	
+
+		
+		//		else {
+
+//		}
+			
+			
+
+			
+		
 		return mv;
 	}
 	
@@ -325,7 +440,7 @@ public class ProjectController {
 				@RequestParam(name="project_std_date_update") String project_std_update_date,
 				@RequestParam(name="project_end_date_update") String project_end_update_date,
 				@RequestParam(name="update_important") String update_important,
-				@RequestParam(name="prj_member_id_update", required = false) String prj_member_id_update
+				@RequestParam(name="prj_member_id_update",required = false) String prj_member_id_update
 				){
 				
 				
@@ -370,14 +485,17 @@ public class ProjectController {
 
 					
 				}
-				if(prj_update_id == null) {
+				
+				if(prj_member_id_update == null || prj_member_id_update.equals("")) {
 					ps.setProject_id(p_pid);
 					ps.setProject_sub_id(prj_update_id);
 					ps.setProject_sub_title(project_update_title);
 					ps.setProject_sub_std_date(project_std_update);
 					ps.setProject_sub_end_date(project_end_update);
 					ps.setProject_sub_important(update_important);
+					System.out.println("멤버없음");
 					pService.projectSubUpdate(ps);
+					
 				}else {
 					ps.setProject_id(p_pid);
 					ps.setProject_sub_id(prj_update_id);
@@ -386,7 +504,7 @@ public class ProjectController {
 					ps.setProject_sub_end_date(project_end_update);
 					ps.setProject_sub_important(update_important);
 					pService.projectSubUpdate(ps);
-					
+					System.out.println("멤버있음");
 					//프로잭트 멤버 추가
 					pm.setId(prj_member_id_update);
 					pm.setProject_sub_id(prj_update_id);
@@ -396,6 +514,7 @@ public class ProjectController {
 				System.out.println(project_update_title);
 				System.out.println(project_std_update);
 				System.out.println(project_end_update);
+				System.out.println(prj_member_id_update);
 				
 				mv.setViewName("redirect:projectlist.do");
 			
@@ -406,7 +525,7 @@ public class ProjectController {
 				e.printStackTrace();
 				System.out.println("실패");
 				mv.addObject("message", e.getMessage());
-				mv.setViewName("project/projectlist.do");
+				mv.setViewName("project/projectDetail.do");
 			}
 
 			return mv;
@@ -644,6 +763,212 @@ public class ProjectController {
 						mv.setViewName("project/projectlist.do");
 					}
 
+					return mv;
+				}
+				
+				
+				
+				@RequestMapping(value = "/historyInsert.do", method = RequestMethod.POST)
+				public ModelAndView historyInsert(ProjectDetail pd, 
+						@RequestParam(name = "upload_project_file", required = false) MultipartFile report, @RequestParam(name="pid") String pid,
+						@RequestParam(name="psid", required = false) String psid, 
+						@RequestParam(name="sessionId") String id, 
+						@RequestParam(name="project_datail_content") String project_datail_content,
+						@RequestParam(name="stauts") String stauts,
+						HttpServletRequest request, ModelAndView mv) {
+					try {
+						if (report != null && !report.equals("")) {
+							saveFile(report, request);
+							System.out.println(pid);
+							System.out.println(psid);
+						
+							pd.setProject_datail_file(report.getOriginalFilename());
+							pd.setId(id);
+							pd.setProject_datail_status(stauts);
+							pd.setProject_datail_content(project_datail_content);
+							pd.setProject_id(pid);
+							pd.setProject_sub_id(psid);
+							System.out.println("pdpd : " +pd);
+							pService.historyInsert(pd);
+							
+							mv.setViewName("redirect:projectHistory.do?subid="+psid+"&pid="+pid+"");
+						}else {
+							pd.setId(id);
+							pd.setProject_datail_status(stauts);
+							pd.setProject_datail_content(project_datail_content);
+							pd.setProject_id(pid);
+							pd.setProject_sub_id(psid);
+							pService.historyInsert(pd);
+							mv.setViewName("redirect:projectHistory.do?subid="+psid+"&pid="+pid+"");
+						}
+							
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return mv;
+				}
+				
+					
+					@RequestMapping(value = "/projectHistoryUpdate.do", method = RequestMethod.POST)
+				public ModelAndView projectHistoryUpdate(ProjectDetail pd, 
+						@RequestParam(name = "update_file", required = false) MultipartFile report, 
+						@RequestParam(name="pid") String pid,
+						@RequestParam(name="subid", required = false) String subid,
+						@RequestParam(name="update_content") String project_datail_content,
+						@RequestParam(name="update_stauts") String stauts,
+						@RequestParam(name="pdid") String project_datail_id,
+						HttpServletRequest request, ModelAndView mv) {
+					try {
+						
+						//현재 project_datail_id에 저장된 파일명을 가져와지운다
+						//view에서 가져온 파일명을 업데이트(저장) 시켜준다.
+						//리스트에 반환한다.
+						
+						String befor_file = pService.historyFileName(project_datail_id);
+						System.out.println("befor_file : "+befor_file);
+						if (report != null && !report.equals("")) {
+							removeFile(befor_file, request);
+							saveFile(report, request);
+							System.out.println(pid);
+							System.out.println(subid);
+						
+							pd.setProject_datail_file(report.getOriginalFilename());
+							pd.setProject_datail_status(stauts);
+							pd.setProject_datail_content(project_datail_content);
+							pd.setProject_datail_id(project_datail_id);
+							pService.historyUpdateFile(pd);
+							mv.setViewName("redirect:projectHistory.do?subid="+subid+"&pid="+pid+"");
+						}else {
+							mv.setViewName("redirect:projectHistory.do?subid="+subid+"&pid="+pid+"");							
+						}
+							
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return mv;
+				}
+//				@RequestMapping(value = "/bUpdate.do", method = RequestMethod.POST)
+//				public ModelAndView boardUpdate(Board b, @RequestParam(name = "page", defaultValue = "1") int page,
+//						@RequestParam("upfile") MultipartFile report, HttpServletRequest request, ModelAndView mv) {
+//					try {
+//						if (report != null && !report.equals("")) {
+//							removeFile(b.getBoard_file(), request);
+//							saveFile(report, request);
+//						}
+//						b.setBoard_file(report.getOriginalFilename());
+//						mv.addObject("board_num", bService.updateBoard(b).getBoard_num());
+//						mv.addObject("currentPage", page);
+//						mv.setViewName("redirect:bDetail.do");
+//					} catch (Exception e) {
+//						mv.addObject("msg", e.getMessage());
+//						mv.setViewName("errorPage");
+//					}
+//					return mv;
+//				}
+					
+					@RequestMapping(value = "/projectHistoryDelete.do", method = RequestMethod.POST)
+					public void projectHistoryDelete(HttpServletResponse response, HttpServletRequest request, ProjectDetail pd) {
+						PrintWriter out = null;
+						JSONObject job = new JSONObject();
+						try {
+							String project_datail_id = pd.getProject_datail_file();
+							String file = pService.historyFileName(project_datail_id);
+							removeFile(file, request);
+							job.put("ack", pService.projectHistoryDelete(pd));
+							System.out.println(response);
+							out = response.getWriter();
+							out.append(job.toString());
+						} catch (Exception e) {
+							job.put("ack", -1);
+						} finally {
+							out.flush();
+							out.close();
+						}
+					}
+				
+				
+					@RequestMapping(value = "/projecthistoryComment.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Object projecthistoryComment(HttpServletResponse response, HttpServletRequest request, ProjectComment pc) {
+						JSONObject job = new JSONObject();
+						PrintWriter out = null;
+						try {
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+							
+							
+							String getProject_comment_content = pc.getProject_comment_content();
+							String getProject_datail_id = pc.getProject_datail_id();
+							String getId = pc.getId();
+							
+							System.out.println(getProject_comment_content);
+							System.out.println(getProject_datail_id);
+							System.out.println(getId);
+							List<ProjectComment> pcList = new ArrayList<ProjectComment>();
+							
+							job.put("project_comment",getProject_comment_content);
+							job.put("project_detail_id",getId);
+							job.put("id",getId);
+							System.out.println(job);
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						return job;
+					}
+				
+				
+				
+				private void saveFile(MultipartFile report, HttpServletRequest request) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\projectFiles";
+					File folder = new File(savePath);
+					if (!folder.exists()) {
+						folder.mkdir(); // 폴더가 없다면 생성한다.
+					}
+					String filePath = null;
+					try {
+						// 파일 저장
+						System.out.println(report.getOriginalFilename() + "을 저장합니다.");
+						System.out.println("저장 경로 : " + savePath);
+						filePath = folder + "\\" + report.getOriginalFilename();
+						report.transferTo(new File(filePath)); // 파일을 저장한다
+						System.out.println("파일 명 : " + report.getOriginalFilename());
+						System.out.println("파일 경로 : " + filePath);
+						System.out.println("파일 전송이 완료되었습니다.");
+					} catch (Exception e) {
+						System.out.println("파일 전송 에러 : " + e.getMessage());
+					}
+				}
+
+				private void removeFile(String project_file, HttpServletRequest request) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\uploadFiles";
+
+					String filePath = savePath + "\\" + project_file;
+					try {
+						// 파일 저장
+						System.out.println(project_file + "을 삭제합니다.");
+						System.out.println("기존 저장 경로 : " + savePath);
+
+						File delFile = new File(filePath);
+						delFile.delete();
+
+						System.out.println("파일 삭제가 완료되었습니다.");
+					} catch (Exception e) {
+						System.out.println("파일 삭제 에러 : " + e.getMessage());
+					}
+				}
+				
+				@RequestMapping("/download.do")
+				public ModelAndView download(@RequestParam HashMap<Object, Object> params, ModelAndView mv) {
+					String fileName = (String) params.get("fileName");
+					String fullPath = FILE_SERVER_PATH + "/" + fileName;
+					File file = new File(fullPath);
+					
+					mv.setViewName("downloadView");
+					mv.addObject("downloadFile", file);
 					return mv;
 				}
 }

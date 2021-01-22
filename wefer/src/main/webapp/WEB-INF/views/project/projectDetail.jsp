@@ -52,7 +52,12 @@
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
 									<li class="breadcrumb-item active" aria-current="page">프로젝트</li>
-									<li class="breadcrumb-item active" aria-current="page">프로젝트 작업</li>
+									<c:if test="${not empty projectDate}">
+										<c:forEach items="${projectDate}" var="pcs" varStatus="ms" > 
+											<li class="breadcrumb-item active" aria-current="page">${pcs.project_title}</li>
+										</c:forEach>
+									</c:if>
+									
 								</ol>
 							</nav>
 						</div>
@@ -61,8 +66,9 @@
 				
 				
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-										<div class="clearfix mb-20">	
-							<div class="pull-right">
+					<div class="clearfix mb-20">	
+						
+							<div class="pull-right" style="margin-top:10px;">
 								<a href="#" class="btn-block" data-toggle="modal" data-target="#bd-example-modal-lg" type="button">
 									작업 추가
 								</a>
@@ -80,8 +86,8 @@
 											<div class="modal-body">
 													<c:if test="${not empty projectDate}">
 														<c:forEach items="${projectDate}" var="pdate" varStatus="g">
-															<input type="hidden" name = "std" value="${pdate.project_std_date}">
-															<input type="hidden" name = "end" value="${pdate.project_end_date}">
+															<input type="hidden" name = "stds" value="${pdate.project_std_date}">
+															<input type="hidden" name = "ends" value="${pdate.project_end_date}">
 															<input type="hidden" name = "pid" value="${pdate.project_id}">
 														</c:forEach>
 													</c:if>
@@ -202,10 +208,16 @@
 							</div>
 						</div>
 						
-				
+			
 				<c:if test="${not empty projectSubList}">
 				
-		<%-- 		<div><p>${projectSubList.project_std_date}</p><p>${projectSubList.project_end_date}</p></div> --%>
+				<c:if test="${not empty projectDate}">
+				<c:forEach items="${projectDate}" var="p" varStatus="n" > 
+				
+					<div><h3>${p.project_title}</h3><p style="float: right;">기간 : ${p.project_std_date}~${p.project_end_date}</p></div> 
+				</c:forEach>
+				</c:if>
+		
 					<table class="table">
 							<thead>
 								<tr>
@@ -226,7 +238,7 @@
 										</div>
 									</th>
 									<td>
-										<a href="#" onclick="window.location='projectHistory.do'">${pvo.project_sub_title}</a>
+										<a href="#" onclick="window.location='projectHistory.do?subid=${pvo.project_sub_id}&pid=${pvo.project_id}'">${pvo.project_sub_title}</a>
 										<input type="hidden" name="p_title" value="${pvo.project_sub_title}">
 									</td>
 									<td>${pvo.project_sub_important}<input type="hidden" name="p_imp" value="${pvo.project_sub_important}"></td>
@@ -282,8 +294,8 @@
 			<div class="modal-body">
 					<c:if test="${not empty projectDate}">
 						<c:forEach items="${projectDate}" var="pdate" varStatus="g">
-							<input type="hidden" name = "std" value="${pdate.project_std_date}">
-							<input type="hidden" name = "end" value="${pdate.project_end_date}">
+							<input type="hidden" name ="std" value="${pdate.project_std_date}">
+							<input type="hidden" name ="end" value="${pdate.project_end_date}">
 							<input type="hidden" name = "p_pid" value="${pdate.project_id}">
 						</c:forEach>
 					</c:if>
@@ -590,7 +602,9 @@ datePickerSet($("#datepicker3"), $("#datepicker4"), true); //다중은 시작하
 			    	   }
 			       }
 			       for (var i = 0; i < data.length; i++) {
-			    	  
+			    	   if(data[i].position == '사장'){
+			      			  continue; 
+			      		}else{
 			      	   if(data[i].dept_name == '인사팀'){
 			    	      	 $('.insa-update').append('<li class="add-person2" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id_update" type="hidden" name="member_id_update" value="'+data[i].id+'"></li>');		   
 			        	   }else if(data[i].dept_name == '경영팀'){
@@ -598,6 +612,7 @@ datePickerSet($("#datepicker3"), $("#datepicker4"), true); //다중은 시작하
 			        	   }else if(data[i].dept_name == '개발팀'){
 			    	      	 $('.geabal-update').append('<li class="add-person2" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']' + data[i].name + '('+data[i].position+')</a><input class="member_id_update" type="hidden" name="member_id_update" value="'+data[i].id+'"></li>');		   
 			        	   }
+			      		}
 			      	   
 			      	/*  if(data[i].dept_name == '인사팀'){
 		    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
@@ -790,7 +805,9 @@ $('#prj-save-update').click(function() {
 			    	   }
 			       }
 			       for (var i = 0; i < data.length; i++) {
-			    	  
+			    	   if(data[i].position == '사장'){
+			      			  continue; 
+			      		}else{
 			      	   if(data[i].dept_name == '인사팀'){
 			    	      	 $('.insa1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
 			        	   }else if(data[i].dept_name == '경영팀'){
@@ -798,6 +815,7 @@ $('#prj-save-update').click(function() {
 			        	   }else if(data[i].dept_name == '개발팀'){
 			    	      	 $('.geabal1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
 			        	   }
+			      		}
 			      	   
 			      	/*  if(data[i].dept_name == '인사팀'){
 		    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
@@ -976,6 +994,9 @@ $(".prj-del").click(function(){
 });
 </script>
 	<!-- js -->
+
+	
+
 	<script src="./resources/src/plugins/jquery-steps/jquery.steps.js"></script>
 	<script src="./resources/vendors/scripts/steps-setting.js"></script>
 

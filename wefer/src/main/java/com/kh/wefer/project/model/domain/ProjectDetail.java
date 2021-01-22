@@ -21,13 +21,17 @@ public class ProjectDetail {
 //	PROJECT_SUB_ID            NOT NULL VARCHAR2(2000) 
 	
 	private String project_datail_id;
-	private String project_datail_title;
 	private String project_datail_content;
 	private Date project_datail_write_date;
 	private String project_datail_file;
 	private String id;
 	private String project_id;
 	private String project_sub_id;
+	private String project_datail_status;
+	private String name;
+	private String profile;
+	
+	
 	
 	
 	

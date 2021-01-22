@@ -71,7 +71,19 @@
 		<beans:constructor-arg index="0"
 			ref="sqlSessionFactory" />
 	</beans:bean>
-
+	
+	
+	<!-- Multipart 파일업로드 관련 bean등록 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	<!-- spring-donwload bean -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	    <beans:property name="order" value="0" />
+	</beans:bean>
+	<beans:bean id="downloadView" class="com.kh.wefer.project.common.DownloadView" />
+	<!-- /spring-donwload bean -->
+	
 	<!-- TransactionManager를 정의하여 Commit, Rollback을 제어한다 -->
 	<beans:bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

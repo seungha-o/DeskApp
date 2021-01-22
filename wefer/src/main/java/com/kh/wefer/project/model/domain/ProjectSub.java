@@ -31,6 +31,9 @@ public class ProjectSub {
 	private String project_sub_status;
 	private String project_id;
 	private String project_color;
+	private String project_title;
+	private Date project_std_date;
+	private Date project_end_date;
 	
 	private List<ProjectMember> projectMembers;
 	private List<Project> project;

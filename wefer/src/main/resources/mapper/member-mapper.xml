@@ -30,7 +30,7 @@
 	
 	<select id="memberList" resultType="arraylist"
 		resultMap="resultMember">
-		select dept.dept_name,member.position, member.name, member.id from dept, member where dept.dept_no = member.dept_no
+		select dept.dept_name,member.position, member.profile, member.status, member.name, member.id from dept, member where dept.dept_no = member.dept_no
 	</select>
 	
 	<select id="memberAllList" resultType="arraylist"

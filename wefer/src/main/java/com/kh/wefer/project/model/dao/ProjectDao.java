@@ -5,8 +5,11 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
@@ -51,7 +54,7 @@ public class ProjectDao {
 	}
 
 	public int updateProject(Project p) {
-		System.out.println("´Ù¿À"+p.toString());
+		System.out.println("ï¿½Ù¿ï¿½"+p.toString());
 		return sqlSession.update("Project.updateProject", p);
 	}
 
@@ -74,6 +77,54 @@ public class ProjectDao {
 	public int projectSubAddMember(ProjectMember pm) {
 		return sqlSession.insert("Project.projectSubAddMember", pm);
 	}
+
+	public int projectSubUpdate(ProjectSub ps) {
+		return sqlSession.update("Project.projectSubUpdate", ps);
+	}
+
+	public int projectSubUpdateInsertMember(ProjectMember pm) {
+		return sqlSession.insert("Project.projectSubUpdateInsertMember", pm);
+	}
+
+	public List<ProjectMember> projectMemberChk(ProjectMember pm) {
+		return sqlSession.selectList("Project.projectMemberChk", pm);
+	}
+
+	public List<ProjectMember> projectChk(ProjectMember pm) {
+		return sqlSession.selectList("Project.projectChk", pm);
+	}
+
+	public List<ProjectSub> projectSubTitles(String subid) {
+		return sqlSession.selectList("Project.projectSubTitles", subid);
+	}
+
+	public Member projectMemberImg(Member m) {
+		return sqlSession.selectOne("Project.projectMemberImg", m);
+	}
+
+	public int historyInsert(ProjectDetail pd) {
+		return sqlSession.insert("Project.historyInsert", pd);
+	}
+
+	public List<ProjectDetail> projectHistoryList(ProjectDetail pd) {
+		return sqlSession.selectList("Project.projectHistoryList", pd);
+	}
+
+	
+
+	public String historyFileName(String project_datail_id) {
+		return sqlSession.selectOne("Project.historyFileName", project_datail_id);
+	}
+
+	public int historyUpdateFile(ProjectDetail pd) {
+		return sqlSession.update("Project.historyUpdateFile", pd);
+	}
+
+	public int projectHistoryDelete(ProjectDetail pd) {
+		return sqlSession.delete("Project.projectHistoryDelete", pd);
+	}
+
+	
 
 
 }

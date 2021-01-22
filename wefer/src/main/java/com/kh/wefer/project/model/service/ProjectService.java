@@ -2,7 +2,11 @@ package com.kh.wefer.project.model.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
@@ -38,8 +42,26 @@ public interface ProjectService {
 	int projectSubAddMember(ProjectMember pm);
 
 	int projectSubUpdate(ProjectSub ps);
-
+	
 	int projectSubUpdateInsertMember(ProjectMember pm);
+
+	List<ProjectMember> projectMemberChk(ProjectMember pm);
+
+	List<ProjectMember> projectChk(ProjectMember pm);
+
+	List<ProjectSub> projectSubTitles(String subid);
+
+	Member projectMemberImg(Member m);
+
+	int historyInsert(ProjectDetail pd);
+
+	List<ProjectDetail> projectHistoryList(ProjectDetail pd);
+
+	String historyFileName(String project_datail_id);
+
+	void historyUpdateFile(ProjectDetail pd);
+
+	int projectHistoryDelete(ProjectDetail pd);
 
 
 

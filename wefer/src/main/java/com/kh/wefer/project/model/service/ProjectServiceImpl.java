@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.dao.ProjectDao;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
@@ -90,14 +93,66 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int projectSubUpdate(ProjectSub ps) {
 		// TODO Auto-generated method stub
-		return 0;
+		return pDao.projectSubUpdate(ps);
 	}
 
 	@Override
 	public int projectSubUpdateInsertMember(ProjectMember pm) {
 		// TODO Auto-generated method stub
-		return 0;
+		return pDao.projectSubUpdateInsertMember(pm);
 	}
+	
+	//프로젝트 히스토리 체크
+	@Override
+	public List<ProjectMember> projectMemberChk(ProjectMember pm) {
+		return pDao.projectMemberChk(pm);
+	}
+
+	@Override
+	public List<ProjectMember> projectChk(ProjectMember pm) {
+		return pDao.projectChk(pm);
+	}
+
+	@Override
+	public List<ProjectSub> projectSubTitles(String subid) {
+		return pDao.projectSubTitles(subid);
+	}
+
+	@Override
+	public Member projectMemberImg(Member m) {
+		return pDao.projectMemberImg(m);
+	}
+
+	@Override
+	public int historyInsert(ProjectDetail pd) {
+		return pDao.historyInsert(pd);
+	}
+
+	@Override
+	public List<ProjectDetail> projectHistoryList(ProjectDetail pd) {
+		return pDao.projectHistoryList(pd);
+	}
+
+	@Override
+	public String historyFileName(String project_datail_id) {
+		return pDao.historyFileName(project_datail_id);
+	}
+
+	@Override
+	public void historyUpdateFile(ProjectDetail pd) {
+		pDao.historyUpdateFile(pd);
+		
+	}
+
+	@Override
+	public int projectHistoryDelete(ProjectDetail pd) {
+		return pDao.projectHistoryDelete(pd);
+	}
+
+	
+	
+
+
 
 	
 }
