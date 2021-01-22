@@ -976,12 +976,6 @@ $(".prj-del").click(function(){
 });
 </script>
 	<!-- js -->
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
-	
-
 	<script src="./resources/src/plugins/jquery-steps/jquery.steps.js"></script>
 	<script src="./resources/vendors/scripts/steps-setting.js"></script>
 

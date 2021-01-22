@@ -236,10 +236,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script

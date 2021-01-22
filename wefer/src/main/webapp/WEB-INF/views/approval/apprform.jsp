@@ -43,7 +43,8 @@
 <script
 	src="./resources/src/plugins/air-datepicker/dist/js/i18n/datepicker.ko.js"></script>
 <!-- 달력 한글 추가를 위해 커스텀 -->
-</head>
+
+
 <style>
 .chat-box .chat-desc ul, .pd-ltr-20 {
 	padding: 20px 20px 10px;
@@ -59,6 +60,7 @@
 	border: 0;
 }
 </style>
+</head>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<div class="main-container">
@@ -505,13 +507,8 @@
 		});
 	</script>
 	<!-- js -->
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
 	<script src="./resources/src/plugins/jquery-steps/jquery.steps.js"></script>
 	<script src="./resources/vendors/scripts/steps-setting.js"></script>
-
 	<!-- switchery js -->
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->

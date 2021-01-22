@@ -111,10 +111,5 @@
 			</div>
 		</div>
 	</div>
-	<!-- js -->
-		<script src="./resources/vendors/scripts/core.js"></script>
-		<script src="./resources/vendors/scripts/script.min.js"></script>
-		<script src="./resources/vendors/scripts/process.js"></script>
-		<script src="./resources/vendors/scripts/layout-settings.js"></script>
 </body>
 </html>
