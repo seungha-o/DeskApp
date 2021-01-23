@@ -56,6 +56,9 @@ public class PaymentController {
 			@RequestParam(name = "annual_enddate", required = false) String end) {
 		try {
 			a.setId((String) session.getAttribute("loginId"));
+			if(a.getAnnual_kind().equals("반차")) {
+				a.setAnnual_enddate(a.getAnnual_stddate());
+			}
 			b.setId((String) session.getAttribute("loginId"));
 			System.out.println(pc.getS_member_id0());
 			System.out.println(pc.getS_member_id1());
