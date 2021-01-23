@@ -33,7 +33,9 @@ public class PaymentDao {
 	}
 
 	public int confirmCnt(Payment confirm_id) {
-		System.out.println("다오왔니"+confirm_id);
 		return sqlSession.update("PaymentMapper.confirmCnt", confirm_id);
+	}
+	public int status(Payment confirm_id) {
+		return sqlSession.update("PaymentMapper.status", confirm_id);
 	}
 }

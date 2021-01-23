@@ -29,9 +29,16 @@ public class Payment extends Conference implements java.io.Serializable {
 	private java.sql.Date write_date;
 	private String name;
 	private Payment_confirm Payment_confirm;
+	private String payment_confirm_id;
 	private String s_member_id0;
 	private String s_member_id1;
 	private String s_member_id2;
+	public String getPayment_confirm_id() {
+		return payment_confirm_id;
+	}
+	public void setPayment_confirm_id(String payment_confirm_id) {
+		this.payment_confirm_id = payment_confirm_id;
+	}
 	private String confirm ;
 	
 	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
