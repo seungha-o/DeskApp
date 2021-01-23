@@ -10,7 +10,8 @@
 	href="./resources/vendors/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16"
 	href="./resources/vendors/images/favicon-16x16.png">
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <!-- Mobile Specific Metas -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -86,12 +87,12 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="notification-list mx-h-350 customscroll">
-						   <ul id="socketAlert"style="display:none;"></ul>
+						<ul id="socketAlert" style="display: none;"></ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		 
+
 		<div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button"
@@ -230,9 +231,8 @@
 	<div class="menu-block customscroll">
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
-				<li class="dropdown"><a href="#"
-					class="dropdown-toggle"> <span class="micon dw dw-house-1"></span><span
-						class="mtext">마이페이지</span>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"> <span
+						class="micon dw dw-house-1"></span><span class="mtext">마이페이지</span>
 				</a>
 					<ul class="submenu">
 						<li><a href="#" onclick="location.href='/wefer/profile.do'">내
@@ -240,14 +240,13 @@
 						<li><a href="schdmanagement.do">내 일정관리</a></li>
 						<li><a href="index2.html">내 근태조회</a></li>
 					</ul></li>
-				<li><a href="#"
-					onclick="location.href='/wefer/approval.do'"
+				<li><a href="#" onclick="location.href='/wefer/approval.do'"
 					class="dropdown-toggle no-arrow"> <span
 						class="micon dw dw-calendar1"></span><span class="mtext">전자결재</span>
 				</a></li>
-				<li class="dropdown"><a href="#"
-					class="dropdown-toggle" data-option="off"> <span
-						class="micon dw dw-list3"></span><span class="mtext">프로젝트</span>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-option="off"> <span class="micon dw dw-list3"></span><span
+						class="mtext">프로젝트</span>
 				</a>
 					<ul class="submenu">
 						<li><a href="#"
@@ -262,12 +261,16 @@
 						<li><a href="basic-table.html">Basic Tables</a></li>
 						<li><a href="datatable.html">DataTables</a></li>
 					</ul></li>
-					<c:if test="${dept_no eq '1'||position eq '부장' }">
-									<li><a href="schedule.do" class="dropdown-toggle no-arrow"></c:if>
-						<span class="micon dw dw-calendar1"></span><span class="mtext">일정</span>
-				</a></li>
+				<c:if test="${dept_no eq '1'||position eq '부장' }">
+					<li><a href="schedule.do" class="dropdown-toggle no-arrow">
+				</c:if>
+				<span class="micon dw dw-calendar1"></span>
+				<span class="mtext">일정</span>
+				</a>
+				</li>
 
-				<li><a href="#" onclick="location.href='/wefer/chat.do'" class="dropdown-toggle no-arrow"> <span
+				<li><a href="#" onclick="location.href='/wefer/chat.do'"
+					class="dropdown-toggle no-arrow"> <span
 						class="micon dw dw-chat3"></span><span class="mtext">채팅</span>
 				</a></li>
 				<li>
@@ -291,82 +294,142 @@
 
 <script>
 	var socket = null;
-	$(document).ready( function() {
-	    connectWS();   
+	$(document).ready(function() {
+		connectWS();
 	});
 
 	function connectWS() {
-	    console.log("tttttttttttttt")
-	    var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
-	    console.log("tttttttttttttt 연결됨")
-	    socket = ws;
-	
-	    ws.onopen = function () {
-	        console.log('Info: connection opened.');
-	    };
-	
-	    ws.onmessage = function (event) {
-	        console.log("ReceiveMessage:", event.data+'\n');
-	        
-	        var $socketAlert = $('ul#socketAlert');
-	        $socketAlert.html(event.data);
-	        $socketAlert.css('display', 'block');
-	        
-	    /*     setTimeout( function() {
-	           $socketAlert.css('display', 'none');
-	        }, 3000); */
-	    };
-	
-	    ws.onclose = function (event) { 
-	        console.log('Info: connection closed.');
-	    };
-	    ws.onerror = function (err) { console.log('Error:', err); };
+		console.log("tttttttttttttt")
+		var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
+		console.log("tttttttttttttt 연결됨")
+		socket = ws;
+
+		ws.onopen = function() {
+			console.log('Info: connection opened.');
+		};
+
+		ws.onmessage = function(event) {
+			console.log("ReceiveMessage:", event.data + '\n');
+
+			var $socketAlert = $('ul#socketAlert');
+			$socketAlert.html(event.data);
+			$socketAlert.css('display', 'block');
+
+			/*     setTimeout( function() {
+			       $socketAlert.css('display', 'none');
+			    }, 3000); */
+		};
+
+		ws.onclose = function(event) {
+			console.log('Info: connection closed.');
+		};
+		ws.onerror = function(err) {
+			console.log('Error:', err);
+		};
 	}
-</script> 
+</script>
 <script type="text/javascript">
-	$.ajax({
+	$
+			.ajax({
 				url : "${pageContext.request.contextPath}/memeberList",
 				type : "POST",
 				contentType : "application/json; charset=utf-8;",
 				dataType : "json",
 				success : function(data) {
-				       for (var i = 0; i < data.length; i++) {	
-				    	   if(data[i].dept_name == '인사팀'){	
-				    		 if($('.insa').length == 0){	
-					      	 $('.result').append('<ul class="insa"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			 	
-				    		 }	
-				    	   }else if(data[i].dept_name == '경영팀'){	
-				    		   if($('.gyeonyoung').length == 0){	
-					      	 		$('.result').append('<ul class="gyeonyoung"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			   	
-				    		   }	
-				    	   }else if(data[i].dept_name == '개발팀'){	
-				    		   if($('.geabal').length == 0){	
-					      	 		$('.result').append('<ul class="geabal"><span style="color:white;">'+data[i].dept_name+'</span></ul>');		       			   	
-				   		   }	   	
-				    	   }	
-				       }	
-				       for (var i = 0; i < data.length; i++) {	
-				    	   if(data[i].dept_name == '인사팀'){	
-				  	      	 if(data[i].status == '퇴근'){	
-				  	      		$('.insa').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');		   	
-				  	      	 }else if(data[i].status == '출근'){	
-				  	      		$('.insa').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');		   	 	
-				  	      	 }	
-				  	      	 	
-				      	   }else if(data[i].dept_name == '경영팀'){	
-				      		 if(data[i].status == '퇴근'){	
-					  	      		$('.gyeonyoung').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');		   	
-					  	      	 }else if(data[i].status == '출근'){	
-					  	      		$('.gyeonyoung').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');		   	 	
-					  	      	 }	
-				      	   }else if(data[i].dept_name == '개발팀'){	
-				      		 if(data[i].status == '퇴근'){	
-					  	      		$('.geabal').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');		   	
-					  	      	 }else if(data[i].status == '출근'){	
-					  	      		$('.geabal').append('<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+data[i].id+'\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '  + data[i].name + '('+data[i].position+')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');		   	 	
-					  	      	 }	
-				      	   }	
-				       							}
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].dept_name == '인사팀') {
+							if ($('.insa').length == 0) {
+								$('.result').append(
+										'<ul class="insa"><span style="color:white;">'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						} else if (data[i].dept_name == '경영팀') {
+							if ($('.gyeonyoung').length == 0) {
+								$('.result').append(
+										'<ul class="gyeonyoung"><span style="color:white;">'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						} else if (data[i].dept_name == '개발팀') {
+							if ($('.geabal').length == 0) {
+								$('.result').append(
+										'<ul class="geabal"><span style="color:white;">'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						}
+					}
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].dept_name == '인사팀') {
+							if (data[i].status == '퇴근') {
+								$('.insa')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+							} else if (data[i].status == '출근') {
+								$('.insa')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+							}
+
+						} else if (data[i].dept_name == '경영팀') {
+							if (data[i].status == '퇴근') {
+								$('.gyeonyoung')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+							} else if (data[i].status == '출근') {
+								$('.gyeonyoung')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+							}
+						} else if (data[i].dept_name == '개발팀') {
+							if (data[i].status == '퇴근') {
+								$('.geabal')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+							} else if (data[i].status == '출근') {
+								$('.geabal')
+										.append(
+												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+														+ data[i].id
+														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+														+ data[i].name
+														+ '('
+														+ data[i].position
+														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+							}
+						}
+					}
 
 				},
 				error : function() {

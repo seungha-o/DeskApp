@@ -32,4 +32,6 @@ public interface MemberService {
 
 	void updatePw(Member m);
 
+	String selectuserdept(String addrMember);
+
 }

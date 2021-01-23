@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="AnnualMapper"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+	<resultMap type="Annual" id="resultAnnual"> 
+		<id property="id" column="id"/>
+		<result property="annual_id" column="annual_id" />
+		<result property="annual_content" column="annual_content" />
+		<result property="annual_kind" column="annual_kind" />
+		<result property="annual_stddate" column="annual_stddate" />
+		<result property="annual_enddate" column="annual_enddate" />
+	</resultMap>
+		<resultMap type="AnnualSc" id="resultAnnualSc"> 
+		<id property="id" column="id"/>
+		<result property="annual_id" column="annual_id" />
+		<result property="annual_content" column="annual_content" />
+		<result property="annual_kind" column="annual_kind" />
+		<result property="annual_stddate" column="annual_stddate" />
+		<result property="annual_enddate" column="annual_enddate" />
+	</resultMap>
+	
+	<insert id = "annualInsert" parameterType="Annual"
+		flushCache="true" statementType="PREPARED">
+      <selectKey resultType="string" keyProperty="id" order="BEFORE">
+         select id from member where id = #{id}
+      </selectKey>
+		insert into annual (annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
+		values (#{annual_id},
+		#{annual_content},
+		#{annual_stddate},
+		#{annual_enddate},
+		#{annual_kind},
+		#{id})
+	</insert>
+
+	<select id = "seqAnnualPayment" resultType="string">
+		select SEQ_PAYMENT_ANNUAL.nextval from dual
+	</select>
+	
+	<select id ="selectAnnualList" resultType="arraylist" resultMap="resultAnnualSc" parameterType="String">
+		select* from annual where id =#{id}
+	</select>
+	
+	<update id="updatescheduleSc" parameterType="AnnualSc" flushCache="true" statementType="PREPARED">
+		update annual set annual_content =#{annual_content},annual_stddate=TO_DATE(#{annual_stddate}),annual_enddate=TO_DATE(#{annual_enddate}),annual_kind=#{annual_kind}
+		where annual_id=#{annual_id}
+	</update>
+	
+	<insert id="insertscheduleSc" parameterType="AnnualSc" flushCache="true" statementType="PREPARED">
+	insert into annual(annual_content,annual_stddate,annual_enddate,annual_kind,annual_id,id)values(#{annual_content},TO_DATE(#{annual_stddate}),TO_DATE(#{annual_enddate}),#{annual_kind},Annual_SEQ.nextval,#{id})
+	</insert>
+</mapper>

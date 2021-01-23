@@ -129,7 +129,7 @@
 							<div class="modal-content">
 								<form action="insert_scheduleSc.do" id="add_schedule" method="post">
 									<div class="modal-body">
-										<h4 class="text-blue h4 mb-10">일정수정</h4>
+										<h4 class="text-blue h4 mb-10">일정추가</h4>
 										<!-- 수정하세야 -->
 										<input type="hidden" name="annual_id" id="scid"> <input
 											type="hidden" name="id" value="${loginId}">
@@ -213,14 +213,11 @@
 			
 				],
 				dayClick: function(date,jsEvent, view) {
-					
+					jQuery('#modal-view-event-add').modal();
+
 				},
 				borderColor:"white",
 				eventClick: function(events, jsEvent, view) {
-					
-					
-					
-					
 					//jQuery('#modal-view-event').modal();
 					var evtt =events.title1;
 					$("#schedules_name").val(evtt);

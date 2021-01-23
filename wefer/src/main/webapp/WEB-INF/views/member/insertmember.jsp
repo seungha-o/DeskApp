@@ -88,7 +88,7 @@
 						</div>
 						
 						
-				<form action="insertmember.do" method="post">
+				<form action="insertmember.do" method="post" enctype="multipart/form-data">
 							<div class="form-group row">
 								<label class="col-sm-12 col-md-2 col-form-label">아이디</label>
 								<div class="col-sm-12 col-md-10">
@@ -165,6 +165,12 @@
 											type="radio" name="manage" id="option2" autocomplete="off" checked value="0">
 											아니요 </label>
 									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-12 col-md-2 col-form-label">프로필 이미지</label>
+								<div class="col-sm-12 col-md-10">
+									<input type ="file" name="profileimg" required="required">
 								</div>
 							</div>
 						<input type="submit" value="등록하기">

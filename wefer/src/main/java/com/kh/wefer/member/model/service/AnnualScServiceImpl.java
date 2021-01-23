@@ -16,7 +16,7 @@ public class AnnualScServiceImpl implements AnnualScService {
 	@Autowired
 	private AnnualScDao aScDao;
 	@Override
-	public List<Annual> selectAnnualList(String id) {
+	public List<AnnualSc> selectAnnualList(String id) {
 		return aScDao.selectAnnualList(id);
 	}
 	@Override

@@ -133,11 +133,10 @@
 									method="post">
 									<div class="modal-body">
 										<h4 class="text-blue h4 mb-10">일정수정</h4>
-										<!-- 수정하세야 -->
 										<input type="hidden" name="schedules_id" id="scid"> <input
 											type="hidden" name="id" value="test1">
 										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
-										<input type="text" name="schedules_status" value="회사">
+										<!-- <input type="text" name="schedules_status" value="회사"> -->
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
 												name="schedules_name" id="schedules_name">
@@ -187,7 +186,6 @@
 								<form action="add_schedule.do" id="add_schedule" method="post">
 									<div class="modal-body">
 										<h4 class="text-blue h4 mb-10">일정추가</h4>
-										<!-- 수정하세야 -->
 										<input type="hidden" name="schedules_id" value="0"> <input
 											type="hidden" name="id" class="rid" value="test1">
 										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
@@ -248,11 +246,6 @@
 		$("#dept").val("${dept_no}");
 		
 	})
-	
-	
-	
-
-
 	$(function() {
 		jQuery(function() {
 			window.dataLayer = window.dataLayer || [];

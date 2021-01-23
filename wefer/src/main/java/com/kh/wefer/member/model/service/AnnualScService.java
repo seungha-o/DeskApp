@@ -6,6 +6,6 @@ import com.kh.wefer.member.model.domain.AnnualSc;
 import com.kh.wefer.payment.model.domain.Annual;
 
 public interface AnnualScService {
-	List<Annual>selectAnnualList(String id);
+	List<AnnualSc>selectAnnualList(String id);
 	void updatescheduleSc(AnnualSc vo);
 }

@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	
-	//mypage?¥ê?
+	//mypage?ï¿½ï¿½?
 	@Override
 	public Member profileList(String id) {
 		return mDao.profileList(id);
@@ -79,9 +79,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void updatePw(Member m) {//pw ¼öÁ¤
+	public void updatePw(Member m) {//pw ï¿½ï¿½ï¿½ï¿½
 		mDao.updatePw(m);
 		
+	}
+
+	@Override
+	public String selectuserdept(String addrMember) {
+		return mDao.selectuserdept(addrMember);
 	}
 
 

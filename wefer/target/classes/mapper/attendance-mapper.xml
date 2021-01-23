@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Attendance"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+	<resultMap type="Attendance" id="resultAttendance"> <!-- type = "xml의 별칭" -->
+		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="attend_id" column="attend_id"></id>
+		<result property="id" column="id" />
+		<result property="attend_work_date" column="attend_work_date" />
+		<result property="attend_work_time" column="attend_work_time" />
+		<result property="attend_gotowork" column="attend_gotowork" />
+		<result property="attend_gotohome" column="attend_gotohome" />
+		<collection property="member" resultMap="resultMember">
+        </collection>
+	</resultMap>
+	<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="dept_no" column="dept_no" />
+	</resultMap>	
+		
+	
+	<select id="attendanceDaylist" resultType="arraylist"
+		resultMap="resultAttendance">
+		select 
+			member.name as name, 
+			member.dept_no as dept_no, 
+			attendance.attend_work_date as attend_work_date, 
+			attendance.id as id, 
+			attendance.attend_work_time as attend_work_time, 
+			attendance.attend_gotowork as attend_gotowork,
+			attendance.attend_gotowork as attend_gotowork
+		from 
+			member, attendance 
+		where  
+			member.id = attendance.id and attend_work_date like sysdate
+	</select>
+	
+	<select id="attendanceWeeklist" resultType="arraylist"
+		resultMap="resultAttendance">
+		select 
+			member.name as name, 
+			member.dept_no as dept_no, 
+			attendance.attend_work_date as attend_work_date, 
+			attendance.id as id, 
+			attendance.attend_work_time as attend_work_time, 
+			attendance.attend_gotowork as attend_gotowork,
+			attendance.attend_gotowork as attend_gotowork
+		from 
+			member, attendance 
+		where
+			member.id = attendance.id and attend_work_date BETWEEN sysdate-7 and sysdate
+	</select>
+	
+	<select id="searchattendancelist" resultType="arraylist"
+		resultMap="resultAttendance" parameterType="Map">
+		select 
+			member.name as name, 
+			member.dept_no as dept_no, 
+			attendance.attend_work_date as attend_work_date, 
+			attendance.id as id, 
+			attendance.attend_work_time as attend_work_time, 
+			attendance.attend_gotowork as attend_gotowork,
+			attendance.attend_gotowork as attend_gotowork
+		from 
+			member, attendance 
+		where
+			member.id = attendance.id and attend_work_date BETWEEN #{startdate} and #{enddate}
+	</select>
+</mapper>

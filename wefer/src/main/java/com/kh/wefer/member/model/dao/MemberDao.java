@@ -65,10 +65,14 @@ public class MemberDao {
 	}
 	// pw 체크
 	public List<Member> pwCheck(Member m) { 
-		return sqlSession.selectList("Member.pwCheck" ,m);	
+		return sqlSession.selectList("Member.pwCheck" ,m);
 	}
 	public List<Member> checkuserid(String id) {
 		return sqlSession.selectList("Member.checkuserid",id);
+	}
+	public String selectuserdept(String addrMember) {
+		
+		return sqlSession.selectOne("Member.selectuserdept",addrMember);
 	}
 	
 }

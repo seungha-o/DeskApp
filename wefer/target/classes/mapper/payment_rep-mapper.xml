@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Payment_rep"> <!-- DAO에서 접근할때 사용되는 이름임 -->
+	
+	<select id="commentCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM
+		payment_comment
+	</select>
+
+	<select id="commentList"
+		resultType="com.kh.wefer.payment.model.domain.Payment_rep">
+		 SELECT * FROM payment_comment pc left join payment p	
+		on p.payment_id =  #{payment_id}
+	</select>
+
+	<insert id="commentInsert"
+		parameterType="com.kh.wefer.payment.model.domain.Payment_rep">
+		<selectKey resultType="string" keyProperty="payment_id"
+			order="BEFORE">
+			select payment_id from payment where payment_id = #{payment_id}
+		</selectKey>
+		INSERT INTO payment_comment
+		(PAYMENT_COMMENT_NUMBER,
+		PAYMENT_ID,
+		CONTENTS,
+		ID)
+		VALUES(
+		SEQ_PAYMENT_COMENT.nextval,
+		#{payment_id},
+		#{contents},
+		#{id})
+	</insert>
+
+	<update id="commentUpdate"
+		parameterType="com.kh.wefer.payment.model.domain.Payment_rep">
+		UPDATE payment_comment
+		SET
+		CONTENTS = #{contents}
+		WHERE
+		PAYMENT_COMMENT_NUMBER = 1
+	</update>
+
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM
+		payment_comment
+		WHERE PAYMENT_COMMENT_NUMBER = 1
+	</delete>
+</mapper>

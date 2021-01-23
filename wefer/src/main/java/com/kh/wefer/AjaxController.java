@@ -34,7 +34,6 @@ public class AjaxController {
 		arrList= mService.memberList();
 		return arrList;
 	}
-	
 	@ResponseBody
 	@RequestMapping(value="/deptmemberlist.do")
 	public Object deptlist(@RequestParam(name="dept" ,defaultValue = "") String dept_no) {

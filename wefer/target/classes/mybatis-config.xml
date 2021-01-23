@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull"  value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type ="com.kh.wefer.member.model.domain.Member" alias = "Member"/> 
+		<typeAlias type ="com.kh.wefer.member.model.domain.Dept" alias="Dept"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.Project" alias="Project"/>
+		<typeAlias type ="com.kh.wefer.member.model.domain.AnnualSc" alias="AnnualSc"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectComment" alias="ProjectComment"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectDetail" alias="ProjectDetail"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectMember" alias="ProjectMember"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectReComment" alias="ProjectReComment"/>
+		<typeAlias type ="com.kh.wefer.project.model.domain.ProjectSub" alias="ProjectSub"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment" alias="Payment"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Conference" alias="Conference"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Annual" alias="Annual"/>
+		<typeAlias type ="com.kh.wefer.attendance.model.domain.Attendance" alias="Attendance"/>
+		<typeAlias type ="com.kh.wefer.schedules.model.domain.Schedules" alias="Schedules"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment_confirm" alias="Payment_confirm"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Payment_rep" alias="Payment_rep"/>
+		<typeAlias type ="com.kh.wefer.payment.model.domain.Notify" alias="Notify"/>
+	</typeAliases>
+	<mappers> <!-- 쿼리문이 있는 xml등록 -->
+		<mapper resource="mapper/member-mapper.xml"/>
+		<mapper resource="mapper/project-mapper.xml"/>
+		<mapper resource="mapper/payment-mapper.xml"/>
+		<mapper resource="mapper/annual-mapper.xml"/>
+	 <mapper resource="mapper/schedule-mapper.xml"/>
+	 <mapper resource="mapper/payment_confirm-mapper.xml"/>
+	 <mapper resource="mapper/attendance-mapper.xml"/>
+	 <mapper resource="mapper/payment_rep-mapper.xml"/>
+	 <mapper resource="mapper/notify-mapper.xml"/>
+	</mappers>
+</configuration>

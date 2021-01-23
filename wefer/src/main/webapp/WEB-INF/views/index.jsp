@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>	
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="apple-touch-icon" sizes="180x180"
-	href="./resources/vendors/images/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="./resources/vendors/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="./resources/vendors/images/favicon-16x16.png">
-<!-- CSS -->
-<link rel="stylesheet" type="text/css"
-	href="./resources/src/plugins/fullcalendar/fullcalendar.css">
-<title>wefer</title>
-</head>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<!-- Basic Page Info -->
+<meta charset="utf-8">
+<title>wefer</title>
 <style>
 .fc-event-time {
 	display: none;
@@ -26,10 +20,45 @@
 	display: none;
 }
 </style>
+<!-- Site favicon -->
+<link rel="apple-touch-icon" sizes="180x180"
+	href="./resources/vendors/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="./resources/vendors/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./resources/vendors/images/favicon-16x16.png">
 
+<!-- Mobile Specific Metas -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+	rel="stylesheet">
+<!-- CSS -->
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/core.css">
+<link rel="stylesheet" type="text/css" href="./resources/vendors/styles/icon-font.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/src/plugins/fullcalendar/fullcalendar.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendors/styles/style.css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+
+<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-119386393-1');
+	</script>
+</head>
 <body>
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 
+	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -59,7 +88,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
 					<div id='calendar' style="width: 40%"></div>
 
@@ -74,21 +102,20 @@
 	</div>
 	<!-- js -->
 	<script>
-		$(function() {
-			jQuery(function() {
-				// page is ready
-				jQuery('#calendar').fullCalendar(
-						{
-							themeSystem : 'bootstrap4',
-							// emphasizes business hours
-							businessHours : false,
-							defaultView : 'month',
-							/* // event dragging & resizing */
-							editable : false,
-							// ����ǥ���� �� �ð� �������� ���� ������.
-
-							displayEventTime : true,
-							plugins : [ 'interaction', 'dayGrid' ],
+	$(function() {
+		jQuery(function() {
+			// page is ready
+			jQuery('#calendar').fullCalendar({
+				themeSystem: 'bootstrap4',
+				// emphasizes business hours
+				businessHours: false,
+				defaultView: 'month',
+				/* // event dragging & resizing */
+				editable: false,
+				// ����ǥ���� �� �ð� �������� ���� ������.
+				
+				displayEventTime : true,
+			      plugins: [ 'interaction', 'dayGrid' ],
 
 				// header
 				header: {
@@ -177,10 +204,10 @@
 		$("#delBtn").click(function(){
 		var scid = $(this).prev().val();
 
-				location.href = "delete_schedule.do?scid=" + scid
-
-			})
+		location.href="delete_schedule.do?scid="+scid
+				
 		})
+	})
 	</script>
 	<script src="./resources/src/plugins/fullcalendar/fullcalendar.min.js"></script>
 	<script src="./resources/src/locale/ko.js"></script>

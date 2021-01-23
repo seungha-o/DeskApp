@@ -5,10 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+.fc-event-time {
+	display: none;
+}
+
+.fc-time {
+	display: none;
+}</style>
 <meta charset="UTF-8">
 <title>주소록 사원 연락처 보기</title>
-
-<!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
 	href="./resources/vendors/images/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32"
@@ -27,15 +33,14 @@
 <!-- CSS -->
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/core.css">
+<link rel="stylesheet" type="text/css" href="./resources/vendors/styles/icon-font.min.css">
 <link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/icon-font.min.css">
+	href="./resources/src/plugins/fullcalendar/fullcalendar.css">
 <link rel="stylesheet" type="text/css"
 	href="./resources/vendors/styles/style.css">
 
-
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async
-	src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 <script>
 	window.dataLayer = window.dataLayer || [];
 	function gtag() {
@@ -133,15 +138,16 @@
 								<div class="tab height-100-p">
 									<ul class="nav nav-tabs customtab" role="tablist">
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">개인정보열람</a>
+											<a class="nav-link active" data-toggle="tab" href="#timeline" role="tab" id="calbtn">개인정보열람</a>
 										</li>						
 										<li class="nav-item"> 
-											<a class="nav-link" data-toggle="tab" href="#setting" role="tab">기타 </a>
+											<a class="nav-link" data-toggle="tab" href="#setting" role="tab" id="etcbtn">기타 </a>
 										</li>
 									</ul>
 									<div class="tab-content">
-									
-										
+										<div class="calendar-wrap" style="width:100% ">
+														<div id='calendar'></div>
+													</div>
 									</div>
 								</div>
 							</div>
@@ -156,12 +162,89 @@
 	</div>
 
 	<!-- js -->
+		
+	<script type="text/javascript">
+	$(function(){
+		$("#etcbtn").click(function(){
+			$(".calendar-wrap").css("display","none");
+		})
+		$("#calbtn").click(function(){
+			
+			$(".calendar-wrap").css("display","block");
+
+		})
+	})
+	$(function() {
+		jQuery(function() {
+			// page is ready
+			jQuery('#calendar').fullCalendar({
+				themeSystem: 'bootstrap4',
+				// emphasizes business hours
+				businessHours: false,
+				defaultView: 'month',
+				/* // event dragging & resizing */
+				editable: false,
+				// ����ǥ���� �� �ð� �������� ���� ������.
+				
+				displayEventTime : true,
+			      plugins: [ 'interaction', 'dayGrid' ],
+
+				// header
+				header: {
+					left: '',
+					center: 'prev title next',
+					right: 'today',
+				},
+				events: [
+					   <c:forEach var="vo" items="${list}" varStatus="status">
+					   {	
+						   title : "<휴가>",
+						   title1:"${vo.annual_content}",
+					  		start : "${vo.annual_stddate}", 
+					  		end : "${vo.annual_enddate}" ,
+					  		content:"${vo.annual_content}",
+							borderColor:'white',
+							dept:"${vo.annual_kind}",
+							scid:"${vo.annual_id}"
+					  		  },
+					       </c:forEach>
+					  		   <c:forEach var="vo" items="${list2}" varStatus="status">
+							   {	
+								    title : "${vo.schedules_name}",
+							  		start : "${vo.schedules_std_date}", 
+							  		end : "${vo.schedules_end_date}" ,
+							  		className:"${vo.schedules_color}",
+							  		content:"${vo.schedules_content}",
+									backgroundColor : "${vo.schedules_color}",
+									dept:"${vo.dept_no}",
+									borderColor:'white',
+
+									scid:"${vo.schedules_id}",
+							  		  },
+							       </c:forEach>
+				],
+			})
+	});
+              
+              
+           
+          
+           });
+	
+	</script>
+	<script src="./resources/vendors/scripts/core.js"></script>
+	<script src="./resources/vendors/scripts/script.min.js"></script>
+	<script src="./resources/vendors/scripts/process.js"></script>
+	<script src="./resources/vendors/scripts/layout-settings.js"></script>
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script src="./resources/src/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 	<!-- bootstrap-touchspin js -->
 	<script src="./resources/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
 	<script src="./resources/vendors/scripts/advanced-components.js"></script>
+	<!-- calendar js  -->
+	<script src="./resources/src/plugins/fullcalendar/fullcalendar.min.js"></script>
+	<script src="./resources/src/locale/ko.js"></script>
 </body>
 </html>
 

@@ -1,9 +1,13 @@
 package com.kh.wefer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.wefer.member.model.domain.AnnualSc;
@@ -74,11 +79,11 @@ public class MemberController {
 		 }
 		 return mv;
 	  }
-	 // 주소록 사원 프로필정보 보여주기
 	 @RequestMapping(value ="/personerProfileList.do", method = RequestMethod.GET)
 	 public ModelAndView PersonerProfileList( Member m, ModelAndView mv, @RequestParam(name="addrMemberId") String addrMember, HttpServletRequest request)	 {		 
-		 System.out.println(addrMember);
 		 m.setId(addrMember);
+		mv.addObject("list",aScService.selectAnnualList(addrMember));
+		mv.addObject("list2",schdservice.schedulesDeptList(mService.selectuserdept(addrMember)));
 		 mv.addObject("personerProfileList",mService.personerProfileList(m));
 		 mv.setViewName("member/personerProfileList");
 		 return mv;
@@ -165,9 +170,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/insertmember.do", method = RequestMethod.POST)
-	public String insertmember(Member m, HttpServletRequest request) throws IOException {
-		System.out.println(m.toString());
-		System.out.println(request.getParameter("id"));
+	public String insertmember(Member m,HttpServletRequest request,@RequestParam(name="profileimg")MultipartFile report) throws IOException {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\profileImg";
+		File folder = new File(savePath);
+		saveFile(report, request);
+		String filePath = null;
+		filePath = folder + "\\" + report.getOriginalFilename();
+		try {
+			// 파일저장
+			System.out.println(report.getOriginalFilename() + "을 저장합니다.");
+			System.out.println("저장 경로 : " + savePath);
+			filePath = folder + "\\" + report.getOriginalFilename();
+			report.transferTo(new File(filePath)); // 파일을 저장한다
+			System.out.println("파일명 : " + report.getOriginalFilename());
+			System.out.println("파일 경로 : " + filePath);
+			System.out.println("파일 전송이 완료되었습니다.");
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 : " + e.getMessage());
+		}
+		m.setProfile(report.getOriginalFilename());
 		mService.insertMember(m);
 		return "member/sessiontest";
 	}
@@ -235,7 +258,28 @@ public class MemberController {
 	@RequestMapping("/schdmanagement.do")
 	public ModelAndView schdmanagement(ModelAndView mv,HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
-		mv.addObject("list",aScService.selectAnnualList(id));
+		List<AnnualSc>list = aScService.selectAnnualList(id);
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-ddhh:mm:ss");
+		System.out.println(list.size());
+		System.out.println(list.get(0).toString());
+		Date date =null;
+		try {
+			for(int i=0;i<list.size();i++) {
+				date = fm.parse(list.get(i).getannual_enddate());
+				System.out.println(date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(date);
+				cal.add(Calendar.DATE,-1);
+				System.out.println(String.valueOf(fm.format(cal.getTime())));
+				StringBuffer Buffer = new StringBuffer(String.valueOf(fm.format(cal.getTime())));
+				Buffer.insert(10,"T");
+				System.out.println(Buffer);
+				list.get(i).setannual_enddate(String.valueOf(Buffer));	
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		mv.addObject("list",list);
 		mv.setViewName("/member/schdmanagement");
 		return mv;
 	}
@@ -255,8 +299,18 @@ public class MemberController {
 		}
 		String id = (String) session.getAttribute("loginId");
 		vo.setId(id);
-		System.out.println(vo.getAnnual_stddate());
-		System.out.println(vo.getannual_enddate());
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+		Date to = fm.parse(vo.getannual_enddate());
+		Date date = fm.parse(vo.getannual_enddate());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE,1);
+		vo.setannual_enddate(String.valueOf(fm.format(cal.getTime())));	
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		aScService.insertscheduleSc(vo);
 		mv.setViewName("redirect:schdmanagement.do");
 		return mv;
@@ -288,5 +342,28 @@ public class MemberController {
 				}
 			}
 			return result; 
+		}
+		private void saveFile(MultipartFile report, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\profileImg";
+			File folder = new File(savePath);
+
+			if (!folder.exists()) {
+				folder.mkdir(); // 폴더가 없다면 생성한다.
+			}
+			String filePath = null;
+			try {
+				// 파일저장
+				System.out.println(report.getOriginalFilename() + "을 저장합니다.");
+				System.out.println("저장 경로 : " + savePath);
+
+				filePath = folder + "\\" + report.getOriginalFilename();
+				report.transferTo(new File(filePath)); // 파일을 저장한다
+				System.out.println("파일명 : " + report.getOriginalFilename());
+				System.out.println("파일 경로 : " + filePath);
+				System.out.println("파일 전송이 완료되었습니다.");
+			} catch (Exception e) {
+				System.out.println("파일 전송 에러 : " + e.getMessage());
+			}
 		}
 }
