@@ -28,6 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	@Override
 	public int confirmCnt(Payment confirm_id) {
+		System.out.println("여긴왔나");
 		return pmDao.confirmCnt(confirm_id);
 	}
 }

@@ -69,23 +69,22 @@ public class PaymentController {
 
 	@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
 	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id, ModelAndView mv) {
-		// System.out.println("±Û ¹øÈ£: " + payment_id);
 		mv.addObject("payment_id", pmService.paymentDetail(payment_id));
 		mv.setViewName("approval/apprdetail");
-		// System.out.println(pmService.paymentDetail(payment_id));
-
 		return mv;
 	}
 
-	@RequestMapping(value = "/confirm.do ", method = RequestMethod.GET)
-	public String apprForm(Payment confirm_id, ModelAndView mv, HttpSession session) {
+	@RequestMapping(value = "/confirm.do", method = RequestMethod.GET)
+	public String apprForm(Payment_confirm pc, Payment confirm_id, HttpSession session) {
 		try {
-			System.out.println("³ª¿Í¶ó");
+			System.out.println(pc.getS_member_id0());
+			System.out.println(pc.getS_member_id1());
+			System.out.println(pc.getS_member_id2());
+			
 			confirm_id.setId((String) session.getAttribute("loginId"));
-
+			System.out.println("ìŠ¹ì¸í•œì‚¬ëŒ :"+confirm_id);
 			pmService.confirmCnt(confirm_id);
-			System.out.println(pmService.confirmCnt(confirm_id));
-
+			System.out.println("ì´ê±´ ì•ˆë‚˜ì˜¤ë‚˜"+pmService.confirmCnt(confirm_id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

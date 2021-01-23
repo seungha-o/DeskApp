@@ -8,6 +8,7 @@
 		<result property="s_member_id0" column="s_member_id0" />
 		<result property="s_member_id1" column="s_member_id1" />
 		<result property="s_member_id2" column="s_member_id2" />
+		<result property="confirm" column="confirm" />
 	</resultMap>
 	
 	<insert id = "selectMember" parameterType="Payment" flushCache="true" statementType="PREPARED">

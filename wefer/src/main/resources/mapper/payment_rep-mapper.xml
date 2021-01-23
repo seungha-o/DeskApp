@@ -26,12 +26,12 @@
 		(PAYMENT_COMMENT_NUMBER,
 		PAYMENT_ID,
 		CONTENTS,
-		ID)
+		ID,comment_date)
 		VALUES(
 		SEQ_PAYMENT_COMENT.nextval,
 		#{payment_id},
 		#{contents},
-		#{id})
+		#{id},#{comment_date})
 	</insert>
 
 	<update id="commentUpdate"

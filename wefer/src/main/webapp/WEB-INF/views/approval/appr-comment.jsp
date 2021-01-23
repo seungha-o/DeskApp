@@ -34,11 +34,9 @@ $(document).ready(function() {
 							console.log(value.contents);
 											a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
 											a += '<div class="commentInfo'+value.payment_comment_number+'">'
-													+ '댓글번호 : '
-													+ value.payment_comment_number
-													+ ' / 작성자 : '
-													+ value.id;
-											a += '<a onclick="commentUpdate('
+												
+											a += '<a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='+value.id+'\'">'+value.id+'</a>';
+											a += '<div class = "right" style="float: right"><a onclick="commentUpdate('
 													+ value.payment_comment_number + ',\''
 													+ value.contents
 													+ '\');"> 수정 </a>';
@@ -46,7 +44,7 @@ $(document).ready(function() {
 													+ value.cno
 													+ ');"> 삭제 </a> </div>';
 											a += '<div class="commentContent'+value.payment_comment_number+'"> <p> '
-													+ value.contents + '</p>';
+													+ value.contents + '</p></div>';
 											a += '</div></div>';
 										});
 
@@ -114,5 +112,4 @@ $(document).ready(function() {
 			}
 		});
 	}
-
 </script>

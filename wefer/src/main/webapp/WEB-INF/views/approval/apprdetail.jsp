@@ -124,12 +124,14 @@
 
 				<div class="pd-20 card-box mb-30">
 					<div>
+					
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item pt-20 pb-20"><c:if
 									test="${not empty payment_id.s_member_id0}">
 									<div class="card card-box check" style="visibility: visible;">
 										<div class="card-header name">
 											${payment_id.s_member_id0}</div>
+													<input type = "hidden" name="s_member_id0" value = "${payment_id.s_member_id0}"/>
 										<div class="card-body" onclick="check0()">
 											<div class="conf" id="check0">
 												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
@@ -139,6 +141,7 @@
 								</c:if> <c:if test="${not empty payment_id.s_member_id1}">
 									<div class="card card-box check" style="visibility: visible;">
 										<div class="card-header name">${payment_id.s_member_id1}</div>
+												<input type = "hidden" name="s_member_id1" value = "${payment_id.s_member_id1}"/>
 												<div class="card-body" onclick="check1()">
 											<div class="conf" id="check1">
 												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
@@ -147,7 +150,8 @@
 									</div>
 								</c:if> <c:if test="${not empty payment_id.s_member_id2}">
 									<div class="card card-box check" style="visibility: visible;">
-										<div class="card-header name">${payment_id.s_member_id2}</div>
+										<div class="card-header name" >${payment_id.s_member_id2}</div>
+										<input type = "hidden" name="s_member_id2" value = "${payment_id.s_member_id2}"/>
 										<div class="card-body" onclick="check2()">
 											<div class="conf" id="check2">
 												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
@@ -204,10 +208,28 @@
 											<td>${payment_id.conference.conference_contents}</td>
 										</c:otherwise>
 									</c:choose>
+									<button type="button" class="pd-20 btn btn-primary btn-lg"
+												style="float: right;" onclick="window.location='/wefer/confirm.do'">승인하기</button>
+									
 								</div>
 							</li>
-							<li class="list-group-item pt-20 pb-20">
+							</ul>
+						
+					</div>
+				</div>
+			<div class="card">
+							<div class="card-header">
+								<button class="btn btn-block" data-toggle="collapse" data-target="#faq1" aria-expanded="true">
+									COMMENTS
+								</button>
+							</div>
+							<div id="faq1" data-parent="#accordion" class="collapse show" style="">
+								<div class="card-body">
+								 <%@ include file="/WEB-INF/views/approval/appr-comment.jsp"%>
 								<div class="container">
+									<div class="commentList"></div>
+								</div>
+								</div><div class="container">
 									<label for="content">comment</label>
 									<form name="commentInsertForm">
 										<div class="input-group">
@@ -219,17 +241,12 @@
 													name="commentInsertBtn" >등록</button>
 											</span>
 										</div>
-												<button type="button" class="pd-20 btn btn-primary btn-lg"
-			style="float: right;" onclick="window.location='/wefer/confirm.do '">승인하기</button>
 									</form>
 								</div>
-								<div class="container">
-									<div class="commentList"></div>
-								</div> <%@ include file="/WEB-INF/views/approval/appr-comment.jsp"%>
-							</li>
-						</ul>
-					</div>
-				</div>
+							</div>
+					
+								
+						</div>	
 			</div>
 		</div>
 	</div>
