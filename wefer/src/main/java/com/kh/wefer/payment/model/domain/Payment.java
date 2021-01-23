@@ -29,9 +29,54 @@ public class Payment extends Conference implements java.io.Serializable {
 	private java.sql.Date write_date;
 	private String name;
 	private Payment_confirm Payment_confirm;
+	private String payment_confirm_id;
 	private String s_member_id0;
 	private String s_member_id1;
 	private String s_member_id2;
+	public String getPayment_confirm_id() {
+		return payment_confirm_id;
+	}
+	public void setPayment_confirm_id(String payment_confirm_id) {
+		this.payment_confirm_id = payment_confirm_id;
+	}
+	private String confirm ;
+	
+	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
+			java.sql.Date conference_date, String id, String payment_id, String payment_item, String payment_status,
+			String payment_members_count, String payment_prestatus, String id2, String conference_id2,
+			com.kh.wefer.payment.model.domain.Conference conference, com.kh.wefer.member.model.domain.Member member,
+			String annual_id, String annual_content, String annual_kind, Date annual_stddate, Date annual_enddate,
+			java.sql.Date write_date, String name, com.kh.wefer.payment.model.domain.Payment_confirm payment_confirm,
+			String s_member_id0, String s_member_id1, String s_member_id2, String confirm) {
+		super(conference_id, conference_member, conference_title, conference_contents, conference_date, id);
+		this.payment_id = payment_id;
+		this.payment_item = payment_item;
+		this.payment_status = payment_status;
+		this.payment_members_count = payment_members_count;
+		this.payment_prestatus = payment_prestatus;
+		id = id2;
+		conference_id = conference_id2;
+		Conference = conference;
+		Member = member;
+		this.annual_id = annual_id;
+		this.annual_content = annual_content;
+		this.annual_kind = annual_kind;
+		this.annual_stddate = annual_stddate;
+		this.annual_enddate = annual_enddate;
+		this.write_date = write_date;
+		this.name = name;
+		Payment_confirm = payment_confirm;
+		this.s_member_id0 = s_member_id0;
+		this.s_member_id1 = s_member_id1;
+		this.s_member_id2 = s_member_id2;
+		this.confirm = confirm;
+	}
+	public String getConfirm() {
+		return confirm;
+	}
+	public void setConfirm(String confirm) {
+		this.confirm = confirm;
+	}
 
 	public Payment(String conference_id, String conference_member, String conference_title, String conference_contents,
 			java.sql.Date conference_date, String id, String payment_id, String payment_item, String payment_status,
@@ -172,7 +217,7 @@ public class Payment extends Conference implements java.io.Serializable {
 				+ ", annual_kind=" + annual_kind + ", annual_stddate=" + annual_stddate + ", annual_enddate="
 				+ annual_enddate + ", write_date=" + write_date + ", name=" + name + ", Payment_confirm="
 				+ Payment_confirm + ", s_member_id0=" + s_member_id0 + ", s_member_id1=" + s_member_id1
-				+ ", s_member_id2=" + s_member_id2 + "]";
+				+ ", s_member_id2=" + s_member_id2 + ", confirm=" + confirm + "]";
 	}
 	public String getPayment_id() {
 		return payment_id;

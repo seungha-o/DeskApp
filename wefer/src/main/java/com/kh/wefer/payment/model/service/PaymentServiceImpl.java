@@ -30,4 +30,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public int confirmCnt(Payment confirm_id) {
 		return pmDao.confirmCnt(confirm_id);
 	}
+	@Override
+	public int status(Payment confirm_id) {
+		 return pmDao.status(confirm_id);
+	}
 }

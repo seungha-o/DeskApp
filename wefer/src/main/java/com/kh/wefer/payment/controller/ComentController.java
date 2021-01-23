@@ -36,7 +36,7 @@ public class ComentController {
     	
     	my_name.setId((String) session.getAttribute("loginId"));
        System.out.println("aaaa: "+ my_name.getId());
-       
+       System.out.println(prService.commentInsert(my_name));
         return prService.commentInsert(my_name);
     }
     
@@ -45,7 +45,7 @@ public class ComentController {
     private int commentUpdate(@RequestParam String payment_comment_number, @RequestParam String contents) throws Exception{
         
     	Payment_rep comment = new Payment_rep();
-        comment.setPayment_comment_number(payment_comment_number);
+       comment.setPayment_comment_number(payment_comment_number);
         comment.setContents(contents);
         return prService.commentUpdate(comment);
     }

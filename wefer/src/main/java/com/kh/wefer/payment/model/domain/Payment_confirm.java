@@ -10,7 +10,24 @@ public class Payment_confirm implements java.io.Serializable {
 	private String s_member_id0;
 	private String s_member_id1;
 	private String s_member_id2;
+	private String confirm ;
 	
+	public String getConfirm() {
+		return confirm;
+	}
+	public void setConfirm(String confirm) {
+		this.confirm = confirm;
+	}
+	public Payment_confirm(String payment_confirm_id, String payment_id, String s_member_id0, String s_member_id1,
+			String s_member_id2, String confirm) {
+		super();
+		this.payment_confirm_id = payment_confirm_id;
+		this.payment_id = payment_id;
+		this.s_member_id0 = s_member_id0;
+		this.s_member_id1 = s_member_id1;
+		this.s_member_id2 = s_member_id2;
+		this.confirm = confirm;
+	}
 	public String getPayment_confirm_id() {
 		return payment_confirm_id;
 	}
@@ -56,7 +73,7 @@ public class Payment_confirm implements java.io.Serializable {
 	public String toString() {
 		return "Payment_confirm [payment_confirm_id=" + payment_confirm_id + ", payment_id=" + payment_id
 				+ ", s_member_id0=" + s_member_id0 + ", s_member_id1=" + s_member_id1 + ", s_member_id2=" + s_member_id2
-				+ "]";
+				+ ", confirm=" + confirm + "]";
 	}
 	
 }
