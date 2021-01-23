@@ -2,7 +2,6 @@ package com.kh.wefer.payment.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.wefer.payment.model.domain.Payment;
 import com.kh.wefer.payment.model.domain.Payment_rep;
 import com.kh.wefer.payment.model.service.Payment_repService;
 
@@ -38,6 +38,16 @@ public class ComentController {
        System.out.println("aaaa: "+ my_name.getId());
        System.out.println(prService.commentInsert(my_name));
         return prService.commentInsert(my_name);
+    }
+    
+    @RequestMapping("/check") // check:
+    @ResponseBody
+    private Payment_rep check(Payment_rep my_name, HttpSession session, HttpServletRequest request) throws Exception{
+    	
+    	my_name.setId((String) session.getAttribute("loginId"));
+        System.out.println("abc: "+ my_name.getId());
+        System.out.println(prService.commentInsert(my_name));
+        return my_name;
     }
     
     @RequestMapping("/update") //댓글 수정  

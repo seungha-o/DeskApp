@@ -116,7 +116,22 @@
 												<td>${vo.conference.conference_title}</td>
 												<td>${vo.member.name}</td>
 												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
-												<td>${vo.payment_status}</td>
+				<td>${vo.payment_status}</td>
+											 	<%-- <c:if test="${vo.payment_status eq '진행중'}  ">
+													<td>
+														<div class="progress mb-20">
+															<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td>
+												</c:if> 
+												<c:if test="${vo.payment_status eq '승인'}  ">
+													<td>
+														<div class="progress">
+															<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td> 
+												</c:if>
+											 --%>
 												<c:choose>
 											 	<c:when test="${vo.conference.conference_date == null}">
 													<td>${vo.write_date}</td>
@@ -155,6 +170,21 @@
 												<td>${vo.member.name}</td>
 												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
+											 	<%-- <c:if test="${vo.payment_status eq '진행중'}  ">
+													<td>
+														<div class="progress mb-20">
+															<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td>
+												</c:if> 
+												<c:if test="${vo.payment_status eq '승인'}  ">
+													<td>
+														<div class="progress">
+															<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td> 
+												</c:if>
+											 --%>
 												<c:choose>
 											 	<c:when test="${vo.conference.conference_date == null}">
 													<td>${vo.write_date}</td>
@@ -187,12 +217,28 @@
 										</tr>
 									</thead>
 									<tbody>
+									
 										<c:forEach var="vo" items="${pmlist}">
 											<tr>
 												<td>${vo.conference.conference_title}</td>
 												<td>${vo.member.name}</td>
 												<td><a href="apprDetail.do?payment_id=${vo.payment_id}">${vo.payment_item}</a></td>
 												<td>${vo.payment_status}</td>
+											 	<%-- <c:if test="${vo.payment_status eq '진행중'}  ">
+													<td>
+														<div class="progress mb-20">
+															<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td>
+												</c:if> 
+												<c:if test="${vo.payment_status eq '승인'}  ">
+													<td>
+														<div class="progress">
+															<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</td> 
+												</c:if>
+											 --%>
 												<c:choose>
 											 	<c:when test="${vo.conference.conference_date == null}">
 													<td>${vo.write_date}</td>

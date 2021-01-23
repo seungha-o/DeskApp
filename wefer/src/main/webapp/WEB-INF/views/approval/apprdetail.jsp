@@ -44,7 +44,7 @@
 
 	gtag('config', 'UA-119386393-1');
 </script>
-<script>
+<!-- <script>
 	function check0() {
 		if ($('#check0').css('display') == 'none') {
 			$('#check0').show();
@@ -66,7 +66,7 @@
 			$('#check2').hide();
 		}
 	}
-</script>
+</script> -->
 </head>
 <style>
 .chat-box .chat-desc ul, .pd-ltr-20 {
@@ -85,15 +85,16 @@
 
 .check {
 	float: right;
-	padding: 10px !important;
 	visibility: hidden;
 	margin-left: 10px;
 	
 }
-
+.body {
+padding: 2px !important;
+}
 .name {
 	text-align: center;
-	padding: inherit;
+	padding: 5px !important;
 }
 
 .conf {
@@ -103,7 +104,7 @@
 </style>
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-
+ <%@ include file="/WEB-INF/views/approval/appr-comment.jsp"%>
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-0">
 			<div class="min-height-200px">
@@ -126,43 +127,45 @@
 				<div class="pd-20 card-box mb-30">
 					<div>
 					
-							<form  id="conf" action="/wefer/confirm.do">
+							<form  id="conf" action="/wefer/confirm.do" onsubmit = "return cksubmit();">
 								<input type = "hidden" name = "payment_id" value = "${payment_id.payment_id}">
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item pt-20 pb-20">
-							<c:if
-									test="${not empty payment_id.s_member_id0}">
-									<div class="card card-box check" style="visibility: visible;">
+                              <div class = "checkList"></div>
+							<%-- <c:if test="${not empty payment_id.s_member_id0}">
+							
+									<div class="card card-box check" id = "${payment_id.s_member_id0}" style="visibility: visible;">
 										<div class="card-header name">
-											${payment_id.s_member_id0}</div><%-- 
-													<input type = "hidden" name="s_member_id0" value = "${payment_id.s_member_id0}"/> --%>
-										<div class="card-body">
-											<div class="conf" id="check0">
-												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
-											</div>
+											${payment_id.s_member_id0}</div>
+											<div class="card-body body">
+										
+										<input type="button" id = "1"
+						                  class="btn btn-outline-primary confbutton" style="float: right;"
+						                      value="승인하기" />
 										</div>
+										
 									</div>
-								</c:if> <c:if test="${not empty payment_id.s_member_id1}">
-									<div class="card card-box check" style="visibility: visible;">
-										<div class="card-header name">${payment_id.s_member_id1}</div><%-- 
-												<input type = "hidden" name="s_member_id1" value = "${payment_id.s_member_id1}"/> --%>
-												<div class="card-body">
-											<div class="conf" id="check1">
-												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
-											</div>
+								</c:if> --%> <%-- <c:if test="${not empty payment_id.s_member_id1}">
+									<div class="card card-box check" id = "${payment_id.s_member_id1}"  style="visibility: visible;">
+										<div class="card-header name">${payment_id.s_member_id1}</div>
+												<input type = "hidden" name="s_member_id1" value = "${payment_id.s_member_id1}"/>
+												<div class="card-body body">
+												<input type="button" id = "2"
+						 class="btn btn-outline-primary confbutton" style="float: right;"
+						value="승인하기" />
 										</div>
 									</div>
 								</c:if> <c:if test="${not empty payment_id.s_member_id2}">
-									<div class="card card-box check" style="visibility: visible;">
+									<div class="card card-box check" id = "${payment_id.s_member_id2}" style="visibility: visible;">
 										<div class="card-header name" >${payment_id.s_member_id2}</div>
-										<%-- <input type = "hidden" name="s_member_id2" value = "${payment_id.s_member_id2}"/> --%>
-										<div class="card-body">
-											<div class="conf" id="check2">
-												<i class="icon-copy fa fa-check" aria-hidden="true"></i>
-											</div>
+										<input type = "hidden" name="s_member_id2" value = "${payment_id.s_member_id2}"/>
+										<div class="card-body body">
+											<input type="button" id = "3"
+						 class="btn btn-outline-primary confbutton" style="float: right;"
+						value="승인하기" />
+											
 										</div>
 									</div>
-								</c:if></li>
+								</c:if> --%>
 							<li class="list-group-item pt-20 pb-20">
 								<div class="container">
 									<h6 class="weight-400 d-flex">
@@ -178,7 +181,7 @@
 										<c:choose>
 											<c:when
 												test="${payment_id.conference.conference_member == null}">
-												<td>${payment_id.id}</td>
+												<td>${payment_id.member.name}</td>
 											</c:when>
 											<c:otherwise>
 												<td>${payment_id.conference.conference_member}</td>
@@ -212,12 +215,7 @@
 											<td>${payment_id.conference.conference_contents}</td>
 										</c:otherwise>
 									</c:choose>
-									<input type="button" id="confbutton"
-						class="pd-20 btn btn-primary btn-lg" style="float: right;"
-						value="승인하기" />
-									
 								</div>
-								
 							</li>
 							</ul>
 						</form>
@@ -231,7 +229,7 @@
 							</div>
 							<div id="faq1" data-parent="#accordion" class="collapse show" style="">
 								<div class="card-body">
-								 <%@ include file="/WEB-INF/views/approval/appr-comment.jsp"%>
+								
 								<div class="container">
 									<div class="commentList"></div>
 								</div>
@@ -250,20 +248,10 @@
 									</form>
 								</div>
 							</div>
-					
-								
 						</div>	
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-	$(function() {
-			$("#confbutton").click(function() {
-				confirm("${payment_id.id}"+"님의 결재를 승인하시겠습니까?");
-				$("#conf").submit();
-			});
-		})
-	</script>	
 	<script src="./resources/src/plugins/switchery/switchery.min.js"></script>
 	<!-- bootstrap-tagsinput js -->
 	<script

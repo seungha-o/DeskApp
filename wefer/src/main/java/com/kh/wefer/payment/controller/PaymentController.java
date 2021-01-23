@@ -82,15 +82,11 @@ public class PaymentController {
 		try {
 
 			p.setId((String) session.getAttribute("loginId"));
-		//	System.out.println(p.getS_member_id0());
-		//	System.out.println(pc.getS_member_id1());
-		//	System.out.println(pc.getS_member_id2());
-			
-		//	System.out.println("승인한사람 :"+pc);
+	
 			pmService.confirmCnt(p);
 			pmService.status(p);
-			System.out.println("승인한 사람 (1,2,4):"+pmService.confirmCnt(p));
-			System.out.println("7인지 아닌지"+pmService.confirmCnt(p));
+			System.out.println("cnt:"+pmService.confirmCnt(p));
+			System.out.println("status"+pmService.status(p));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

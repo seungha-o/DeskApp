@@ -89,7 +89,7 @@
 							<label class="col-sm-12 col-md-2 col-form-label">제목</label>
 							<div class="col-sm-12 col-md-10 wrap">
 								<select id="payment_item" name="payment_item"
-									onchange="select()" class="custom-select col-3">
+									onchange="select()" class=" selectpicker ">
 									<option value="no">Choose...</option>
 									<option value="반차">반차</option>
 									<option value="월차">월차</option>

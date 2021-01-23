@@ -87,12 +87,18 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right">
 					<div class="notification-list mx-h-350 customscroll">
-						<ul id="socketAlert" style="display: none;"></ul>
+						   <ul id="socketAlert">
+						   		<li>
+									<a href="#">
+										모든 알림을 확인했습니다
+									</a>
+								</li>
+						   </ul>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		 
 		<div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button"

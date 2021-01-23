@@ -68,7 +68,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 					
 					for(WebSocketSession sess : sessions){
 						//log(sender+"가 글을 1개 등록했습니다");
-						sess.sendMessage(new TextMessage( "<li><a href='./approval.do'>"+sender+"님이 전자결재를 등록했습니다</a></li>"));
+						sess.sendMessage(new TextMessage( "<li><a href='./approval.do' style = \"color: blue;\" >"+sender+"님이 전자결재를 등록했습니다</a></li>"));
 					}
 					
 //					WebSocketSession targetSession = users.get(target);  // 수신을 받을 세션 조회

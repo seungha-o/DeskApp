@@ -6,7 +6,8 @@
 
 $(document).ready(function() {
 	console.log("로드됐나?");
-	commentList(); //페이지 로딩시 댓글 목록 출력 
+	commentList();//페이지 로딩시 댓글 목록 출력 
+	checkList();
 });
 
 	var payment_id = '${payment_id.payment_id}'; 
@@ -27,7 +28,6 @@ $(document).ready(function() {
 						var a = '';
 						console.log(data);
 						$.each(data,function(key, value) {
-							console.log("rmfwk");
 							console.log(key);
 							console.log(value);
 							console.log(value.payment_comment_number);
@@ -49,6 +49,44 @@ $(document).ready(function() {
 										});
 
 						$(".commentList").html(a);
+					}
+				});
+	}
+	function checkList() {
+		$.ajax({
+					url : '${contextPath}/comment/check',
+					type : 'get',
+					data : {
+						'payment_id' : payment_id
+					},
+					success : function(data) {
+						console.log("수신자나왔나?");
+						var a = '';
+						console.log(data.id);
+						if (data.id == "${payment_id.s_member_id0}"){
+							a += '<div class="card card-box check" id = "${payment_id.s_member_id0}" style="visibility: visible;">'
+							a += '<div class="card-header name">'
+							a += '${payment_id.s_member_id0}</div>'
+							a +=	'<div class="card-body body">'
+							a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
+							a += '</div>'
+						}else if (data.id == "${payment_id.s_member_id1}"){
+							a += '<div class="card card-box check" id = "${payment_id.s_member_id1}" style="visibility: visible;">'
+								a += '<div class="card-header name">'
+								a += '${payment_id.s_member_id1}</div>'
+								a +=	'<div class="card-body body">'
+								a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
+								a += '</div>'
+						}else {
+							a += '<div class="card card-box check" id = "${payment_id.s_member_id2}" style="visibility: visible;">'
+								a += '<div class="card-header name">'
+								a += '${payment_id.s_member_id2}</div>'
+								a +=	'<div class="card-body body">'
+								a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
+								a += '</div>'
+						}
+						
+						$(".checkList").html(a);
 					}
 				});
 	}
@@ -112,4 +150,22 @@ $(document).ready(function() {
 			}
 		});
 	}
-</script>
+	 function cksubmit() {
+			confirm("${payment_id.member.name}"+"님의 결재를 승인하시겠습니까?");
+	      }
+			$(".confbutton").click(function() {
+			
+				//$("#conf").submit();
+			});
+			/* $(".confbutton").click(function() {
+				confirm("${payment_id.member.name}"+"님의 결재를 승인하시겠습니까?");
+				$("#conf").submit();
+				$("#2").hide();
+			});
+			$("#0").click(function() {
+				confirm("${payment_id.member.name}"+"님의 결재를 승인하시겠습니까?");
+				$("#conf").submit();
+				$("#0").hide();
+			}); */
+	
+	</script>
