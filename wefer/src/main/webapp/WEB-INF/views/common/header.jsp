@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- Jquery CDN -->
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+ <c:set var="contextPath" value="${pageContext.request.contextPath}" />  
+ <!-- Jquery CDN -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <!-- Site favicon -->
 <link rel="apple-touch-icon" sizes="180x180"
@@ -41,33 +42,19 @@
 
 	gtag('config', 'UA-119386393-1');
 </script>
-<script type="text/javascript">
-	var change = function() {
-		var elem = document.getElementById("commute");
-		if (elem.value == "출근") {
-			alert("출근 확인되었습니다.");
-			elem.value = "퇴근";
-		} else {
-			var conf = confirm("퇴근하시겠습니까 현재시간은 TO_CHAR(SYSDATE, 'HH:MI:SS') 입니다.");
-			if (conf)
-				elem.value = "출근";
-			else
-				elem.value = "퇴근";
-		}
-	}
-</script>
-<div class="pre-loader">
-	<div class="pre-loader-box">
-		<div class="loader-logo">
-			<img src="./resources/vendors/images/deskapp-logo.svg" alt="">
+
+	<div class="pre-loader">
+		<div class="pre-loader-box">
+			<div class="loader-logo"><img src="./resources/vendors/images/deskapp-logo.svg" alt=""></div>
+			<div class='loader-progress' id="progress_div">
+				<div class='bar' id='bar1'></div>
+			</div>
+			<div class='percent' id='percent1'>0%</div>
+			<div class="loading-text">
+				Loading...
+			</div>
 		</div>
-		<div class='loader-progress' id="progress_div">
-			<div class='bar' id='bar1'></div>
-		</div>
-		<div class='percent' id='percent1'>0%</div>
-		<div class="loading-text">Loading...</div>
 	</div>
-</div>
 
 <div class="header">
 	<div class="header-left">
@@ -76,7 +63,8 @@
 
 	</div>
 	<div class="header-right">
-		<!-- <input class="btn btn-success" type="button" value="출근" id = "commute" onclick='change();'> -->
+		<input style="display: none" class="btn btn-success" type="button" value="출근" id = "gowork"'>
+		<input style="display: none" class="btn btn-success" type="button" value="퇴근" id = "gohome" onclick='gotohome();'>
 
 		<div class="user-notification">
 			<div class="dropdown">
@@ -259,21 +247,42 @@
 							onclick="location.href='/wefer/projectlist.do'">진행중인 프로젝트</a></li>
 						<li><a href="#">종료된 프로젝트</a></li>
 					</ul></li>
-				<li class="dropdown"><a href="javascript:;"
-					class="dropdown-toggle"> <span class="micon dw dw-library"></span><span
-						class="mtext">근태관리</span>
-				</a>
-					<ul class="submenu">
-						<li><a href="basic-table.html">Basic Tables</a></li>
-						<li><a href="datatable.html">DataTables</a></li>
-					</ul></li>
+				<c:if test="${dept_no eq '1'}">
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">근태관리</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="${contextPath}/attendancelist.do">근태 리스트</a></li>
+						</ul>
+					</li>
+					</c:if>
+					<c:if test="${dept_no ne '1'}">
+					
+					</c:if>
+					
+					
+					<c:if test="${dept_no eq '1'}">
+					<li class="dropdown">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-library"></span><span class="mtext">사원 관리</span>
+						</a>
+						<ul class="submenu">
+							<li><a href="memberlist.do">사원 목록</a></li>
+							<li><a href="insertmember">사원 추가</a></li>
+						</ul>
+					</li>
+					</c:if>
+					
 				<c:if test="${dept_no eq '1'||position eq '부장' }">
-					<li><a href="schedule.do" class="dropdown-toggle no-arrow">
+					<li>
+					<a href="schedule.do" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-calendar1"></span>
+					<span class="mtext">일정</span>
+					</a>
+					</li>
 				</c:if>
-				<span class="micon dw dw-calendar1"></span>
-				<span class="mtext">일정</span>
-				</a>
-				</li>
+				
 
 				<li><a href="#" onclick="location.href='/wefer/chat.do'"
 					class="dropdown-toggle no-arrow"> <span
@@ -302,6 +311,23 @@
 	var socket = null;
 	$(document).ready(function() {
 		connectWS();
+		
+	$.ajax({
+			type : 'post',
+			url : '${contextPath}/attendbutton.do',
+			success : function(data){
+				if(data == "0"){
+					$('#gowork').css('display','block');
+					$('#gohome').css('display','none');
+				}else{
+					$('#gohome').css('display','block');
+					$('#gowork').css('display','none');
+				}
+			},
+			error : function() {
+				 alert("button err"); 
+			}
+		})
 	});
 
 	function connectWS() {
@@ -442,6 +468,53 @@
 					alert("restController err");
 				}
 			});
+$('#gowork').click(function() {
+		$.ajax({
+			type : 'post',
+			url : '${contextPath}/insertattend.do',
+			success : function(data){
+				 alert(data); 
+				 $.ajax({
+						type : 'post',
+						url : '${contextPath}/attendbutton.do',
+						success : function(data){
+							if(data == "0"){
+								$('#gowork').css('display','block');
+								$('#gohome').css('display','none');
+							}else{
+								$('#gohome').css('display','block');
+								$('#gowork').css('display','none');
+							}
+						},
+						error : function() {
+							 alert("gowork button err"); 
+						}
+					})
+			},
+			error : function() {
+				 alert("gowork err"); 
+			}
+		})
+	}) 
+
+	
+	
+	function gotohome() {
+		$.ajax({
+			type : 'post',
+			url : '${contextPath}/updateattend.do',
+			success : function(data){
+				alert(data); 
+				sessionStorage.clear();
+				location.href="${contextPath}/";
+
+				
+			},
+			error : function() {
+				 alert("gohome err"); 
+			}
+		})
+}
 </script>
 <script src="./resources/vendors/scripts/core.js"></script>
 <script src="./resources/vendors/scripts/script.min.js"></script>

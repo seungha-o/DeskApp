@@ -1,7 +1,11 @@
 package com.kh.wefer.attendance.model.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +19,17 @@ public class Attendance {
 	private String attend_id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private java.sql.Date attend_work_date;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private java.sql.Date attend_work_time;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private java.sql.Date attend_gotowork;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private java.sql.Date attend_gotohome;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	private java.sql.Timestamp attend_work_time;
+	
+	
+	private String attend_gotowork;
+	private String attend_gotohome;
+	
 	private String id;
 	private Member member;
-	
+	private String worktime;
 	
 	public Attendance() {
 		
@@ -50,33 +56,56 @@ public class Attendance {
 	}
 
 
-	public java.sql.Date getAttend_work_time() {
+	public java.sql.Timestamp getAttend_work_time() {
 		return attend_work_time;
 	}
 
 
-	public void setAttend_work_time(java.sql.Date attend_work_time) {
+	public void setAttend_work_time(java.sql.Timestamp attend_work_time) {
 		this.attend_work_time = attend_work_time;
 	}
 
 
-	public java.sql.Date getAttend_gotowork() {
+	public String getAttend_gotowork() {
 		return attend_gotowork;
 	}
 
 
-	public void setAttend_gotowork(java.sql.Date attend_gotowork) {
-		this.attend_gotowork = attend_gotowork;
+	public void setAttend_gotowork(Date attend_gotowork) {
+//		String dt = String.valueOf(attend_gotowork);
+//		System.out.println("날짜"+attend_gotowork);
+//		System.out.println("날짜 넣은거"+dt);
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+//        String Resultstr = "";
+        
+    
+//            Date date = format.parse(dt);
+//            System.out.println("date" +date);
+            SimpleDateFormat resultFormat = new SimpleDateFormat("HH:mm:ss");
+            
+            System.out.println(resultFormat.format(attend_gotowork));
+            String time1 = resultFormat.format(attend_gotowork); 
+           this.attend_gotowork =time1;
+			
+           
+           
+            
+        
+		
 	}
 
 
-	public java.sql.Date getAttend_gotohome() {
+	public String getAttend_gotohome() {
 		return attend_gotohome;
 	}
 
 
-	public void setAttend_gotohome(java.sql.Date attend_gotohome) {
-		this.attend_gotohome = attend_gotohome;
+	public void setAttend_gotohome(Date attend_gotohome) {
+		 SimpleDateFormat resultFormat = new SimpleDateFormat("HH:mm:ss");
+         
+         System.out.println(resultFormat.format(attend_gotohome));
+         String time2 = resultFormat.format(attend_gotohome); 
+		this.attend_gotohome =time2;
 	}
 
 
@@ -89,6 +118,7 @@ public class Attendance {
 		this.id = id;
 	}
 
+	
 
 	public Member getMember() {
 		return member;
@@ -108,8 +138,8 @@ public class Attendance {
 	}
 
 
-	public Attendance(String attend_id, java.sql.Date attend_work_date, java.sql.Date attend_work_time,
-			java.sql.Date attend_gotowork, java.sql.Date attend_gotohome, String id, Member member) {
+	public Attendance(String attend_id, java.sql.Date attend_work_date, java.sql.Timestamp attend_work_time,
+			String attend_gotowork, String attend_gotohome, String id, Member member) {
 		super();
 		this.attend_id = attend_id;
 		this.attend_work_date = attend_work_date;
@@ -120,6 +150,6 @@ public class Attendance {
 		this.member = member;
 	}
 
-
+	
 	
 }

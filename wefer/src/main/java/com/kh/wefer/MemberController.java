@@ -165,12 +165,19 @@ public class MemberController {
 //		}
 	
 	@RequestMapping("/insertmember")
-	public String goinsert(Locale locale, Model model) {
-		return "member/insertmember";
+	public ModelAndView goinsert(ModelAndView mv, HttpSession session) {
+		String dept_no = (String) session.getAttribute("dept_no");
+		String loginId = (String) session.getAttribute("loginId");
+		mv.setViewName("member/insertmember");
+		mv.addObject("dept_no", dept_no);
+		mv.addObject("loginId", loginId);
+		return mv;
 	}
 	
+	
+	
 	@RequestMapping(value = "/insertmember.do", method = RequestMethod.POST)
-	public String insertmember(Member m,HttpServletRequest request,@RequestParam(name="profileimg")MultipartFile report) throws IOException {
+	public ModelAndView insertmember(Member m,HttpServletRequest request,@RequestParam(name="profileimg")MultipartFile report, ModelAndView mv) throws IOException {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\profileImg";
@@ -192,12 +199,19 @@ public class MemberController {
 		}
 		m.setProfile(report.getOriginalFilename());
 		mService.insertMember(m);
-		return "member/sessiontest";
+		mv.setViewName("redirect:memberlist");
+		return mv;
 	}
 	
 	@RequestMapping("/")
-	public String goLogin(Locale locale, Model model) {
-		return "member/login";
+	public ModelAndView goLogin( ModelAndView mv,HttpSession session,HttpServletRequest request) {
+		String seesionid = (String)session.getAttribute("loginId");
+		if(seesionid==null||seesionid.equals("")) {
+			mv.setViewName("member/login");
+		}else {
+			mv.setViewName("redirect:home.do");	
+		}	
+		return mv;
 	}
 	
 	@RequestMapping(value ="/login.do", method = RequestMethod.POST)
@@ -225,8 +239,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/memberlist")
-	public String mlist(Locale locale, Model model) {
-		return "member/memberlist";
+	public ModelAndView mlist(ModelAndView mv, HttpSession session) {
+		mv.setViewName("member/memberlist");
+		return mv;
 	}
 //	@RequestMapping("/memberlist.do")
 //	public ModelAndView gomlist(ModelAndView mv) {

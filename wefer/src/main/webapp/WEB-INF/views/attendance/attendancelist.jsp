@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html>
@@ -63,37 +62,20 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
 							<div class="title">
-								<h4>DataTable</h4>
+								<h4>근태관리</h4>
 							</div>
 							<nav aria-label="breadcrumb" role="navigation">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">DataTable</li>
+									<li class="breadcrumb-item active" aria-current="page">근태 리스트</li>
 								</ol>
 							</nav>
-						</div>
-						<div class="col-md-6 col-sm-12 text-right">
-							<div class="dropdown">
-								<a class="btn btn-primary dropdown-toggle" href="#"
-									role="button" data-toggle="dropdown"> January 2018 </a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">Export List</a> <a
-										class="dropdown-item" href="#">Policies</a> <a
-										class="dropdown-item" href="#">View Assets</a>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 					<div class="pd-20">
-						<h4 class="text-blue h4">Data Table Simple</h4>
-						<p class="mb-0">
-							you can find more options <a class="text-primary"
-								href="https://datatables.net/" target="_blank">Click Here</a>
-						</p>
-						<p class="mb-0">
 							<!-- <label><input class="deptrd" type="radio" name="dept_item" value="" checked="checked">오늘</label>
 							<label><input class="deptrd" type="radio" name="dept_item" value="">일주일</label>
 							<label><input class="deptrd" type="radio" name="dept_item" value="">날짜선택</label> 
@@ -134,21 +116,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="dlist" items="${dlist}">
-								<tr>
-									<td>${dlist.member.name}</td>
+								<c:forEach var="daylist" items="${daylist}" varStatus="status">
+								<tr onclick="location.href='${contextPath}/attendancedetail.do?id=${daylist.id}'">
+									<td>${daylist.member.name}</td>
 									<td>
 									<c:choose>
-									<c:when test="${dlist.member.dept_no eq '1'}">인사팀</c:when>
-									<c:when test="${dlist.member.dept_no eq '2'}">경영팀</c:when>
+									<c:when test="${daylist.member.dept_no eq '1'}">인사팀</c:when>
+									<c:when test="${daylist.member.dept_no eq '2'}">경영팀</c:when>
 									<c:otherwise>개발팀</c:otherwise>
 									</c:choose>
 									</td>
-									<td>${dlist.attend_work_date}</td>
-									<td>${dlist.attend_gotowork}</td>
-									<td>${dlist.attend_gotowork}</td>
-									<td>${dlist.attend_work_time}</td>
-								<tr>
+									<td>${daylist.attend_work_date}</td>
+									<td>${daylist.attend_gotowork}</td>
+									<td>${daylist.attend_gotohome}</td>			
+									<td>${daywt[status.index].toString()}</td>
+								
+								</tr>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -167,20 +150,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="wlist" items="${wlist}">
-								<tr>
-									<td>${wlist.member.name}</td>
+								<c:forEach var="weeklist" items="${weeklist}" varStatus="status">
+								<tr onclick="location.href='${contextPath}/attendancedetail.do?id=${weeklist.id}'">
+									<td>${weeklist.member.name}</td>
 									<td>
 									<c:choose>
-									<c:when test="${wlist.member.dept_no eq '1'}">인사팀</c:when>
-									<c:when test="${wlist.member.dept_no eq '2'}">경영팀</c:when>
+									<c:when test="${weeklist.member.dept_no eq '1'}">인사팀</c:when>
+									<c:when test="${weeklist.member.dept_no eq '2'}">경영팀</c:when>
 									<c:otherwise>개발팀</c:otherwise>
 									</c:choose>
 									</td>
-									<td>${wlist.attend_work_date}</td>
-									<td>${wlist.attend_gotowork}</td>
-									<td>${wlist.attend_gotowork}</td>
-									<td>${wlist.attend_work_time}</td>
+									<td>${weeklist.attend_work_date}</td>
+									<td>${weeklist.attend_gotowork}</td>
+									<td>${weeklist.attend_gotohome}</td>
+									<td>${weekwt[status.index].toString()}</td>
 								<tr>
 								</c:forEach>
 							</tbody>
@@ -208,14 +191,11 @@
 				</div>
 				<!-- Simple Datatable End -->
 			</div>
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a
-					href="https://github.com/dropways" target="_blank">Ankit
-					Hingarajiya</a>
-			</div>
 		</div>
 	</div>
 	<!-- js -->
+
+
 	<script
 		src="./resources/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script
@@ -240,6 +220,11 @@
 	<!-- Datatable Setting js -->
 	<script src="./resources/vendors/scripts/datatable-setting.js"></script>
 	<script type="text/javascript">
+	
+	function detail(id) {
+		location.href="${contextPath}/attendancedetail.do?id=id";
+		console.log(id);
+	}
 	
 	$(document).ready(function() {
 		$('#day_list').css('display','block');
@@ -288,11 +273,15 @@
 							}else{
 								dept_name="개발팀";
 							}
-						$(".resultsearch").append('<tr><td>'+ data[i].member.name +'</td>'+				
+						var a = data[i].id
+						console.log(data[i].id);
+						$(".resultsearch").append(
+								'<tr onclick="location.href=\'${contextPath}/attendancedetail.do?id='+data[i].id+'\'">'+
+								'<td>'+ data[i].member.name +'</td>'+				
 								'<td>'+dept_name+'</td>'+	
 								'<td>'+data[i].attend_work_date+'</td>'+
 								'<td>'+data[i].attend_gotowork+'</td>'+
-								'<td>'+data[i].attend_gotowork+'</td>'+
+								'<td>'+data[i].attend_gotohome+'</td>'+
 								'<td>'+data[i].attend_work_time+'</td></tr>')
 						$('#day_list').css('display','none')
 						$('#week_list').css('display','none')

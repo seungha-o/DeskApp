@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
@@ -160,14 +160,7 @@
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+
 							'<td>'+data[i].employ_date+'</td>'+
-							'<td><div class="dropdown">'+
-									'<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">'+
-										'<i class="dw dw-more"></i>'+
-									'</a>'+
-									'<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">'+
-										'<a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
-									'</div>'+
-								'</div>'+
+							'<td><a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
 							'</td></tr>')
 				}
 			},
@@ -203,14 +196,7 @@
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+
 							'<td>'+data[i].employ_date+'</td>'+
-							'<td><div class="dropdown">'+
-									'<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">'+
-										'<i class="dw dw-more"></i>'+
-									'</a>'+
-									'<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">'+
-										'<a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
-									'</div>'+
-								'</div>'+
+							'<td><a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
 							'</td></tr>')
 				}
 			},
@@ -245,14 +231,7 @@
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+
 							'<td>'+data[i].employ_date+'</td>'+
-							'<td><div class="dropdown">'+
-									'<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">'+
-										'<i class="dw dw-more"></i>'+
-									'</a>'+
-									'<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">'+
-										'<a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
-									'</div>'+
-								'</div>'+
+							'<td><a class="dropdown-item" href="${contextPath}/deletemember.do?id='+data[i].id+'"><i class="dw dw-delete-3"></i> Delete</a>'+
 							'</td></tr>')
 				}
 			},

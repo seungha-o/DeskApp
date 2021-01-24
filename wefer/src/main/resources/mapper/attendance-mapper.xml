@@ -28,11 +28,11 @@
 			attendance.id as id, 
 			attendance.attend_work_time as attend_work_time, 
 			attendance.attend_gotowork as attend_gotowork,
-			attendance.attend_gotowork as attend_gotowork
+			attendance.attend_gotohome as attend_gotohome
 		from 
 			member, attendance 
 		where  
-			member.id = attendance.id and attend_work_date like sysdate
+			member.id = attendance.id and attend_work_date like current_date
 	</select>
 	
 	<select id="attendanceWeeklist" resultType="arraylist"
@@ -44,11 +44,11 @@
 			attendance.id as id, 
 			attendance.attend_work_time as attend_work_time, 
 			attendance.attend_gotowork as attend_gotowork,
-			attendance.attend_gotowork as attend_gotowork
+			attendance.attend_gotohome as attend_gotohome
 		from 
 			member, attendance 
 		where
-			member.id = attendance.id and attend_work_date BETWEEN sysdate-7 and sysdate
+			member.id = attendance.id and attend_work_date BETWEEN current_date-7 and current_date
 	</select>
 	
 	<select id="searchattendancelist" resultType="arraylist"
@@ -60,10 +60,73 @@
 			attendance.id as id, 
 			attendance.attend_work_time as attend_work_time, 
 			attendance.attend_gotowork as attend_gotowork,
-			attendance.attend_gotowork as attend_gotowork
+			attendance.attend_gotohome as attend_gotohome
 		from 
 			member, attendance 
 		where
 			member.id = attendance.id and attend_work_date BETWEEN #{startdate} and #{enddate}
 	</select>
+	
+	<select id="attendancedetail" resultType="arraylist" resultMap="resultAttendance" parameterType="String">
+		select
+			attend_work_date,
+			<!-- to_char(attend_gotowork,'HH24:MI:SS') as  -->attend_gotowork,
+			<!-- to_char(attend_gotohome,'HH24:MI:SS') as  -->attend_gotohome,
+			attend_work_time,
+			id
+		from
+			attendance
+		where
+			id =#{id}
+	</select>
+	
+	<insert id="insertattend" parameterType="String" statementType="PREPARED">
+		<!-- insert 
+			into attendance(attend_id, attend_work_date, attend_gotowork, id)
+    	VALUES
+    		(attendid.NEXTVAL, TO_DATE(current_date,'YYYY/MM/DD'), TO_DATE(current_date,'YYYY/MM/DD HH24:MI:SS'),#{id}) -->
+    	insert 
+			into attendance(attend_id, attend_work_date, attend_gotowork, id)
+    	VALUES
+    		(attendid.NEXTVAL, TO_CHAR(current_date, 'RR/MM/DD'), current_date, #{id})
+	</insert>
+	 	
+	<select id="selectattend" resultType="arraylist" resultMap="resultAttendance" parameterType="String">
+		select * from attendance
+		where to_char(attend_work_date, 'yyyy-mm-dd') = to_char(current_date, 'yyyy-mm-dd') and id =#{id}  
+	</select>
+	
+	<select id="selectattendafter"  resultType="String" parameterType="String">
+		select  to_char(ATTEND_GOTOwork,'HH24:Mi:SS')
+		from attendance
+		where to_char(attend_work_date, 'yyyy-mm-dd') = to_char(current_date, 'yyyy-mm-dd') and id =#{id}  and attend_gotohome is null and attend_work_time is null
+	</select>
+	
+	<update id="updateattend" parameterType="Map" statementType="PREPARED">
+		UPDATE attendance SET
+		attend_gotohome=#{date5},
+		attend_work_time=#{date2}
+		where id=#{id} and attend_work_date=TO_CHAR(current_date,'YYYY/MM/DD') and attend_gotohome is null and attend_work_time is null
+	</update>
+	
+	<select id="selectattend2"  resultType="arraylist" resultMap="resultAttendance" parameterType="String">
+		select *
+		from attendance
+		where id=#{id} and to_char(attend_work_date, 'yyyy-mm-dd') = to_char(current_date, 'yyyy-mm-dd') and attend_gotohome is not null
+	</select>
+	
+	
+	<select id="workaverage"  resultType="arraylist" resultMap="resultAttendance" parameterType="String">
+		select attend_work_time
+		from attendance
+		where id=#{id} and to_char(attend_work_date, 'yyyy-mm') = to_char(current_date, 'yyyy-mm') 
+	</select>
+	
+	<select id="attendToDay"  resultType="arraylist" resultMap="resultAttendance" parameterType="String">
+		select attend_gotowork,attend_gotohome,attend_work_time
+		from attendance
+		where id=#{id} and to_char(attend_work_date, 'yyyy-mm-dd') = to_char(current_date, 'yyyy-mm-dd') 
+	</select>
+	
+	
 </mapper>
