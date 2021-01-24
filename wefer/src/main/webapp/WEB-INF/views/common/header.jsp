@@ -232,7 +232,7 @@
 						<li><a href="#" onclick="location.href='/wefer/profile.do'">내
 								정보</a></li>
 						<li><a href="schdmanagement.do">내 일정관리</a></li>
-						<li><a href="index2.html">내 근태조회</a></li>
+						<li><a href="myattendance.do">내 근태조회</a></li>
 					</ul></li>
 				<li><a href="#" onclick="location.href='/wefer/approval.do'"
 					class="dropdown-toggle no-arrow"> <span

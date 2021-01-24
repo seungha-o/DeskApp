@@ -92,10 +92,10 @@
 							</div>
 								&nbsp;&nbsp;
 							<div class="btn-group btn-group-toggle disset" data-toggle="buttons" >
-								<input style="width: 100px; height: 40px;" id="datepicker1" name="project_std_date" placeholder=" Select Date" type="text">
+								<input style="width: 100px; height: 40px;" id="datepicker1" name="project_std_date" placeholder=" Select Date" type="text" autocomplete="off">
 							</div>
 							<div class="btn-group btn-group-toggle disset" data-toggle="buttons" >
-								<input style="width: 100px; height: 40px;" id="datepicker2" name="project_end_date" placeholder=" Select Date" type="text">
+								<input style="width: 100px; height: 40px;" id="datepicker2" name="project_end_date" placeholder=" Select Date" type="text" autocomplete="off">
 							</div>
 							<div class="btn-group btn-group-toggle disset" data-toggle="buttons" >
 								<button name="search" type="button" class="btn btn-secondary">검색</button>
