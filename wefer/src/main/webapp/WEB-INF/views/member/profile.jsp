@@ -127,7 +127,7 @@ $(function(){
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 						<div class="pd-20 card-box height-100-p">
 							<div class="profile-photo">
-								<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
+							
 								<img src="${pageContext.request.contextPath}/resources/profileImg/${profileList.profile}" alt="" class="avatar-photo">
 								<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">

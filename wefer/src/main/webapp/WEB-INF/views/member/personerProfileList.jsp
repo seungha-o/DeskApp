@@ -90,7 +90,7 @@
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 						<div class="pd-20 card-box height-100-p">
 							<div class="profile-photo">
-								<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="fa fa-pencil"></i></a>
+								
 								<img src="./resources/vendors/images/photo1.jpg" alt="" class="avatar-photo">
 								<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
@@ -117,15 +117,15 @@
 								
 									<li>
 										<span>Email 주소:</span>
-										"${personerProfileList.email}"
+										${personerProfileList.email}
 									</li>
 									<li>
 										<span>핸드폰 번호:</span>
-										"${personerProfileList.phone}"
+										${personerProfileList.phone}
 									</li>
 									<li>
 										<span>주소:</span>										
-										"${personerProfileList.address}"
+										${personerProfileList.address}
 									</li>
 							
 								</ul>
@@ -155,9 +155,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
-			</div>
+			
 		</div>
 	</div>
 
