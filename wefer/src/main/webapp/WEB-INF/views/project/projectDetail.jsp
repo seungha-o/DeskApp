@@ -258,8 +258,13 @@
 									</td>
 									<td>
 									<input type="hidden" name="prj-id" value="${pvo.project_sub_id}">
+									
+									<c:forEach items="${pvo.projectMembers}" var="pm">
+									<c:if test = "${pm.project_member_grade eq 1}">
 									<button type="button" data-toggle="modal" data-target="#bd-example-modal-lg2" class="btn btn-primary prj-update" style="width:50px; height: 30px; padding: 0; font-size: 14px; font-weight: 500; mar">수정</button>												
 									<button type="button" class="btn btn-danger prj-del" style="width:50px; height: 30px; padding: 0; margin-right:20px; font-size: 14px; font-weight: 500; float: left;">삭제</button>
+									</c:if>
+									</c:forEach>
 									</td>
 											</tr>
 								</c:forEach>	
@@ -464,7 +469,7 @@ categoryAxis.renderer.inversed = true;
 var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 dateAxis.renderer.minGridDistance = 70;
 dateAxis.baseInterval = { count: 1, timeUnit: "day" };
-// dateAxis.max = new Date(2018, 0, 1, 24, 0, 0, 0).getTime();
+dateAxis.max = new Date().getTime();
 //dateAxis.strictMinMax = true;
 dateAxis.renderer.tooltipLocation = 0;
 

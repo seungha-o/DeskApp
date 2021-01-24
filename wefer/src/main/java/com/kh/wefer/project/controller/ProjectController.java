@@ -13,11 +13,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,7 @@ import com.kh.wefer.project.model.domain.Project;
 import com.kh.wefer.project.model.domain.ProjectComment;
 import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
+import com.kh.wefer.project.model.domain.ProjectReComment;
 import com.kh.wefer.project.model.domain.ProjectSub;
 import com.kh.wefer.project.model.service.ProjectService;
 
@@ -114,8 +117,12 @@ public class ProjectController {
 		pm.setId(id);
 		pm.setProject_id(project_id);
 		List<ProjectMember> projectChk = new ArrayList<ProjectMember>();
+		List<ProjectMember> projectsub = new ArrayList<ProjectMember>();
 		projectChk = pService.projectChk(pm);
-		
+	
+//		String grade = pService.projectSubChkGrade(id);
+//		System.out.println("grade " +  grade);
+//		mv.addObject("grade",grade);
 		for(int i=0; i<projectChk.size(); i++) {
 			if(id.equals(projectChk.get(i).getId().toString())) {
 				result = 1;
@@ -124,7 +131,9 @@ public class ProjectController {
 			
 		}
 		if(result == 1) {
-			mv.addObject("projectSubList", pService.projectSubList(project_id));
+			projectsub = pService.projectSubList(project_id);
+			
+			mv.addObject("projectSubList",projectsub);
 			mv.addObject("projectDate", pService.projectDate(project_id));
 //			mv.addObject("projectSubMemberList", pService.projectSubMemberList(project_id));
 			mv.setViewName("project/projectDetail");
@@ -220,7 +229,7 @@ public class ProjectController {
 	
 	//프로젝트 생성
 	@RequestMapping(value = "/projectInsert.do", method = RequestMethod.POST)
-	public ModelAndView projectInsert(HttpServletRequest request, ModelAndView mv, Project p, ProjectSub ps, ProjectMember pm,
+	public ModelAndView projectInsert(HttpServletRequest request,HttpSession session, ModelAndView mv, Project p, ProjectSub ps, ProjectMember pm,
 			@RequestParam(name="project_title", required = false)String project_title,@RequestParam(name="project_color")String project_color,
 			@RequestParam(name="project_std_date")String project_std_date, @RequestParam(name="project_end_date")String project_end_date,
 			@RequestParam(name="project_sub_title")String sub_work,@RequestParam(name="id", required = false)String prj_members_id,
@@ -229,8 +238,9 @@ public class ProjectController {
 		try {
 			
 	
+			String sessoinId = (String) session.getAttribute("loginId");
 			
-			
+			Date prjEndDate; // 삭제 시작일
 			Date prjStartDate; // 삭제 시작일
 			Date currentDate; // 현재날짜 Date
 			String oTime = ""; // 현재날짜
@@ -242,32 +252,34 @@ public class ProjectController {
 
 			oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
 
-
-
 			prjStartDate = mSimpleDateFormat.parse( project_std_date );
+
+			prjEndDate = mSimpleDateFormat.parse( project_end_date );
 
 			currentDate =  mSimpleDateFormat.parse( oTime );
 
 								
 
+			int endCompare = currentDate.compareTo( prjEndDate ); // 날짜비교
 			int stdCompare = currentDate.compareTo( prjStartDate ); // 날짜비교
+			System.out.println("시작일이 오늘날짜보다 ? " +stdCompare);
+			System.out.println("종료일이 오늘날짜보다 ? " +endCompare);
 
+// -1 전     1 후      0 오늘
+		
+			if (endCompare > 0 && stdCompare >0){ // 현재날짜가 삭제 시작일 후 인 경우
+				prjStatus = "종료";					
 
-
-			if ( stdCompare > 0 ){ // 현재날짜가 삭제 시작일 후 인 경우
-				prjStatus = "진행중";					
-
-			} else if ( stdCompare < 0) { // 현재날짜가 삭제 시작일 전 인 경우
-
-				prjStatus = "진행예정";
-
-
-			} else if(stdCompare == 0) { // 현재날짜가 삭제 시작일 인 경우
+			} else if (endCompare < 0 && stdCompare > 0) { // 현재날짜가 삭제 시작일 전 인 경우
 
 				prjStatus = "진행중";
 
-				
+
+			} else if(stdCompare <0 && endCompare < 0) { // 현재날짜가 삭제일 인 경우
+
+				prjStatus = "진행예정";
 			}
+			
 			System.out.println("프로젝트 이름" +project_title);
 			System.out.println("프로젝트 색" +project_color);
 			System.out.println("프로젝트 시작일" +project_std_date);
@@ -387,13 +399,16 @@ public class ProjectController {
 					a = new int[prj_sub_title.size()];
 					a[i] = Integer.parseInt(prj_members_id_counts[i]); //2 3
 					
-					System.out.println(a[i]+"번돌립니다.");
 					for(int j=0; j<a[i]; j++) {
-						System.out.println(a[i]+"번째의"+j+"번째입니다 위에꺼");
 						System.out.println(prj_members_group.get(0));
 						pm.setId(prj_members_group.get(0));
 						//여기서 세션아이디 비교
-						pm.setProject_member_grade(0);
+						if(prj_members_group.get(0).equals(sessoinId)) {
+							pm.setProject_member_grade(1);
+							
+						}else {
+							pm.setProject_member_grade(0);							
+						}
 						pService.projectSubMember(pm);
 						prj_members_group.remove(0); 
 						
@@ -767,7 +782,7 @@ public class ProjectController {
 				}
 				
 				
-				
+				//프로젝트 히스토리 작성
 				@RequestMapping(value = "/historyInsert.do", method = RequestMethod.POST)
 				public ModelAndView historyInsert(ProjectDetail pd, 
 						@RequestParam(name = "upload_project_file", required = false) MultipartFile report, @RequestParam(name="pid") String pid,
@@ -808,8 +823,8 @@ public class ProjectController {
 					return mv;
 				}
 				
-					
-					@RequestMapping(value = "/projectHistoryUpdate.do", method = RequestMethod.POST)
+				//프로젝트 히스토리 업데이트
+				@RequestMapping(value = "/projectHistoryUpdate.do", method = RequestMethod.POST)
 				public ModelAndView projectHistoryUpdate(ProjectDetail pd, 
 						@RequestParam(name = "update_file", required = false) MultipartFile report, 
 						@RequestParam(name="pid") String pid,
@@ -865,60 +880,267 @@ public class ProjectController {
 //					}
 //					return mv;
 //				}
-					
+					//히스토리 삭제
 					@RequestMapping(value = "/projectHistoryDelete.do", method = RequestMethod.POST)
-					public void projectHistoryDelete(HttpServletResponse response, HttpServletRequest request, ProjectDetail pd) {
-						PrintWriter out = null;
-						JSONObject job = new JSONObject();
+					@ResponseBody
+					public Map<String, Object> projectHistoryDelete(HttpServletResponse response, HttpServletRequest request, ProjectDetail pd) {
+						Map<String, Object> map = new HashMap<String, Object>();
 						try {
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
 							String project_datail_id = pd.getProject_datail_file();
 							String file = pService.historyFileName(project_datail_id);
 							removeFile(file, request);
-							job.put("ack", pService.projectHistoryDelete(pd));
-							System.out.println(response);
-							out = response.getWriter();
-							out.append(job.toString());
+							pService.projectHistoryDelete(pd);
+							map.put("sucess", "성공");
+							
+							
 						} catch (Exception e) {
-							job.put("ack", -1);
-						} finally {
-							out.flush();
-							out.close();
+							map.put("fail", "실패");
+							
 						}
+						return map;
 					}
-				
-				
+					
+					@RequestMapping(value = "/projectCommentDelete.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Map<String, Object> projectCommentDelete(HttpServletResponse response,HttpSession session, HttpServletRequest request, ProjectComment pc) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						try {
+							String name = (String) session.getAttribute("loginId");
+							System.out.println("세션이름" + name);
+							
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+							String project_comment_id = pc.getProject_comment_id();
+							System.out.println(project_comment_id);
+							System.out.println(pc.getId());
+							if(name.equals(pc.getId())) {
+								int delAck = pService.projectCommentDelete(pc);
+								if(delAck == 1) {
+									map.put("sucess", "삭제되었습니다");								
+								}else {
+									map.put("fail", "실패하였습니다");								
+									
+								}
+							}else {
+								map.put("fail", "작성자만 삭제 할 수 있습니다.");			
+							}
+							
+							
+							
+						} catch (Exception e) {
+							map.put("fail", "실패하였습니다.");
+							
+						}
+						return map;
+					}
+					
+					@RequestMapping(value = "/projectReCommentDelete.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Map<String, Object> projectReCommentDelete(HttpServletResponse response,HttpSession session, HttpServletRequest request, ProjectReComment prc) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						try {
+							String name = (String) session.getAttribute("loginId");
+							System.out.println("세션이름" + name);
+							
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+							String project_recomment_id = prc.getProject_recomment_id();
+							System.out.println(project_recomment_id);
+							System.out.println(prc.getId());
+							if(name.equals(prc.getId())) {
+								int delAck = pService.projectReCommentDelete(prc);
+								if(delAck == 1) {
+									map.put("sucess", "삭제되었습니다");								
+								}else {
+									map.put("fail", "실패하였습니다");								
+									
+								}
+							}else {
+								map.put("fail", "작성자만 삭제 할 수 있습니다.");			
+							}
+							
+							
+							
+						} catch (Exception e) {
+							map.put("fail", "실패하였습니다.");
+							
+						}
+						return map;
+					}
+					
+					
 					@RequestMapping(value = "/projecthistoryComment.do", method = RequestMethod.POST)
 					@ResponseBody
-					public Object projecthistoryComment(HttpServletResponse response, HttpServletRequest request, ProjectComment pc) {
-						JSONObject job = new JSONObject();
-						PrintWriter out = null;
+					public Map<String, Object> projecthistoryComment(HttpServletResponse response, HttpServletRequest request, ProjectComment pc) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						try {
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+							if(pc.getProject_comment_content()== null || pc.getProject_comment_content().equals("")) {
+								map.put("fail", "댓글을 입력해 주세요.");
+							}else {
+								String getProject_comment_content = pc.getProject_comment_content();
+								String getProject_datail_id = pc.getProject_datail_id();
+								String getId = pc.getId();
+								
+								System.out.println(getProject_comment_content);
+								System.out.println(getProject_datail_id);
+								System.out.println(getId);
+								List<ProjectComment> pcList = new ArrayList<ProjectComment>();
+								int a = pService.projectCommentWirte(pc);
+								System.out.println("성공?: "  +a);
+								if(a == 1) {
+									pcList = pService.projectCommentInsertList(pc);
+									System.out.println(pcList);
+									map.put("success", "성공");
+									map.put("commentList", pcList);
+									
+								}else if(a==0) {
+									map.put("fail", "실패");
+								}
+							}
+							
+							
+							
+							
+							
+						} catch (UnsupportedEncodingException e) {
+							map.put("fail", "실패");						
+						}
+						
+						return map;
+					}
+					
+					
+					@RequestMapping(value = "/projecthistoryCommentList.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Map<String, Object> projecthistoryCommentList(HttpServletResponse response, HttpServletRequest request, ProjectComment pc) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						try {
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+								String getProject_datail_id = pc.getProject_datail_id();
+								String getId = pc.getId();
+								
+								System.out.println(getProject_datail_id);
+								System.out.println(getId);
+								List<ProjectComment> pcList = new ArrayList<ProjectComment>();
+								
+									pcList = pService.projectCommentList(pc);
+									System.out.println(pcList);
+									map.put("success", "성공");
+									
+									map.put("commentList", pcList);
+									/*
+									 * select a.*, b.name, r.project_recomment_content, b.profile from
+									 * project_recomment r, project_comment a, member b where r.id = b.id and
+									 * a.project_comment_id = r.project_comment_id and a.project_datail_id='64';
+									 */
+
+						} catch (UnsupportedEncodingException e) {
+							map.put("fail", "실패");						
+						}
+						
+						return map;
+					}
+					
+					
+					
+					@RequestMapping(value = "/projecthistoryReCommentInsert.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Map<String, Object> projecthistoryReCommentInsert(HttpServletResponse response, HttpServletRequest request, ProjectReComment prc) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						try {
+							request.setCharacterEncoding("UTF-8");
+							response.setContentType("text/html; charset=UTF-8");
+							if(prc.getProject_recomment_content()== null || prc.getProject_recomment_content().equals("")) {
+								map.put("fail", "댓글을 입력해 주세요.");
+							}else {
+								String getProject_comment_id = prc.getProject_recomment_content();
+								String project_recomment_content = prc.getProject_comment_id();
+								String getId = prc.getId();
+								
+								System.out.println(getProject_comment_id);
+								System.out.println(project_recomment_content);
+								System.out.println(getId);
+								List<ProjectReComment> prcList = new ArrayList<ProjectReComment>(); 
+								try {
+									pService.projecthistoryReCommentInsert(prc);
+									System.out.println("인서트 성공!");
+									prcList =pService.projectreReCommentInsertList(prc); 
+									System.out.println(prcList);
+									System.out.println("aaa");
+									  map.put("success", "성공");
+									  map.put("recommentList", prcList);
+								}catch (Exception e) {
+									 map.put("fail", "실패"); 
+								}
+								
+								  
+								  
+								 
+							}
+							
+							
+							
+							
+							
+						} catch (UnsupportedEncodingException e) {
+							map.put("fail", "실패");						
+						}
+						
+						return map;
+					}
+				
+					
+					@RequestMapping(value = "/projecthistoryReCommentList.do", method = RequestMethod.POST)
+					@ResponseBody
+					public Map<String, Object> projecthistoryReCommentList(HttpServletResponse response, HttpServletRequest request, ProjectReComment prc) {
+						Map<String, Object> map = new HashMap<String, Object>();
 						try {
 							request.setCharacterEncoding("UTF-8");
 							response.setContentType("text/html; charset=UTF-8");
 							
+								String getProject_comment_id = prc.getProject_comment_id();
+								
+								System.out.println("a" + getProject_comment_id);
+								
+								List<ProjectReComment> prcList = new ArrayList<ProjectReComment>();
+								prcList = pService.projectReCommentList(prc);
+								System.out.println("댓글 리스트 : " + prcList.size());
+								map.put("recommentList", prcList);
+//								List<ProjectReComment> prcList = new ArrayList<ProjectReComment>(); 
+//								try {
+//									pService.projecthistoryReCommentInsert(prc);
+//									System.out.println("인서트 성공!");
+//									prcList =pService.projectreReCommentInsertList(prc); 
+//									System.out.println(prcList);
+//									System.out.println("aaa");
+//									  map.put("success", "성공");
+//									  map.put("recommentList", prcList);
+//								}catch (Exception e) {
+//									 map.put("fail", "실패"); 
+//								}
+								
+								
+								  
+								 
 							
-							String getProject_comment_content = pc.getProject_comment_content();
-							String getProject_datail_id = pc.getProject_datail_id();
-							String getId = pc.getId();
 							
-							System.out.println(getProject_comment_content);
-							System.out.println(getProject_datail_id);
-							System.out.println(getId);
-							List<ProjectComment> pcList = new ArrayList<ProjectComment>();
 							
-							job.put("project_comment",getProject_comment_content);
-							job.put("project_detail_id",getId);
-							job.put("id",getId);
-							System.out.println(job);
+							
+							
+							
 						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							map.put("fail", "실패");						
 						}
 						
-						return job;
+						return map;
 					}
-				
-				
+					
+					
 				
 				private void saveFile(MultipartFile report, HttpServletRequest request) {
 					String root = request.getSession().getServletContext().getRealPath("resources");

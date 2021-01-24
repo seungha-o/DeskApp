@@ -22,6 +22,8 @@ private String project_recomment_content;
 private String project_recomment_date;
 private String project_comment_id;
 private String id;
+private String name;
+private String profile;
 
 
 

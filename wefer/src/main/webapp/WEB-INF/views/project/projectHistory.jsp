@@ -271,57 +271,11 @@ appearance: none;
 													<hr>
 													
 													</div>
+													<!-- 댓글 대댓글 달리는 구역 -->
 													<div class="commentList" style="width: 100%; display: block;">
-														<div style="width: 100%; display: flex">
-															<div style="width: 5%; text-align: center;">
-																<c:if test="${not empty projectMemberImg}">
-																	<img src = "./resources/image/memberImage/${projectMemberImg.profile}" style="width: 30px; height:30px; border-radius: 50%;" >
-																	<input type="hidden" name="sessionId" value="${projectMemberImg.id}">
-																	
-																</c:if>
-															</div>
-																<div class="commentPrints" style="width: 75%; word-break:break-all;">
-																<div class="comment_user_name" style="font-size: 12px; font-weight: bold;">정현봉</div>
-																<div class="comment_content">ㅁㄴㅇㅁㄴㅁㄴㅁㅇㄴ</div>
-																
-															</div>
-															<div class="comment-nav" style="width: 18%; margin-left: 2%;">
-																<label class="recommentFrm_block" style="text-decoration: underline; color:black; font-size: 10px; cursor: pointer;">답글달기</label>
-																<label class="comment_update" style="text-decoration: underline; color:blue; font-size: 10px; cursor: pointer;">수정하기</label>
-																<label class="commnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>
-															</div>
-														</div>
-															<div class="recommnet_Print" style="margin-left: 2%; margin-top: 10px; width: 100%; display: flex;">
-																<div style="width: 5%; text-align: center;">
-																	<c:if test="${not empty projectMemberImg}">
-																		<img src = "./resources/image/memberImage/${projectMemberImg.profile}" style="width: 35px; height:35px; border-radius: 50%;" >
-																		<input type="hidden" name="sessionId" value="${projectMemberImg.id}">
-																		
-																	</c:if>
-																</div>
-																	<div class="recommentPrints" style="width: 98%; word-break:break-all;">
-																	<div class="recomment_user_name" style="font-size: 12px; font-weight: bold;">정현봉</div>
-																	<div class="recomment_content">ㅁㄴㅇㅁㄴㅁㄴㅁㅇㄴ</div>
-																	
-																	<label class="recomment_update" style="text-decoration: underline; color:blue; font-size: 10px; cursor: pointer;">수정하기</label>
-																	<label class="recommnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>
-																	
-																	<div class="recommentWriteF" style="width: 100%; display: none;">
-																		<c:if test="${not empty projectMemberImg}">
-																		<img src = "./resources/image/memberImage/${projectMemberImg.profile}" style="width: 30px; height:30px; border-radius: 50%;" >
-																		<input type="hidden" name="sessionId" value="${projectMemberImg.id}">
-																		
-																	</c:if>
-																		<input type="text" name="recommentWrite" style="width:90%; height: 40px;">
-																		<input class="recommentWriteOk" type="button" style="margin-left: 5px; margin-bottom:20px; width: 65px; height: 40px; background-color: #0b132b; border-radius: 5%; color:white; font-size: 13px; text-align: center; line-height:40px;"value="전송">
-																	</div>
-																</div>
-																
-																
-																
-																
-															</div>
-														</div>
+										
+															
+													</div>
 													<hr>
 													<div class="closeCommnetArea" style="width: 100%; height: 20px; text-align: center; line-height: 10px; cursor: pointer;">^</div>
 													</div>
@@ -401,7 +355,19 @@ appearance: none;
 
 				        $(this).siblings('.upload-name').val(filename);
 				    });
-				}); 
+				    
+				   
+			
+			
+			
+			
+				
+			
+		
+			
+			
+			
+			}); 
 			
 			
 			$('#stauts').change(function() {
@@ -438,23 +404,189 @@ appearance: none;
 			
 			});
 			
-			$('.comment').click(function() {
+			
+			
+			$(document).on("click", ".comment", function() {
+				
+			
 				var commentArea = $(this).parent().parent().find('.commentArea');
 				
+				var project_datail_id = commentArea.find('input[name=project_datail_id]').val();
+				var sessionId = commentArea.find('input[name=sessionId]').val();
+				var commentList = commentArea.find('.commentList');
+				var chk_content_id = commentList.find('.comments');
+				
+        
+				
+				console.log("코멘츠" + chk_content_id);
+					
+				console.log('aaa'+chk_content_id.length);
+				
+				
+				
+				
 				commentArea.css("display","block");
-			})
+				
+				 $.ajax({
+		                url : "${pageContext.request.contextPath}/projecthistoryCommentList.do",
+		                type : 'POST',
+		                dataType : 'json',
+		                data : {
+		                project_datail_id : project_datail_id,
+		               	id : sessionId
+		                },
+		                beforeSend : function() {
+		                    console.log('Ajax submit 보내기전');
+		                },
+		                success : function(data) {
+		                	if(chk_content_id.length >= data.commentList.length){
+		                		alert('다불러오ㅓㅏㅆ습니다');
+		                	}else{
+		                		for(var i = 0; i<data.commentList.length; i++){
+			                    	a = chk_content_id.length;
+			                		console.log(a.length);
+			                		commentList.append('<div class="comments" style="width: 100%; display: block;">'
+				    						+'<div class="comments_block" style="width: 100%; display: flex">'
+		                					+	'<div style="width: 5%; text-align: center;">'
+				    						+		'<img src="./resources/image/memberImage/'+data.commentList[i].profile+'" style="width: 30px; height:30px; border-radius: 50%;">'
+				    						+		'<input type="hidden" name="sessionIds" value="'+data.commentList[i].id+'">'
+				    						+		'<input type="hidden" name="project_detail_id" value="'+data.commentList[i].project_detail_id+'">'
+				    						+'</div>'
+				    						+	'<div class="commentPrints" style="width: 70%; word-break:break-all;">'
+				    						+	'<div class="comment_user_name" style="font-size: 12px; font-weight: bold;">'+data.commentList[i].name+'</div>'
+				    						+	'<div class="comment_content">'+data.commentList[i].project_comment_content+'</div>'
+ 				    						+	'<input type="hidden" name="project_comment_ids" value="'+data.commentList[i].project_comment_id+'">'
+				    						+'</div>'
+					    						+'<div class="comment-nav" style="width: 22%; margin-left: 2%;">'
+					    						+	'<label class="commnet_delete" style="margin-left:135px; text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+					    						+'</div>'
+				    						+'</div>'
+			    						+'<div class="recommentWriteFMArgin" style="margin-left:5%">'
+										+'<div class="recommentWriteF" style="width: 90%; display: none;">'
+										+	'<img src="./resources/image/memberImage/default.png" style="width: 30px; height:30px; border-radius: 50%;">'
+										+	'<input type="hidden" name="sessionIdse" value="${sessionScope.loginId}">'
+										+	'<input type="hidden" name="project_comment_id" value="'+data.commentList[i].project_comment_id+'">'
+										+	'<input type="text" name="recommentWrite" style="width:90%; height: 40px;">'
+										+	'<input class="recommentWriteOk" type="button" style="margin-left: 5px; margin-bottom:20px; width: 65px; height: 40px; background-color: #0b132b; border-radius: 5%; color:white; font-size: 13px; text-align: center; line-height:40px;" value="전송">'
+						 				+'</div> '
+						 				+'</div> '
+						 				+'<label class="addReComment" style="margin-left:40px; font-size:10px; cursor:pointer; text-decoration:underline;">댓글 더보기</label>'
+						 				+'<div class="recomments" style="margin-left:5% display:block">'
+						 				+'</div>'
+				    					/* +'<div class="recommnet_Print" style="margin-left: 2%; margin-top: 10px; width: 100%; display: flex;">'
+										+'	<div style="width: 5%; text-align: center;">'
+										+'			<img src="./resources/image/memberImage/default.png" style="width: 30px; height:30px; border-radius: 50%;">'
+										+'			<input type="hidden" name="sessionId" value="test1">'
+										+'	</div>'
+										+'	<div class="recommentPrints" style="width: 98%; word-break:break-all;">'
+										+'		<div class="recomment_user_name" style="font-size: 12px; font-weight: bold;">정현봉</div>'
+										+'		<div class="recomment_content">ㅁㄴㅇㅁㄴㅁㄴㅁㅇㄴ</div>'
+										+'		<label class="recomment_update" style="text-decoration: underline; color:blue; font-size: 10px; cursor: pointer;">수정하기</label>'
+										+'		<label class="recommnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+										+'	</div>'
+										+'</div>' */
+			    						+'</div>'
+			    						+'<hr>');
+			                		
+			                  
+			                		
+			                  	}
+			                	chk_content_id = null;
+			                	
+			                	/* 댓글 ajax */
+		                	}
+		                	
+		                	
+		                }, 
+		                error : function(data) {
+		                    console.log('Ajax submit error');
+		                },
+		                complete : function() {
+		                	
+		                    console.log('Ajax submit complete');
+		                }
+		            });	 
+
+			});
 			
 			$('.closeCommnetArea').click(function() {
 				var closeCommentArae = $(this).parent();
 				var recommentFrm_block = $(this).parent().parent().parent().parent().find('.recommentWriteF');
+				
 				closeCommentArae.css("display","none")
 				recommentFrm_block.css("display","none");
+				/* project_comment_id */
 			})
 			
-			$('.recommentFrm_block').click(function() {
-				var recommentFrm_block = $(this).parent().parent().parent().parent().find('.recommentWriteF');
-				recommentFrm_block.css("display","flex");
+		 	$(document).on("click",".addReComment", function() {
+		 		var recommentFrm_block = $(this).parent().find('.recommentWriteF');
+		 		var recomments = $(this).parent().find('.recomments');
+		 		var project_comment_id = $(this).parent().find('input[name=project_comment_id]').val();
+				console.log(project_comment_id);
+				console.log(recomments);
+		 		var text = $(this).text();
+				if(text == '댓글 더보기'){
+					console.log('aaaaaa');
+					
+					 $.ajax({
+			                url : "${pageContext.request.contextPath}/projecthistoryReCommentList.do",
+			                type : 'POST',
+			                dataType : 'json',
+			                data : {
+			                	project_comment_id : project_comment_id
+			                	
+			                },
+			                beforeSend : function() {
+			                    console.log('Ajax submit 보내기전');
+			                },
+			                success : function(data) {
+			                	for(var i = 0; i<data.recommentList.length; i++){
+			                 	recomments.prepend(
+			                			'<div class="recommnet_Print" style="margin-left: 2%; margin-top: 10px; width: 100%; display: flex;">'
+										+'	<div style="width: 5%; text-align: center;">'
+										+'			<img src="./resources/image/memberImage/'+data.recommentList[i].profile+'" style="width: 30px; height:30px; border-radius: 50%;">'
+										+'			<input type="hidden" name="user_id" value="'+data.recommentList[i].id+'">'
+										+'	</div>'
+										+'	<div class="recommentPrints" style="width: 98%; word-break:break-all;">'
+										+'		<input type="hidden" name="project_recomment_id" value="'+data.recommentList[i].project_recomment_id+'">'
+										+'		<div class="recomment_user_name" style="font-size: 12px; font-weight: bold;">'+data.recommentList[i].name+'</div>'
+										+'		<div class="recomment_content">'+data.recommentList[i].project_recomment_content+'</div>'
+										+'		<label class="recommnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+										+'	</div>'
+										
+										
+										+'</div>'
+										);
+			                	
+			                	}
+			                 
+			                	console.log('성공');
+			                
+			                }, error : function(data) {
+			                    console.log('Ajax submit error');
+			                
+			                }, complete : function() {
+			                    console.log('Ajax submit complete');
+			                }
+					  }); 
+					
+					
+					recommentFrm_block.css("display","flex");
+					$(this).text('닫기');
+					
+					
+				
+					
+					
+					
+				}else{
+					$(this).text('댓글 더보기');
+					recommentFrm_block.css("display","none");
+					recomments.empty();
+				}
 			})
+				
+			
 			
 			$(".update").click(function() {
 				var closeCommentArae = $(this).parent().parent().find('.project_datail_id').val();
@@ -496,7 +628,8 @@ appearance: none;
 							},
 							success : function(data) {
 								li.remove();
-								alert('삭제되었습니다.')
+								var a = data.sucess;
+								alert(a);
 							},
 							error : function(request, status,
 									error) {
@@ -516,13 +649,163 @@ appearance: none;
 				}
 			})
 			
-			$(".commentWriteSubmit").click(function() {
+			
+			
+			$(document).on("click",".recommnet_delete", function() {
+				var project_recomment_id = $(this).parent().parent().find('input[name=project_recomment_id]').val();
+				console.log(project_recomment_id);
+				var id = $(this).parent().parent().find('input[name=user_id]').val();
+				console.log(id);
+				var recommnet_Print = $(this).parent().parent().parent();
+				console.log(recommnet_Print);
+				if(confirm("정말 삭제하시겠습니까 ?") == true){ 
+					 $.ajax({
+						url : "${pageContext.request.contextPath}/projectReCommentDelete.do",
+						method : "POST",
+						data : {
+							project_recomment_id : project_recomment_id,
+							id : id
+						},
+						success : function(data) {
+						if(data.fail){
+							alert(data.fail);
+							
+						}else{
+							alert(data.sucess);
+							recommnet_Print.remove();
+						}
+						},
+						error : function(request, status,
+								error) {
+
+							alert("code:" + request.status
+									+ "\n" + "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
+						}
+					});	  
+				}else{
+					return;
+				}  
+				
+				
+				
+			})
+			
+			
+			
+			
+			
+			
+			$(document).on("click",".commnet_delete", function() {
+				var project_comment_id = $(this).parent().parent().parent().find('input[name=project_comment_ids]').val();
+				var id = $(this).parent().parent().parent().find('input[name=sessionIds]').val();
+				var comments = $(this).parent().parent().parent();
+				console.log(comments);
+				console.log(project_comment_id);
+				console.log(id);
+				if(confirm("정말 삭제하시겠습니까 ?") == true){
+					$.ajax({
+						url : "${pageContext.request.contextPath}/projectCommentDelete.do",
+						method : "POST",
+						data : {
+							project_comment_id : project_comment_id,
+							id : id
+						},
+						success : function(data) {
+						if(data.fail){
+							alert(data.fail);
+						}else{
+							comments.remove();
+						}
+						},
+						error : function(request, status,
+								error) {
+
+							alert("code:" + request.status
+									+ "\n" + "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
+						}
+					});	 
+				}else{
+					return;
+				}
+				
+				
+				
+			})
+			
+			
+			$(document).on("click", ".recommentWriteOk", function() {
+				var project_recomment_content = $(this).parent().parent().parent().find('input[name=recommentWrite]').val();
+				var comments = $(this).parent().parent().parent().find('.recomments');
+				var project_comment_id = $(this).parent().parent().parent().find('input[name=project_comment_id]').val();
+				var id = $(this).parent().parent().parent().parent().parent().find('input[name=sessionId]').val();
+				console.log("프컨" + project_recomment_content)
+				console.log("프아" +project_comment_id)
+				console.log(id)
+				console.log(comments)
+				if(project_recomment_content == null || project_recomment_content == ''){
+					alert('답글을 입력해 주세요.'); 
+				}else{
+					
+					  $.ajax({
+			                url : "${pageContext.request.contextPath}/projecthistoryReCommentInsert.do",
+			                type : 'POST',
+			                dataType : 'json',
+			                data : {
+			                	project_recomment_content : project_recomment_content,
+			                	project_comment_id : project_comment_id,
+			                	id : id
+			                },
+			                beforeSend : function() {
+			                    console.log('Ajax submit 보내기전');
+			                },
+			                success : function(data) {
+			                	console.log(data.recommentList.length)
+			                	comments.prepend(
+			                			'<div class="recommnet_Print" style="margin-left: 2%; margin-top: 10px; width: 100%; display: flex;">'
+										+'	<div style="width: 5%; text-align: center;">'
+										+'			<img src="./resources/image/memberImage/'+data.recommentList[0].profile+'" style="width: 30px; height:30px; border-radius: 50%;">'
+										+'			<input type="hidden" name="user_id" value="'+data.recommentList[0].id+'">'
+										+'	</div>'
+										+'	<div class="recommentPrints" style="width: 98%; word-break:break-all;">'
+										+'		<input type="hidden" name="project_recomment_id" value="'+data.recommentList[0].project_recomment_id+'">'
+										+'		<div class="recomment_user_name" style="font-size: 12px; font-weight: bold;">'+data.recommentList[0].name+'</div>'
+										+'		<div class="recomment_content">'+data.recommentList[0].project_recomment_content+'</div>'
+										+'		<label class="recommnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+										+'	</div>'
+										
+										
+										+'</div>'
+										);
+			                	
+			                	
+			                 	$('input[name=recommentWrite]').val('');	
+			                	
+			                
+			                }, error : function(data) {
+			                    console.log('Ajax submit error');
+			                
+			                }, complete : function() {
+			                    console.log('Ajax submit complete');
+			                }
+					  }); 
+					
+				}
+			});
+			
+			
+			
+			$(document).on("click", ".commentWriteSubmit", function() {
 				var comment = $(this).parent().find('input[name=commentWrite]').val();
 				var project_datail_id = $(this).parent().find('input[name=project_datail_id]').val();
 				var sessionId = $(this).parent().find('input[name=sessionId]').val();
-				console.log(comment);
-				console.log(project_datail_id);
-				console.log(sessionId);
+				var commentList = $(this).parent().parent().find('.commentList');
+				console.log("인서트"+sessionId);
 				
 	            $.ajax({
 	                url : "${pageContext.request.contextPath}/projecthistoryComment.do",
@@ -537,7 +820,63 @@ appearance: none;
 	                    console.log('Ajax submit 보내기전');
 	                },
 	                success : function(data) {
-	                  
+	                	var a = 0;
+	                	if(!data.commentList){
+	                		console.log("못받아옴");
+	                	}else{
+	                		for(var i = 0; i<data.commentList.length; i++){
+	                			commentList.append(
+	                					'<div class="comments" style="width: 100%; display: block;">'
+				    						+'<div class="comments_block" style="width: 100%; display: flex">'
+		                					+	'<div style="width: 5%; text-align: center;">'
+				    						+		'<img src="./resources/image/memberImage/'+data.commentList[i].profile+'" style="width: 30px; height:30px; border-radius: 50%;">'
+ 				    						+		'<input type="hidden" name="commentIds" value="'+data.commentList[i].id+'">' 
+				    						+		'<input type="hidden" name="sessionIds" value="${sessionScope.loginId}">'
+				    						+'</div>'
+				    						+	'<div class="commentPrints" style="width: 70%; word-break:break-all;">'
+				    						+	'<div class="comment_user_name" style="font-size: 12px; font-weight: bold;">'+data.commentList[i].name+'</div>'
+				    						+	'<div class="comment_content">'+data.commentList[i].project_comment_content+'</div>'
+				    						+		'<input type="hidden" name="project_comment_id" value="'+data.commentList[i].project_comment_id+'">'
+				    						+'</div>'
+					    						+'<div class="comment-nav" style="width: 22%; margin-left: 2%;">'
+					    						+	'<label class="commnet_delete" style="margin-left:135px; text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+					    						+'</div>'
+				    						+'</div>'
+			    						
+				    				
+			    						+'<div class="recommentWriteFMArgin" style="margin-left:5%">'
+										+'<div class="recommentWriteF" style="width: 90%; display: none;">'
+										+	'<img src="./resources/image/memberImage/default.png" style="width: 30px; height:30px; border-radius: 50%;">'
+										+	'<input type="hidden" name="sessionIdse" value="'+data.commentList[i].id+'">'
+										+	'<input type="hidden" name="project_comment_id" value="'+data.commentList[i].project_comment_id+'">'
+										+	'<input type="text" name="recommentWrite" style="width:90%; height: 40px;">'
+										+	'<input class="recommentWriteOk" type="button" style="margin-left: 5px; margin-bottom:20px; width: 65px; height: 40px; background-color: #0b132b; border-radius: 5%; color:white; font-size: 13px; text-align: center; line-height:40px;" value="전송">'
+						 				+'</div> '
+						 				+'</div> '	
+						 				+'<label class="addReComment" style="margin-left:40px; font-size:10px; cursor:pointer; text-decoration:underline;">댓글 더보기</label>'
+						 				+'<div class="recomments" style="margin-left:5% display:block">'
+						 				+'</div>'
+				    		/* 			+'<div class="recommnet_Print" style="margin-left: 2%; margin-top: 10px; width: 100%; display: flex;">'
+										+'	<div style="width: 5%; text-align: center;">'
+										+'			<img src="./resources/image/memberImage/default.png" style="width: 30px; height:30px; border-radius: 50%;">'
+										+'			<input type="hidden" name="sessionId" value="test1">'
+										+'	</div>'
+										+'	<div class="recommentPrints" style="width: 98%; word-break:break-all;">'
+										+'		<div class="recomment_user_name" style="font-size: 12px; font-weight: bold;">정현봉</div>'
+										+'		<div class="recomment_content">ㅁㄴㅇㅁㄴㅁㄴㅁㅇㄴ</div>'
+										+'		<label class="recomment_update" style="text-decoration: underline; color:blue; font-size: 10px; cursor: pointer;">수정하기</label>'
+										+'		<label class="recommnet_delete" style="text-decoration: underline; color:red; font-size: 10px; cursor: pointer;">삭제하기</label>'
+										+'	</div>'
+										+'</div>' */
+			    						+'</div>'
+		               		
+							);
+		                  
+		                  	$('input[name=commentWrite]').val('');	
+		                  	}
+	                	}
+	                	
+	                	
 	                }, 
 	                error : function(data) {
 	                    console.log('Ajax submit error');

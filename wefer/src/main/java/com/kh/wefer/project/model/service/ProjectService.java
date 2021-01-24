@@ -6,8 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectComment;
 import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
+import com.kh.wefer.project.model.domain.ProjectReComment;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
 public interface ProjectService {
@@ -62,6 +64,24 @@ public interface ProjectService {
 	void historyUpdateFile(ProjectDetail pd);
 
 	int projectHistoryDelete(ProjectDetail pd);
+
+	int projectCommentWirte(ProjectComment pc);
+
+	List<ProjectComment> projectCommentList(ProjectComment pc);
+
+	List<ProjectComment> projectCommentInsertList(ProjectComment pc);
+
+	int projecthistoryReCommentInsert(ProjectReComment prc);
+
+	List<ProjectReComment> projectreReCommentInsertList(ProjectReComment prc);
+
+	List<ProjectReComment> projectReCommentList(ProjectReComment prc);
+
+	int projectCommentDelete(ProjectComment pc);
+
+	int projectReCommentDelete(ProjectReComment prc);
+
+	String projectSubChkGrade(String id);
 
 
 

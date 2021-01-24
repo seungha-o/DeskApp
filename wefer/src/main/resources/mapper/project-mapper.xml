@@ -14,6 +14,7 @@
 		<result property="project_end_date" column="project_end_date"/>
 		<result property="project_status" column="project_status"/>
 		<result property="project_color" column="project_color"/>
+		<result property="project_member_grade" column="project_member_grade"/>
 		<collection property="projectMembers" resultMap="resultProjectMember" ofType="ProjectMember">
 		</collection>
 		
@@ -28,6 +29,7 @@
 		<result property="project_sub_status" column="project_sub_status"/>
 		<result property="project_color" column="project_color"/>
 		<result property="project_id" column="project_id"/>
+		<result property="project_member_grade" column="project_member_grade"/>
 		<collection property="project" resultMap="resultProject" ofType="Project">
 		</collection> 
 		<collection property="projectMembers" resultMap="resultProjectMember" ofType="ProjectMember">
@@ -84,14 +86,52 @@
 		<result property="project_id" column="project_id"/>
 		<result property="project_sub_id" column="project_sub_id"/>
 		<result property="project_datail_status" column="project_datail_status"/>
-		
-
-
-		
-
-		
+	
 	</resultMap>
 	
+	
+<!-- 	private String project_comment_id;
+		private String project_comment_content;
+		private Date project_comment_writedate;
+		private String project_datail_id;
+		private String id; -->
+	<resultMap type="ProjectComment" id="resultProjectComment">
+		<id property="project_comment_id" column="project_comment_id"/>
+		<result property="project_comment_content" column="project_comment_content"/>
+		<result property="project_comment_writedate" column="project_comment_writedate"/>
+		<result property="project_datail_id" column="project_datail_id"/>
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="project_recomment_id" column="project_recomment_id"/>
+		<result property="project_recomment_content" column="project_recomment_content"/>
+		<result property="project_recomment_date" column="project_recomment_date"/>
+		<result property="profile" column="profile"/>
+	</resultMap>
+	
+<!-- 	private String project_comment_id;
+private String project_comment_content;
+private Date project_comment_writedate;
+private String project_datail_id;
+
+private String id;
+private String name;
+private String profile;
+
+private String project_recomment_id;
+private String project_recomment_content;
+private String project_recomment_date;
+
+private List<ProjectReComment> projectRecomments;
+private List<Member> members; -->
+	<resultMap type="ProjectReComment" id="resultProjectReComment">
+		<id property="project_recomment_id" column="project_recomment_id"/>
+		<result property="project_recomment_content" column="project_recomment_content"/>
+		<result property="project_recomment_date" column="project_recomment_date"/>
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="profile" column="profile"/>
+	</resultMap>
+
 	<resultMap type="Member" id="resultMember"> <!-- type = "xml의 별칭" -->
 		<!-- property에는vo의 필드명, column에는 db table의 컬럼명 -->
 		<id property="id" column="id"></id>
@@ -124,9 +164,9 @@
 	<!-- 프로젝트 전체 조회 -->
 	<select id="projectList" resultType="arraylist"
 		resultMap="resultProject" parameterType="Project">
-		select project.* 
+    select distinct project.*, project_member.project_member_grade
 		from project, project_member 
-		where project.project_id = project_member.project_id and project_member.id = #{id}
+		where project.project_id = project_member.project_id and project_member.id = #{id} 
 	</select>
 	<!-- 프로젝트 삭제 -->
 	<delete id="projectDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="Project">
@@ -161,6 +201,7 @@
 		   select 
 		   ps.*, 
 		   pm.id, 
+		   pm.project_member_grade, 
 		   p.project_color,  
 		   m.name 
 		   from project_sub ps, PROJECT_MEMBER pm,  member m, project p 
@@ -170,6 +211,18 @@
 		   and ps.project_id = #{project_id}  
 	</select>
 	
+	
+	<!-- 프로젝트 작업 관리자 조회 -->
+	<select id="projectSubChkGrade" resultType="string" parameterType="string">
+		  select distinct
+		  a.project_member_grade  
+		  from 
+		  project_member a, project b 
+		  where 
+		  a.project_id = b.project_id 
+		  and a.id = #{id} 
+		  and a.project_member_grade = 1
+	</select>
 	<!-- 프로젝트 작업 이름 조회 -->
 		<select id="projectSubTitles" resultType="arraylist"
 		resultMap="resultProjectSub" parameterType="string">
@@ -350,9 +403,48 @@
 	<delete id="projectHistoryDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="ProjectDetail">
 		delete from project_datail where project_datail_id = #{project_datail_id}
 	</delete>
-<!-- select project_datail.*, member.profile, member.name  
-	from  project_datail, member where
-	project_datail.id  = member.id 
-	and project_datail.project_id = #{project_id} 
-	and project_datail.project_sub_id = '#{project_sub_id} -->
+
+	
+	<!-- 댓글 인서트 -->
+	<insert id = "projectCommentWirte" flushCache="true" statementType="PREPARED" parameterType="ProjectComment">
+		insert into project_comment(project_comment_id, project_comment_content, project_comment_writedate, project_datail_id, id)
+		values(WEFER_PRJ_COMMENT_SEQ.NEXTVAL, #{project_comment_content}, current_date, #{project_datail_id}, #{id})
+		
+	</insert>
+	
+	
+		<!-- 댓글 가져오기 -->
+	<select id="projectCommentList" resultType="arraylist" parameterType="ProjectComment" resultMap="resultProjectComment">
+		select a.*, b.name, b.profile from project_comment a, member b where a.id = b.id and a.project_datail_id=#{project_datail_id}
+	</select>
+	<!-- 인서트한 댓글 가져오기 -->
+	<select id="projectCommentInsertList" resultType="arraylist" parameterType="ProjectComment" resultMap="resultProjectComment">
+		select a.*, b.name, b.profile from project_comment a, member b 
+		where a.id = b.id and a.project_datail_id=#{project_datail_id} and a.project_comment_id =(select max(project_comment_id) from project_comment)
+	</select>
+	<!-- 대댓글 인서트 -->
+	<insert id = "projecthistoryReCommentInsert" flushCache="true" statementType="PREPARED" parameterType="ProjectReComment">
+		insert into project_recomment(project_recomment_id, project_recomment_content, project_recomment_date, project_comment_id, id)
+		values(WEFER_PRJ_RECOMMENT_SEQ.NEXTVAL, #{project_recomment_content}, current_date, #{project_comment_id}, #{id})
+	</insert>
+	<!-- 인서트한 댓글 가져오기 -->
+	<select id="projectreReCommentInsertList" resultType="arraylist" parameterType="ProjectReComment" resultMap="resultProjectReComment">
+		select a.*, b.name, b.profile from project_recomment a, member b 
+		where a.id = b.id and a.project_comment_id=#{project_comment_id} and a.project_recomment_id =(select max(project_recomment_id) from project_recomment)
+	</select>
+		<!-- 대댓글 가져오기 -->
+	<select id="projectReCommentList" resultType="arraylist" parameterType="ProjectReComment" resultMap="resultProjectReComment">
+		select a.*, m.name, m.profile from project_recomment a, member m where a.id = m.id and project_comment_id = #{project_comment_id} order by a.project_recomment_date asc
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="projectCommentDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="ProjectComment">
+		delete from project_comment where project_comment_id = #{project_comment_id}
+	</delete>
+	<!-- 댓글 삭제 -->
+	<delete id="projectReCommentDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="ProjectReComment">
+		delete from project_recomment where project_recomment_id = #{project_recomment_id}
+	</delete>
+	
+	
 </mapper>

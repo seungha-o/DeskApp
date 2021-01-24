@@ -9,8 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.dao.ProjectDao;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectComment;
 import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
+import com.kh.wefer.project.model.domain.ProjectReComment;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
 @Service("pService")
@@ -147,6 +149,52 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int projectHistoryDelete(ProjectDetail pd) {
 		return pDao.projectHistoryDelete(pd);
+	}
+
+	@Override
+	public int projectCommentWirte(ProjectComment pc) {
+		return pDao.projectCommentWirte(pc);
+	}
+
+	@Override
+	public List<ProjectComment> projectCommentList(ProjectComment pc) {
+		return pDao.projectCommentList(pc);
+	}
+
+	@Override
+	public List<ProjectComment> projectCommentInsertList(ProjectComment pc) {
+		return pDao.projectCommentInsertList(pc);
+	}
+
+	@Override
+	public int projecthistoryReCommentInsert(ProjectReComment prc) {
+		return pDao.projecthistoryReCommentInsert(prc);
+	}
+
+	@Override
+	public List<ProjectReComment> projectreReCommentInsertList(ProjectReComment prc) {
+		return pDao.projectreReCommentInsertList(prc);
+	}
+
+	@Override
+	public List<ProjectReComment> projectReCommentList(ProjectReComment prc) {
+		return pDao.projectReCommentList(prc);
+	}
+
+	@Override
+	public int projectCommentDelete(ProjectComment pc) {
+		return pDao.projectCommentDelete(pc);
+		
+	}
+
+	@Override
+	public int projectReCommentDelete(ProjectReComment prc) {
+		return pDao.projectReCommentDelete(prc);
+	}
+
+	@Override
+	public String projectSubChkGrade(String id) {
+		return pDao.projectSubChkGrade(id);
 	}
 
 	

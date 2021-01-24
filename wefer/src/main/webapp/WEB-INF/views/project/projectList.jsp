@@ -289,10 +289,12 @@
 															</div>
 														<div style="margin-top: 10px;  padding-right:30px; float: right;">
 																<input type="hidden" name="prj-id" value="${pvo.project_id}">
+																<c:if test="${pvo.project_member_grade eq 1}">
+																
 																<button type="button" data-toggle="modal" data-target="#bd-example-modal-lg2" class="btn btn-primary prj-update" style="width:50px; height: 30px; padding: 0; font-size: 14px; font-weight: 500; mar">수정</button>	
 																					
 																<button type="button" class="btn btn-danger prj-del" style="width:50px; height: 30px; padding: 0; margin-right:20px; font-size: 14px; font-weight: 500; float: left;">삭제</button>
-															
+															</c:if>
 														</div>
 														
 														

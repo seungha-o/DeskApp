@@ -9,8 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.wefer.member.model.domain.Member;
 import com.kh.wefer.project.model.domain.Project;
+import com.kh.wefer.project.model.domain.ProjectComment;
 import com.kh.wefer.project.model.domain.ProjectDetail;
 import com.kh.wefer.project.model.domain.ProjectMember;
+import com.kh.wefer.project.model.domain.ProjectReComment;
 import com.kh.wefer.project.model.domain.ProjectSub;
 
 @Repository("pDao")
@@ -122,6 +124,43 @@ public class ProjectDao {
 
 	public int projectHistoryDelete(ProjectDetail pd) {
 		return sqlSession.delete("Project.projectHistoryDelete", pd);
+	}
+
+	public int projectCommentWirte(ProjectComment pc) {
+		return sqlSession.insert("Project.projectCommentWirte", pc);
+	}
+
+	public List<ProjectComment> projectCommentList(ProjectComment pc) {
+		return sqlSession.selectList("Project.projectCommentList", pc);
+	}
+
+	public List<ProjectComment> projectCommentInsertList(ProjectComment pc) {
+		return sqlSession.selectList("Project.projectCommentInsertList", pc);
+	}
+
+	public int projecthistoryReCommentInsert(ProjectReComment prc) {
+		return sqlSession.insert("Project.projecthistoryReCommentInsert", prc);
+	}
+
+	public List<ProjectReComment> projectreReCommentInsertList(ProjectReComment prc) {
+		return sqlSession.selectList("Project.projectreReCommentInsertList", prc);
+		
+	}
+
+	public List<ProjectReComment> projectReCommentList(ProjectReComment prc) {
+		return sqlSession.selectList("Project.projectReCommentList", prc);
+	}
+
+	public int projectCommentDelete(ProjectComment pc) {
+		return sqlSession.delete("Project.projectCommentDelete", pc);
+	}
+
+	public int projectReCommentDelete(ProjectReComment prc) {
+		return sqlSession.delete("Project.projectReCommentDelete", prc);
+	}
+
+	public String projectSubChkGrade(String id) {
+		return sqlSession.selectOne("Project.projectSubChkGrade", id);
 	}
 
 	
