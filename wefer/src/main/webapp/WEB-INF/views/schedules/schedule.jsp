@@ -336,7 +336,7 @@
             	   var sValue = $("#schedules_std_date1").val();
             	   var eValue = $("#schedules_end_date1").val();
                    $("#schedules_std_date1").val(moment(sValue).format('YYYY-MM-DDTHH:mm:ss'));
-                   $("#schedules_end_date1").val(moment(eValue).format('YYYY-MM-DDTHH:mm:ss'));
+                   $("#schedules_end_date1").val(moment(eValue).format('YYYY-MM-DDT11:59:59'));
               })
               $("#update_schedule").submit(function(){
             	   var sValue = $("#schedules_std_date").val();
