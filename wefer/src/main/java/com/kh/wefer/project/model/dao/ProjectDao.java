@@ -163,6 +163,14 @@ public class ProjectDao {
 		return sqlSession.selectOne("Project.projectSubChkGrade", id);
 	}
 
+	public List<Project> projectEndList(ProjectMember pm) {
+		return sqlSession.selectList("Project.projectEndList", pm);	
+	}
+
+	public List<ProjectSub> projectProgress(ProjectSub ps) {
+		return sqlSession.selectList("Project.projectProgress", ps);	
+	}
+
 	
 
 

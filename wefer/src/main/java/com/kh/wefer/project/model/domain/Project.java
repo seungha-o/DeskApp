@@ -24,6 +24,7 @@ public class Project {
 	private String project_color;
 	private String id;
 	private int project_member_grade;
+	private int progress;
 	
 	
 	private List<Member> members;

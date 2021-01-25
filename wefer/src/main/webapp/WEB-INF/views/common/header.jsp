@@ -246,7 +246,7 @@
 					<ul class="submenu">
 						<li><a href="#"
 							onclick="location.href='/wefer/projectlist.do'">진행중인 프로젝트</a></li>
-						<li><a href="#">종료된 프로젝트</a></li>
+						<li><a href="#" onclick="location.href='/wefer/projectEndlist.do'">종료된 프로젝트</a></li>
 					</ul></li>
 				<c:if test="${dept_no eq '1'}">
 					<li class="dropdown">

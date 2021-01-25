@@ -51,16 +51,70 @@ public class ProjectController {
 	private static final String FILE_SERVER_PATH = "C:/spring_java/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/wefer/resources/projectFiles";
 	//프로젝트 리스트 출력
 	@RequestMapping(value = "/projectlist.do", method = RequestMethod.GET)
-	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv, ProjectMember pm, HttpSession session) {
+	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv, ProjectMember pm, ProjectSub ps, Project p,HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
+		
 		pm.setId(id);
 		List<Project> projectLists = new ArrayList<Project>();
+		List<ProjectSub> projectSubLists = new ArrayList<ProjectSub>();
 		projectLists = pService.projectList(pm);
-		System.out.println(projectLists.toString());
+
+		int progress = 0;
+		for(int i = 0; i<projectLists.size(); i++) {
+			progress = 0;
+			ps.setProject_id(projectLists.get(i).getProject_id());
+			System.out.println(projectLists.get(i).getProjectMembers().size());
+		
+			
+			projectSubLists = pService.projectProgress(ps);
+			System.out.println(projectSubLists);
+			int status_range = 100/projectSubLists.size();
+			
+			System.out.println("범위 : " + status_range);
+			System.out.println("범위 : " + projectSubLists.size());
+			for(int a = 0; a<projectSubLists.size(); a++) {
+				if(projectSubLists.get(a).getProject_sub_status().equals("진행중")) {
+					progress = progress + status_range/2;
+				}else if(projectSubLists.get(a).getProject_sub_status().equals("종료")) {
+					progress = progress + status_range;
+				}else if(projectSubLists.get(a).getProject_sub_status().equals("진행예정")){
+					progress = progress + 0;
+				}
+				
+				
+			}
+			projectLists.get(i).setProgress(progress);
+			System.out.println("ㅔ갷ㄱㄷㄴㄴ " + progress);
+		}
+			System.out.println(projectLists);
+	
+		
 		mv.addObject("projectLists", projectLists);
+		mv.addObject("progress", progress);
+		
 		mv.setViewName("project/projectList");
 		return mv;
 	}
+	
+	
+	
+	
+	
+	
+	//종료된 프로젝트 리스트 출력
+		@RequestMapping(value = "/projectEndlist.do", method = RequestMethod.GET)
+		public ModelAndView projectEndlist(HttpServletRequest request, ModelAndView mv, ProjectMember pm, HttpSession session) {
+			String id = (String) session.getAttribute("loginId");
+			pm.setId(id);
+			List<Project> projectLists = new ArrayList<Project>();
+			projectLists = pService.projectEndList(pm);
+			System.out.println(projectLists.toString());
+			mv.addObject("projectLists", projectLists);
+			mv.setViewName("project/projectEndList");
+			return mv;
+		}
+	
+	
 	//프로젝트 삭제
 	@RequestMapping(value = "/projectDelete.do", method = RequestMethod.POST)
 	public void projectDelete(HttpServletResponse response, Project p) {
@@ -140,7 +194,8 @@ public class ProjectController {
 		}else {
 			try {
 				out = response.getWriter();
-				out.append("<script>alert('프로인원에 포함되지 않았습니다.');location.href='projectlist.do'</script>");
+				out.append("<script>alert('수정완료.');location.href='projectlist.do'</script>");
+				
 				out.flush();
 				out.close();
 			} catch (IOException e) {
@@ -267,10 +322,10 @@ public class ProjectController {
 
 // -1 전     1 후      0 오늘
 		
-			if (endCompare > 0 && stdCompare >0){ // 현재날짜가 삭제 시작일 후 인 경우
+			if (endCompare >= 0 && stdCompare >0){ // 현재날짜가 삭제 시작일 후 인 경우
 				prjStatus = "종료";					
 
-			} else if (endCompare < 0 && stdCompare > 0) { // 현재날짜가 삭제 시작일 전 인 경우
+			} else if (endCompare < 0 && stdCompare >= 0) { // 현재날짜가 삭제 시작일 전 인 경우
 
 				prjStatus = "진행중";
 
@@ -325,6 +380,7 @@ public class ProjectController {
 	
 			
 			Date prjStartDate2; // 삭제 시작일
+			Date prjEndDate2; // 삭제 시작일
 			Date currentDate2; // 현재날짜 Date
 			String oTime2 = ""; // 현재날짜
 			String prjStatus2 = null;
@@ -344,29 +400,29 @@ public class ProjectController {
 
 
 				prjStartDate2 = mSimpleDateFormat2.parse( project_sub_std_dates2.get(i) );
+				prjEndDate2 = mSimpleDateFormat2.parse( project_sub_end_dates2.get(i) );
 
 				currentDate2=  mSimpleDateFormat2.parse( oTime2 );
 
 									
 
 				int stdCompare2 = currentDate2.compareTo( prjStartDate2 ); // 날짜비교
+				int endCompare2 = currentDate2.compareTo( prjEndDate2 ); // 날짜비교
 
+				if (endCompare2 >= 0 && stdCompare2 >0){ // 현재날짜가 삭제 시작일 후 인 경우
+					prjStatus2 = "종료";					
 
-
-				if ( stdCompare2 > 0 ){ // 현재날짜가 삭제 시작일 후 인 경우
-					prjStatus2 = "진행중";					
-
-				} else if ( stdCompare2 < 0) { // 현재날짜가 삭제 시작일 전 인 경우
-
-					prjStatus2 = "진행예정";
-
-
-				} else if(stdCompare2 == 0) { // 현재날짜가 삭제 시작일 인 경우
+				} else if (endCompare2 < 0 && stdCompare2 >= 0) { // 현재날짜가 삭제 시작일 전 인 경우
 
 					prjStatus2 = "진행중";
 
-					
+
+				} else if(stdCompare2 <0 && endCompare2 < 0) { // 현재날짜가 삭제일 인 경우
+
+					prjStatus2 = "진행예정";
 				}
+
+
 				
 				String std = project_sub_std_dates2.get(i);
 				String end = project_sub_end_dates2.get(i);
@@ -390,7 +446,7 @@ public class ProjectController {
 				ps.setProject_sub_important(prj_sub_importants.get(i));
 				ps.setProject_sub_std_date(reTempDate);
 				ps.setProject_sub_end_date(reTempDate2);
-				ps.setProject_sub_status(toTempDate2);
+				ps.setProject_sub_status(prjStatus2);
 				pService.projectSubInsert(ps);
 				
 					
@@ -446,7 +502,7 @@ public class ProjectController {
 		return mv;
 	}
 	
-	//프로젝트 수정
+	//프로젝트  작업 수정
 		@RequestMapping(value = "/projectSubUpdate.do", method = RequestMethod.POST)
 		public ModelAndView projectSubUpdate(HttpServletRequest request, ModelAndView mv, ProjectSub ps, ProjectMember pm, Project p,
 				@RequestParam(name="p_pid") String p_pid, 
@@ -461,6 +517,7 @@ public class ProjectController {
 				
 				
 			Date prjStartDate; // 삭제 시작일
+			Date prjEndDate; // 삭제 시작일
 			Date currentDate; // 현재날짜 Date
 			String oTime = ""; // 현재날짜
 			String prjStatus = null;
@@ -474,8 +531,23 @@ public class ProjectController {
 				java.sql.Date project_end_update =java.sql.Date.valueOf(project_end_update_date);	
 				oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
 
-
-
+//				prjStartDate = mSimpleDateFormat.parse( project_std_date );
+//
+//				prjEndDate = mSimpleDateFormat.parse( project_end_date );
+//
+//				currentDate =  mSimpleDateFormat.parse( oTime );
+//
+//									
+//
+//				int endCompare = currentDate.compareTo( prjEndDate ); // 날짜비교
+//				int stdCompare = currentDate.compareTo( prjStartDate ); // 날짜비교
+//				System.out.println("시작일이 오늘날짜보다 ? " +stdCompare);
+//				System.out.println("종료일이 오늘날짜보다 ? " +endCompare);
+//
+//	// -1 전     1 후      0 오늘
+//			
+				
+				prjEndDate = mSimpleDateFormat.parse( project_end_update_date );
 				prjStartDate = mSimpleDateFormat.parse(project_std_update_date);
 
 				currentDate =  mSimpleDateFormat.parse( oTime );
@@ -483,22 +555,20 @@ public class ProjectController {
 									
 
 				int stdCompare = currentDate.compareTo( prjStartDate ); // 날짜비교
+				int endCompare = currentDate.compareTo( prjEndDate ); // 날짜비교
 
 
+				if (endCompare >= 0 && stdCompare >0){ // 현재날짜가 삭제 시작일 후 인 경우
+					prjStatus = "종료";					
 
-				if ( stdCompare > 0 ){ // 현재날짜가 삭제 시작일 후 인 경우
-					prjStatus = "진행중";					
-
-				} else if ( stdCompare < 0) { // 현재날짜가 삭제 시작일 전 인 경우
-
-					prjStatus = "진행예정";
-
-
-				} else if(stdCompare == 0) { // 현재날짜가 삭제 시작일 인 경우
+				} else if (endCompare < 0 && stdCompare >= 0) { // 현재날짜가 삭제 시작일 전 인 경우
 
 					prjStatus = "진행중";
 
-					
+
+				} else if(stdCompare <0 && endCompare < 0) { // 현재날짜가 삭제일 인 경우
+
+					prjStatus = "진행예정";
 				}
 				
 				if(prj_member_id_update == null || prj_member_id_update.equals("")) {
@@ -508,6 +578,7 @@ public class ProjectController {
 					ps.setProject_sub_std_date(project_std_update);
 					ps.setProject_sub_end_date(project_end_update);
 					ps.setProject_sub_important(update_important);
+					ps.setProject_sub_status(prjStatus);
 					System.out.println("멤버없음");
 					pService.projectSubUpdate(ps);
 					
@@ -518,6 +589,7 @@ public class ProjectController {
 					ps.setProject_sub_std_date(project_std_update);
 					ps.setProject_sub_end_date(project_end_update);
 					ps.setProject_sub_important(update_important);
+					ps.setProject_sub_status(prjStatus);
 					pService.projectSubUpdate(ps);
 					System.out.println("멤버있음");
 					//프로잭트 멤버 추가
@@ -531,7 +603,7 @@ public class ProjectController {
 				System.out.println(project_end_update);
 				System.out.println(prj_member_id_update);
 				
-				mv.setViewName("redirect:projectlist.do");
+				mv.setViewName("redirect:projectDetail.do?id="+p_pid+"");
 			
 
 				System.out.println("성공");
@@ -540,7 +612,7 @@ public class ProjectController {
 				e.printStackTrace();
 				System.out.println("실패");
 				mv.addObject("message", e.getMessage());
-				mv.setViewName("project/projectDetail.do");
+				mv.setViewName("redirect:projectlist.do");
 			}
 
 			return mv;
@@ -548,7 +620,7 @@ public class ProjectController {
 		
 		//작업 추가
 		@RequestMapping(value = "/projectSubInsert.do", method = RequestMethod.POST)
-		public ModelAndView projectSubInsert(HttpServletRequest request, RedirectAttributes redirect, ModelAndView mv, ProjectSub ps, ProjectMember pm,
+		public ModelAndView projectSubInsert(HttpServletRequest request, HttpSession session, RedirectAttributes redirect, ModelAndView mv, ProjectSub ps, ProjectMember pm,
 				@RequestParam(name="pid") String project_id,
 				@RequestParam(name="project_sub_title")String sub_work,
 				@RequestParam(name="id", required = false)String prj_members_id,
@@ -598,6 +670,7 @@ public class ProjectController {
 		
 				
 				Date prjStartDate2; // 삭제 시작일
+				Date prjEndDate2; // 삭제 시작일
 				Date currentDate2; // 현재날짜 Date
 				String oTime2 = ""; // 현재날짜
 				String prjStatus2 = null;
@@ -616,27 +689,34 @@ public class ProjectController {
 
 					try {
 						for(int i = 0; i < prj_sub_title.size(); i++) {
-							oTime2 = mSimpleDateFormat2.format ( currentTime2 ); //현재시간 (String)
+						oTime2 = mSimpleDateFormat2.format ( currentTime2 ); //현재시간 (String)
+						
 						prjStartDate2 = mSimpleDateFormat2.parse( project_sub_std_dates2.get(i) );
+						prjEndDate2 = mSimpleDateFormat2.parse( project_sub_end_dates2.get(i) );
+						
 						currentDate2=  mSimpleDateFormat2.parse( oTime2 );
 						int stdCompare2 = currentDate2.compareTo( prjStartDate2 ); // 날짜비교
+						int endCompare2 = currentDate2.compareTo( prjEndDate2 ); // 날짜비교
+						
+						
+						
+						
 
+						if (endCompare2 >= 0 && stdCompare2 >0){ // 현재날짜가 삭제 시작일 후 인 경우
+							prjStatus2 = "종료";					
 
-
-						if ( stdCompare2 > 0 ){ // 현재날짜가 삭제 시작일 후 인 경우
-							prjStatus2 = "진행중";					
-
-						} else if ( stdCompare2 < 0) { // 현재날짜가 삭제 시작일 전 인 경우
-
-							prjStatus2 = "진행예정";
-
-
-						} else if(stdCompare2 == 0) { // 현재날짜가 삭제 시작일 인 경우
+						} else if (endCompare2 < 0 && stdCompare2 >= 0) { // 현재날짜가 삭제 시작일 전 인 경우
 
 							prjStatus2 = "진행중";
 
-							
+
+						} else if(stdCompare2 <0 && endCompare2 < 0) { // 현재날짜가 삭제일 인 경우
+
+							prjStatus2 = "진행예정";
 						}
+
+
+						
 						
 						String std = project_sub_std_dates2.get(i);
 						String end = project_sub_end_dates2.get(i);
@@ -661,12 +741,12 @@ public class ProjectController {
 						ps.setProject_sub_important(prj_sub_importants.get(i));
 						ps.setProject_sub_std_date(reTempDate);
 						ps.setProject_sub_end_date(reTempDate2);
-						ps.setProject_sub_status(toTempDate2);
+						ps.setProject_sub_status(prjStatus2);
 						pService.projectSubAdd(ps);
 						
 							
 						int a[] = null;
-					
+						String loginId = (String) session.getAttribute("loginId");
 							a = new int[prj_sub_title.size()];
 							a[i] = Integer.parseInt(prj_members_id_counts[i]); //2 3
 							
@@ -676,7 +756,11 @@ public class ProjectController {
 								pm.setId(prj_members_group.get(0));
 								pm.setProject_id(project_id);
 								//여기서 세션아이디 비교
-								pm.setProject_member_grade(0);
+								if(loginId.equals(prj_members_group.get(0))) {
+									pm.setProject_member_grade(1);									
+								}else {
+									pm.setProject_member_grade(0);
+								}
 								pService.projectSubAddMember(pm);
 								prj_members_group.remove(0); 
 								
@@ -710,72 +794,74 @@ public class ProjectController {
 						@RequestParam(name="project_end_update_date") String project_end_update_date
 						){
 						
-						
-						
-					Date prjStartDate; // 삭제 시작일
-					Date currentDate; // 현재날짜 Date
-					String oTime = ""; // 현재날짜
-					String prjStatus = null;
-
-					SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
-
-					Date currentTime = new Date();
-					try {
-						
-							java.sql.Date project_std_update =java.sql.Date.valueOf(project_std_update_date);	
-							java.sql.Date project_end_update =java.sql.Date.valueOf(project_end_update_date);	
-							oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
-
-
-
-							prjStartDate = mSimpleDateFormat.parse(project_std_update_date);
-
-							currentDate =  mSimpleDateFormat.parse( oTime );
-
-												
-
-							int stdCompare = currentDate.compareTo( prjStartDate ); // 날짜비교
-
-
-
-							if ( stdCompare > 0 ){ // 현재날짜가 삭제 시작일 후 인 경우
-								prjStatus = "진행중";					
-
-							} else if ( stdCompare < 0) { // 현재날짜가 삭제 시작일 전 인 경우
-
-								prjStatus = "진행예정";
-
-
-							} else if(stdCompare == 0) { // 현재날짜가 삭제 시작일 인 경우
-
-								prjStatus = "진행중";
-
-								
-							}
+					if(project_std_update_date == null || project_end_update_date == null) {
+						p.setProject_id(prj_update_id);
+						p.setProject_title(project_update_title);
+						pService.updateTitleProject(p);
+					}else {
+						Date prjStartDate; // 삭제 시작일
+						Date prjEndDate; // 삭제 시작일
+						Date currentDate; // 현재날짜 Date
+						String oTime = ""; // 현재날짜
+						String prjStatus = null;
+	
+						SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd", Locale.KOREA );
+	
+						Date currentTime = new Date();
+						try {
 							
-								p.setProject_id(prj_update_id);
-								p.setProject_title(project_update_title);
-								p.setProject_std_date(project_std_update);
-								p.setProject_end_date(project_end_update);
-								p.setProject_status(prjStatus);
-								pService.updateProject(p);
-								pService.updateTitleProject(p);
-								mv.setViewName("redirect:projectlist.do");
+								java.sql.Date project_std_update =java.sql.Date.valueOf(project_std_update_date);	
+								java.sql.Date project_end_update =java.sql.Date.valueOf(project_end_update_date);	
+								oTime = mSimpleDateFormat.format ( currentTime ); //현재시간 (String)
+	
+	
+	
 						
+								
+								
+								prjEndDate = mSimpleDateFormat.parse( project_end_update_date );
+								prjStartDate = mSimpleDateFormat.parse(project_std_update_date);
+	
+								currentDate =  mSimpleDateFormat.parse( oTime );
+	
+													
+	
+								int stdCompare = currentDate.compareTo( prjStartDate ); // 날짜비교
+								int endCompare = currentDate.compareTo( prjEndDate ); // 날짜비교
+	
+								if (endCompare >= 0 && stdCompare >0){ // 현재날짜가 삭제 시작일 후 인 경우
+									prjStatus = "종료";					
+	
+								} else if (endCompare < 0 && stdCompare >= 0) { // 현재날짜가 삭제 시작일 전 인 경우
+	
+									prjStatus = "진행중";
+	
+	
+								} else if(stdCompare <0 && endCompare < 0) { // 현재날짜가 삭제일 인 경우
+	
+									prjStatus = "진행예정";
+								}
+								
+									p.setProject_id(prj_update_id);
+									p.setProject_title(project_update_title);
+									p.setProject_std_date(project_std_update);
+									p.setProject_end_date(project_end_update);
+									p.setProject_status(prjStatus);
+									pService.updateProject(p);
+									
+									mv.setViewName("redirect:projectlist.do");
+							
+						
+	
+							System.out.println("성공");
+							
+						}catch (Exception e) {
+							e.printStackTrace();
+							System.out.println("실패");
+							mv.addObject("message", e.getMessage());
+							mv.setViewName("project/projectlist.do");
+						}
 					
-						
-				
-						
-						
-					
-
-						System.out.println("성공");
-						
-					}catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("실패");
-						mv.addObject("message", e.getMessage());
-						mv.setViewName("project/projectlist.do");
 					}
 
 					return mv;

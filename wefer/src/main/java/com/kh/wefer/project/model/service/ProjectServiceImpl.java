@@ -29,7 +29,6 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void projectSubInsert(ProjectSub ps) {
-		System.out.println("���Դ�");
 		pDao.projectSubInsert(ps);
 		
 	}
@@ -195,6 +194,17 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public String projectSubChkGrade(String id) {
 		return pDao.projectSubChkGrade(id);
+	}
+
+	@Override
+	public List<Project> projectEndList(ProjectMember pm) {
+		return pDao.projectEndList(pm);
+
+	}
+
+	@Override
+	public List<ProjectSub> projectProgress(ProjectSub ps) {
+		return pDao.projectProgress(ps);
 	}
 
 	

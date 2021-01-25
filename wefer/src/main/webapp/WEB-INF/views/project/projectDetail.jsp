@@ -260,7 +260,7 @@
 									<input type="hidden" name="prj-id" value="${pvo.project_sub_id}">
 									
 									<c:forEach items="${pvo.projectMembers}" var="pm">
-									<c:if test = "${pm.project_member_grade eq 1}">
+									<c:if test = "${pm.id eq loginId}">
 									<button type="button" data-toggle="modal" data-target="#bd-example-modal-lg2" class="btn btn-primary prj-update" style="width:50px; height: 30px; padding: 0; font-size: 14px; font-weight: 500; mar">수정</button>												
 									<button type="button" class="btn btn-danger prj-del" style="width:50px; height: 30px; padding: 0; margin-right:20px; font-size: 14px; font-weight: 500; float: left;">삭제</button>
 									</c:if>
@@ -425,38 +425,23 @@ chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 
 var colorSet = new am4core.ColorSet();
 colorSet.saturation = 0.4;
+var result = Math.floor(Math.random() * 30) + 1;
 
-chart.data = [ {
-  "category": "Module #1",
-  "start": "2021-01-06",
-  "end": "2021-01-08",
-  "color": colorSet.getIndex(0).brighten(0),
-  "task": "Gathering requirements"
-}, {
-  "category": "Module #2",
-  "start":"2021-01-10",
-  "end": "2021-01-15",
-  "color": colorSet.getIndex(2).brighten(0),
-  "task": "Gathering requirements"
-},  {
-  "category": "Module #3",
-  "start": "2021-01-13",
-  "end": "2021-01-18",
-  "color": colorSet.getIndex(4).brighten(0),
-  "task": "Gathering requirements"
-},{
-  "category": "Module #4",
-  "start": "2021-01-20",
-  "end": "2021-01-21",
-  "color": colorSet.getIndex(6).brighten(1.2),
-  "task": "Testing and QA"
-}, {
-  "category": "Module #5",
-  "start": "2021-01-09",
-  "end": "2021-01-20",
-  "color": colorSet.getIndex(8).brighten(0),
-  "task": "Gathering requirements"
-}];
+console.log(result);
+chart.data = [ 
+<c:forEach items="${projectSubList}" var="pvo" varStatus="s" >	
+
+{
+  "category": "${pvo.project_sub_title}",
+  "start": "${pvo.project_sub_std_date}",
+  "end": "${pvo.project_sub_end_date}",
+  "color": colorSet.getIndex(${s.index}),
+  "task": "${pvo.project_sub_title}"
+},
+</c:forEach>
+];
+
+
 
 chart.dateFormatter.dateFormat = "yyyy-MM-dd";
 chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
@@ -467,8 +452,8 @@ categoryAxis.renderer.grid.template.location = 0;
 categoryAxis.renderer.inversed = true;
 
 var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.renderer.minGridDistance = 70;
-dateAxis.baseInterval = { count: 1, timeUnit: "day" };
+dateAxis.renderer.minGridDistance = 50;
+dateAxis.baseInterval = { count: 40, timeUnit: "day" };
 dateAxis.max = new Date().getTime();
 //dateAxis.strictMinMax = true;
 dateAxis.renderer.tooltipLocation = 0;

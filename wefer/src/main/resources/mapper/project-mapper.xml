@@ -15,6 +15,7 @@
 		<result property="project_status" column="project_status"/>
 		<result property="project_color" column="project_color"/>
 		<result property="project_member_grade" column="project_member_grade"/>
+		<result property="progress" column="progress"/>
 		<collection property="projectMembers" resultMap="resultProjectMember" ofType="ProjectMember">
 		</collection>
 		
@@ -164,9 +165,23 @@ private List<Member> members; -->
 	<!-- 프로젝트 전체 조회 -->
 	<select id="projectList" resultType="arraylist"
 		resultMap="resultProject" parameterType="Project">
+    	select distinct project.*, project_member.project_member_grade,  project_member.id
+		from project, project_member 
+		where project.project_id = project_member.project_id and project_member.id = #{id} and project.project_status = '진행중' or project.project_status = '진행예정'
+	</select>
+	
+	<!-- 프로젝트 프로그레스 용 상태 조회 -->
+	<select id="projectProgress" resultType="arraylist"
+		resultMap="resultProjectSub" parameterType="ProjectSub">
+    		select project_sub_status from project_sub where project_id = #{project_id}
+    </select>
+	
+	<!-- 종료 프로젝트 전체 조회 -->
+	<select id="projectEndList" resultType="arraylist"
+		resultMap="resultProject" parameterType="Project">
     select distinct project.*, project_member.project_member_grade
 		from project, project_member 
-		where project.project_id = project_member.project_id and project_member.id = #{id} 
+		where project.project_id = project_member.project_id and project_member.id = #{id} and project.project_status = '종료'
 	</select>
 	<!-- 프로젝트 삭제 -->
 	<delete id="projectDelete" flushCache="true" statementType="PREPARED" timeout="20" parameterType="Project">
@@ -290,7 +305,7 @@ private List<Member> members; -->
 	<!-- 서브 프로젝트 삽입 -->
 	<insert id="projectSubInsert" flushCache="true" statementType="PREPARED" parameterType="ProjectSub">
 		insert into project_sub(PROJECT_SUB_ID, PROJECT_SUB_TITLE, PROJECT_SUB_STD_DATE, PROJECT_SUB_END_DATE, PROJECT_SUB_IMPORTANT, PROJECT_SUB_STATUS, PROJECT_ID) 
-		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, '진행예정', WEFER_PRJ_SEQ.CURRVAL)
+		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, #{project_sub_status}, WEFER_PRJ_SEQ.CURRVAL)
 	</insert>
 	
 		<!-- 프로젝트 멤버 삽입 -->
@@ -301,7 +316,7 @@ private List<Member> members; -->
 	<!-- 서브 프로젝트 추가-->
 	<insert id="projectSubAdd" flushCache="true" statementType="PREPARED" parameterType="ProjectSub">
 		insert into project_sub(PROJECT_SUB_ID, PROJECT_SUB_TITLE, PROJECT_SUB_STD_DATE, PROJECT_SUB_END_DATE, PROJECT_SUB_IMPORTANT, PROJECT_SUB_STATUS, PROJECT_ID) 
-		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, '진행예정', #{project_id})
+		values (WEFER_PRJ_SUB_SEQ.NEXTVAL, #{project_sub_title}, #{project_sub_std_date}, #{project_sub_end_date}, #{project_sub_important}, #{project_sub_status}, #{project_id})
 	</insert>
 			<!-- 프로젝트 멤버 추가 -->
 	<insert id="projectSubAddMember" flushCache="true" statementType="PREPARED" parameterType="ProjectMember">
@@ -315,7 +330,7 @@ private List<Member> members; -->
 		project_sub_title = #{project_sub_title},
 		project_sub_std_date = #{project_sub_std_date},
 		project_sub_end_date = #{project_sub_end_date},
-		project_sub_important = #{project_sub_important}
+		project_sub_status = #{project_sub_status}
 		where
 		project_sub_id = #{project_sub_id}
 	</update>

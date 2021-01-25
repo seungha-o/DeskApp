@@ -83,6 +83,10 @@ public interface ProjectService {
 
 	String projectSubChkGrade(String id);
 
+	List<Project> projectEndList(ProjectMember pm);
+
+	List<ProjectSub> projectProgress(ProjectSub ps);
+
 
 
 }
