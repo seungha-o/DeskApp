@@ -47,11 +47,24 @@
 </script>
 <style>
 #scroll{
-    overflow-y: auto;
+	height : 480px;
+    overflow-y: scroll;
+    
 }
-#scroll::-webkit-scrollbar {
+ #scroll::-webkit-scrollbar {
     display: none; 
 }
+#messageinput::-webkit-scrollbar {
+    display: none; 
+}
+.chat-desc{
+	height : 480px;
+    overflow-y: scroll;
+    
+}
+.chat-desc::-webkit-scrollbar {
+    display: none; 
+} 
 
 .btn {
 	height: !important 0px;
@@ -128,14 +141,14 @@
 									</div>
 								</div>
 								<div class="chat-box">
-									<div class="chat-desc customscroll" >
+									<div class="chat-desc" id = scroll >
 									
 										<p style="text-align: center">--------------------------대화가 시작되었습니다.--------------------------</p>
-										<div id = "div_chat">
+									<!-- 	<div id = "scroll" > -->
 											<ul id="messages">
 												
 											</ul>
-										</div>
+										<!-- </div> -->
 									</div>
 									<div class="chat-footer">
 										<div class="file-upload">
@@ -144,7 +157,7 @@
 										<div class="chat_text_area">
 											<input type="text" id="sender" value="${loginName}"
 												style="display: none;">
-											<textarea id="messageinput" onkeyup = "enterkey();"></textarea>
+											<textarea id="messageinput" onkeyup = "enterkey();" ></textarea>
 										</div>
 										<div class="chat_send">
 											<button onclick="sent();" 
@@ -165,10 +178,10 @@
 			var ws;
 			var messages = document.getElementById("messages");
 			var flag = true;
-				  var isScrollUp = false;
-				  var divChat = document.getElementById('div_chat');
+			
 
-			function openSocket(name, photo ) {
+			function openSocket(name, photo) {
+				
 			 //   $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
 			 //   console.log("1"+$("#scroll")[0].scrollHeight);
 				$('#yes').css('display', 'block');
@@ -216,7 +229,9 @@
 		        }
 		}
 			function sent() { // 보내는 사람만 들어감 
-				flag = true;
+				
+
+			  
 				var text = document.getElementById("messageinput").value 
 				/* + ","
 						+ document.getElementById("sender").value; */
@@ -227,18 +242,21 @@
 				
 				if (flag == true){
 					messages.innerHTML +=  // 오른쪽에 나와야함 
-					"<li class=\"clearfix admin_chat\"><span class=\"chat-img\">\r\n" + 
+					"<li class=\"clearfix admin_chat\" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
 	        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
 	        		"</span>\r\n" + 
 	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
 	        		flag = false;
+	        		
+					console.log($("#scroll").scrollTop());
+					console.log($("#scroll")[0].scrollHeight);
+					console.log($("#scroll").height());
+					console.log($("#mCSB_5_scrollbar_vertical").height());
+					  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+					  console.log($("#scroll")[0].scrollHeight);
 				}
-				 // 기본적으로 스크롤 최하단으로 이동 (애니메이션 적용)
-			    if (!isScrollUp) {
-			      $('#div_chat').animate({
-			        scrollTop: divChat.scrollHeight - divChat.clientHeight
-			      }, 100);
-			    }
+				
+				
 				
 			}
 			function writeResponse(text) {
@@ -249,16 +267,22 @@
 				console.log(sender);
 				console.log("writeResponse에 들어오면 보내는거 받는거 다 들어감  " + text);
 				if (sessionid == sender && flag == true){
+					
 					messages.innerHTML +=  // 왼쪽
-						"<li class=\"clearfix \"><span class=\"chat-img\">\r\n" + 
+						"<li class=\"clearfix \" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
 		        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
 		        		"</span>\r\n" + 
 		        		"<div class=\"chat-body clearfix\"><p style = \"display: inline-block;\">"+ text +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
+
+						  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
 				}flag = true;
+				
+				
 			}
 			
 			function closeSocket() {
 				var c = confirm("채팅창을 닫겠습니까?");
+		   
 				$('.photo').empty();
 				$('.name').empty();
 				if (c){

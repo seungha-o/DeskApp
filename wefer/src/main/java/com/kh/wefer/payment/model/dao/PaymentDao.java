@@ -16,8 +16,8 @@ public class PaymentDao {
 	public List<Payment> paymentList(Payment my_name){ 
 		return sqlSession.selectList("PaymentMapper.paymentList",my_name);
 	}
-	public List<Payment> paymentReciveList(Payment my_name){ 
-		return sqlSession.selectList("PaymentMapper.receive-paymentList",my_name);
+	public List<Payment> paymentReciveList(Payment mymy_name){ 
+		return sqlSession.selectList("PaymentMapper.receive-paymentList",mymy_name);
 	}
 	
 	public Payment paymentDetail(String payment_id) {

@@ -129,9 +129,9 @@
 		p.id
 		where p.payment_id in (select pc.payment_id
 		from payment_confirm pc
-		where pc.S_MEMBER_ID0 = #{id}
-		or pc.S_MEMBER_ID1 =#{id} or
-		pc.S_MEMBER_ID2 =#{id}
+		where pc.S_MEMBER_ID0 = #{name}
+		or pc.S_MEMBER_ID1 =#{name} or
+		pc.S_MEMBER_ID2 =#{name}
 		)
 	</select>
 	<insert id="paymentInsert" parameterType="Payment"

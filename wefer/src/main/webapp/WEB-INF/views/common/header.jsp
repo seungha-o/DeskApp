@@ -59,7 +59,9 @@
 <div class="header">
 	<div class="header-left">
 		<div class="menu-icon dw dw-menu"></div>
-
+		<div id="socketMessage" class="alert alert-secondary" role="alert"
+			style="display: none; width: 150%; margin-left: 43px; margin-top: 15px;"">
+		</div>
 
 	</div>
 	<div class="header-right">
@@ -71,23 +73,20 @@
 				<div id="msgStack"></div>
 				<a class="dropdown-toggle no-arrow" href="#" role="button"
 					data-toggle="dropdown"> <i class="icon-copy dw dw-notification"></i>
-					
-					<span id = "dot" class="badge notification-active" style = "display:none"></span>
+
+					<span id="dot" class="badge notification-active"
+					style="display: none"></span>
 				</a>
-				<div class="dropdown-menu dropdown-menu-right"  onchange ="dot();">
+				<div class="dropdown-menu dropdown-menu-right" onchange="dot();">
 					<div class="notification-list mx-h-350 customscroll">
-						   <ul id="socketAlert">
-						   		<li>
-									<a href="#">
-										모든 알림을 확인했습니다
-									</a>
-								</li>
-						   </ul>
+						<ul id="socketAlert">
+							<li><a href="#"> 모든 알림을 확인했습니다 </a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		 
+
 		<div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button"
@@ -338,18 +337,29 @@
 
 		ws.onmessage = function(event) {
 			console.log("ReceiveMessage:", event.data + '\n');
-	/* 		var $socketMessage = $('div#socketMessage'); */
+		//console.log ( event.data + '\n');
+		if ((event.data + '\n').length <= 8){
+			console.log(event.data + '\n');
+	
+		}else {
 			var $socketAlert = $('ul#socketAlert');
-/* 			$socketMessage.html(event.data); */
 			$socketAlert.html(event.data);
-/* 			$socketMessage.css('display', 'block'); */
-			$socketAlert.css('display', 'block');
-			$('#dot').css('display','block');
 
-		/* 	     setTimeout( function() {
+			$('#dot').css('display','block');
+			$socketAlert.css('display', 'block');
+			
+ 		var $socketMessage = $('div#socketMessage'); 
+			$socketMessage.html(event.data); 
+ 			$socketMessage.css('display', 'block'); 
+
+		     setTimeout( function() {
 			       $socketMessage.css('display', 'none');
-			    }, 3000);  */
+			    }, 3000);  
 		};
+			
+
+		}
+			
 
 		ws.onclose = function(event) {
 			console.log('Info: connection closed.');
@@ -360,8 +370,7 @@
 	}
 </script>
 <script type="text/javascript">
-	$
-			.ajax({
+	$.ajax({
 				url : "${pageContext.request.contextPath}/memeberList",
 				type : "POST",
 				contentType : "application/json; charset=utf-8;",
@@ -394,8 +403,7 @@
 					for (var i = 0; i < data.length; i++) {
 						if (data[i].dept_name == '인사팀') {
 							if (data[i].status == '퇴근') {
-								$('.insa')
-										.append(
+								$('.insa').append(
 												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
 														+ data[i].id
 														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
@@ -404,8 +412,7 @@
 														+ data[i].position
 														+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
 							} else if (data[i].status == '출근') {
-								$('.insa')
-										.append(
+								$('.insa').append(
 												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
 														+ data[i].id
 														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
@@ -417,8 +424,7 @@
 
 						} else if (data[i].dept_name == '경영팀') {
 							if (data[i].status == '퇴근') {
-								$('.gyeonyoung')
-										.append(
+								$('.gyeonyoung').append(
 												'<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
 														+ data[i].id
 														+ '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '

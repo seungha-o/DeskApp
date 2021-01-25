@@ -18,8 +18,8 @@ public class PaymentServiceImpl implements PaymentService {
 		return pmDao.paymentList(my_name);
 	}
 	@Override
-	public List<Payment> paymentReciveList(Payment my_name) {
-		return pmDao.paymentReciveList(my_name);
+	public List<Payment> paymentReciveList(Payment mymy_name) {
+		return pmDao.paymentReciveList(mymy_name);
 	}
 
 	@Override
