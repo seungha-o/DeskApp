@@ -89,6 +89,16 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.selectuserdept(addrMember);
 	}
 
+	@Override
+	public String gotoid(String email) {
+		return mDao.gotoid(email);
+	}
+
+	@Override
+	public String gotopw(String email, String id) {
+		return mDao.gotopw(email,id);
+	}
+
 
 	
 }

@@ -118,11 +118,6 @@
 		</div>
 	</div>
 	<!-- js -->
-
-	<script src="./resources/vendors/scripts/core.js"></script>
-	<script src="./resources/vendors/scripts/script.min.js"></script>
-	<script src="./resources/vendors/scripts/process.js"></script>
-	<script src="./resources/vendors/scripts/layout-settings.js"></script>
 	<script src="./resources/src/plugins/fullcalendar/fullcalendar.min.js"></script>
 	<!-- <script src="./resources/vendors/scripts/calendar-setting.js"></script> -->
 	<script type="text/javascript">

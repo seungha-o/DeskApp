@@ -34,4 +34,10 @@ public interface MemberService {
 
 	String selectuserdept(String addrMember);
 
+	String gotoid(String email);
+
+	String gotopw(String email, String id);
+
+	
+
 }

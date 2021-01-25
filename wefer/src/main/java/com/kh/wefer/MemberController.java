@@ -213,31 +213,45 @@ public class MemberController {
 		}	
 		return mv;
 	}
-	
-	@RequestMapping(value ="/login.do", method = RequestMethod.POST)
-	public ModelAndView login(Member m, HttpSession session, ModelAndView mv,HttpServletRequest request) {
-		System.out.println("rrr:"+request.getParameter("id"));
-		System.out.println("rrr:"+m.getId());
+
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST, produces ="application/text; charset=utf8")
+	@ResponseBody
+	public String login(Member m, HttpSession session, HttpServletRequest request) {
+		System.out.println("rrr1:" + m.getPassword());
+		System.out.println("rrr2:" + m.getId());
+		String a = "1";
 		try {
-			Member result = mService.login(m);	
+			Member result = mService.login(m); 
+			System.out.println("result = "+result);
 			if(result == null) {
-				mv.setViewName("redirect:");
-				
+				a = "1";
 			}else {
-				session.setAttribute("loginId", result.getId()); 
-				session.setAttribute("loginName", result.getName()); 
-				session.setAttribute("dept_no", result.getDept_no()); 
+				session.setAttribute("loginId", result.getId());
+				session.setAttribute("loginName", result.getName());
+				session.setAttribute("dept_no", result.getDept_no());
 				session.setAttribute("position",result.getPosition());
-				System.out.println(result.getPosition());
-				mv.setViewName("redirect:home.do");			
-			}				
-		}catch (Exception e) {
-		 e.printStackTrace();
+				a = "2";
+			}
+		}catch(Exception e) {
+			e.printStackTrace(); 
 		}
-		return mv;
-		
+		System.out.println(a);
+		return a;
 	}
 	
+	@RequestMapping("/logout.do")
+	public ModelAndView logout(ModelAndView mv, HttpSession session) {
+		session.invalidate();
+		mv.setViewName("redirect:/");
+		return mv;
+	}
+	
+	@RequestMapping("/findmember.do")
+	public ModelAndView findmember(ModelAndView mv, HttpSession session) {
+		mv.setViewName("member/findmember");
+		return mv;
+	}
+
 	@RequestMapping("/memberlist")
 	public ModelAndView mlist(ModelAndView mv, HttpSession session) {
 		mv.setViewName("member/memberlist");
@@ -372,13 +386,49 @@ public class MemberController {
 				System.out.println(report.getOriginalFilename() + "을 저장합니다.");
 				System.out.println("저장 경로 : " + savePath);
 
-				filePath = folder + "\\" + report.getOriginalFilename();
-				report.transferTo(new File(filePath)); // 파일을 저장한다
-				System.out.println("파일명 : " + report.getOriginalFilename());
-				System.out.println("파일 경로 : " + filePath);
-				System.out.println("파일 전송이 완료되었습니다.");
-			} catch (Exception e) {
-				System.out.println("파일 전송 에러 : " + e.getMessage());
-			}
+			filePath = folder + "\\" + report.getOriginalFilename();
+			report.transferTo(new File(filePath)); // 파일을 저장한다
+			System.out.println("파일명 : " + report.getOriginalFilename());
+			System.out.println("파일 경로 : " + filePath);
+			System.out.println("파일 전송이 완료되었습니다.");
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 : " + e.getMessage());
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("/gotoid.do")
+	public String gotoid(@RequestParam(name = "email")String email) {
+		String result = "1";
+		System.out.println("아이디찾으러옴 이메일은?"+email);
+		result = mService.gotoid(email);
+		
+		System.out.println("아이디찾으러옴 반환값은?"+result);
+		if(result==null||result.equals("")) {
+			System.out.println("아이디찾으러옴 조건에걸림"+result);
+			result="1";
+		}
+		System.out.println("아이디찾으러옴 에이작스반환값은?"+result);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/gotopw.do")
+	public String gotopw(@RequestParam(name = "email")String email,@RequestParam(name = "id")String id) {
+		String result = "1";
+		System.out.println("비밀번호찾으러옴 이메일은?"+email);
+		System.out.println("비밀번호찾으러옴 아이디는?"+id);
+		result = mService.gotopw(email,id);
+		
+		System.out.println("비밀번호찾으러옴 반환값은?"+result);
+		if(result==null||result.equals("")) {
+			System.out.println("비밀번호찾으러옴 조건에걸림"+result);
+			result="1";
+		}
+		System.out.println("비밀번호찾으러옴 에이작스반환값은?"+result);
+		return result;
+	}
+	
+	
+	
 }

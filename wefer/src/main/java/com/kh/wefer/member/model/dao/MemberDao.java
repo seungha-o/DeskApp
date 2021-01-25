@@ -1,7 +1,9 @@
 package com.kh.wefer.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,17 @@ public class MemberDao {
 	public String selectuserdept(String addrMember) {
 		
 		return sqlSession.selectOne("Member.selectuserdept",addrMember);
+	}
+	public String gotoid(String email) {
+		return sqlSession.selectOne("Member.gotoid",email);
+	}
+	public String gotopw(String email, String id) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		
+		parameters.put("email", email);
+		parameters.put("id", id);
+		
+		return sqlSession.selectOne("Member.gotopw",parameters);
 	}
 	
 }
