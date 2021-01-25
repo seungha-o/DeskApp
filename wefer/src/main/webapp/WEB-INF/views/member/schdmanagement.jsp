@@ -213,7 +213,23 @@
 			
 				],
 				dayClick: function(date,jsEvent, view) {
+					 var mm=date.format("YYYY-MM");
+					$.ajax({
+						
+						url:"checkannualmonth.do",
+						data:{"mm":mm},
+						success:function(res){
+							
+							if(res>0){
+								
+								alert("한달에 휴가를 2번이상 사용하실 수 없습니다");
+							}else{
 					jQuery('#modal-view-event-add').modal();
+							}
+							
+						}
+						
+					})
 
 				},
 				borderColor:"white",
@@ -250,8 +266,6 @@
               })
               
               // 현재 변경된 데이터 셋팅
-              
-           
           
            });
 	$(function(){	
@@ -263,8 +277,8 @@
 	$(function(){
 		$("#delBtn").click(function(){
 		var scid = $(this).prev().val();
-
-		location.href="delete_schedule.do?scid="+scid
+			/* alert(scid); */
+		location.href="deleteannual.do?scid="+scid;
 				
 		})
 	})

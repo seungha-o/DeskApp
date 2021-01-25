@@ -49,4 +49,12 @@
 	<insert id="insertscheduleSc" parameterType="AnnualSc" flushCache="true" statementType="PREPARED">
 	insert into annual(annual_content,annual_stddate,annual_enddate,annual_kind,annual_id,id)values(#{annual_content},TO_DATE(#{annual_stddate}),TO_DATE(#{annual_enddate}),#{annual_kind},Annual_SEQ.nextval,#{id})
 	</insert>
+	
+	<delete id="deleteAnnual" parameterType="string" flushCache="true" statementType="PREPARED">
+	delete annual where annual_id=#{hcid}
+	</delete>
+	
+	<select id ="checkannualmonth" parameterType="hashmap" resultType="int">
+	select count(*) from annual where id =#{id} group  by TO_CHAR(annual_stddate,'yyyy-mm') having TO_CHAR(annual_stddate,'yyyy-mm')=#{mm} 
+	</select>
 </mapper>

@@ -323,7 +323,6 @@
 								jQuery('#modal-view-event').modal();
 								$("#schedules_name").val(evtt);
 							}else{
-								
 								alert("일정수정은 해당 부서의 부장직급만 가능합니다");
 							}
 						}

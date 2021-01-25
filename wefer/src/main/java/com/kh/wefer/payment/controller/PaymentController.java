@@ -70,6 +70,11 @@ public class PaymentController {
 		}
 		return "redirect:approval.do";
 	}
+	@RequestMapping(value="/deleteannual.do")
+	public String deleteannual(@RequestParam(name="scid")String hcid) {
+		aService.deleteAnnual(hcid);
+		return "redirect:approval.do";
+	}
 
 	@RequestMapping(value = "/apprDetail.do", method = RequestMethod.GET)
 	public ModelAndView paymentDetail(@RequestParam(name = "payment_id") String payment_id, ModelAndView mv) {
@@ -81,9 +86,7 @@ public class PaymentController {
 	@RequestMapping(value = "/confirm.do", method = RequestMethod.GET)
 	public String apprForm(Payment p, HttpSession session) {
 		try {
-
 			p.setId((String) session.getAttribute("loginId"));
-	
 			pmService.confirmCnt(p);
 			pmService.status(p);
 			System.out.println("cnt:"+pmService.confirmCnt(p));

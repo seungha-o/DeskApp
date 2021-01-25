@@ -21,5 +21,9 @@ public class AnnualDao {
 	public int insertAnnual(Annual a) {
 		return sqlSession.insert("AnnualMapper.annualInsert", a);
 	}
+
+	public void deleteAnnual(String hcid) {
+		 sqlSession.delete("AnnualMapper.deleteAnnual",hcid);
+	}
 	
 }

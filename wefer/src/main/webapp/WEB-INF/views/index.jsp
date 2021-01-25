@@ -89,7 +89,7 @@
 					</div>
 				</div>
 				<div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-					<div id='calendar' style="width: 40%"></div>
+					<div id='calendar' style="width: 100%"></div>
 
 				</div>
 			</div>

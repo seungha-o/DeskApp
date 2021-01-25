@@ -1,5 +1,6 @@
 package com.kh.wefer.member.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,5 +23,8 @@ public class AnnualScDao {
 	public void insertscheduleSc(AnnualSc vo) {
 		sqlSession.insert("AnnualMapper.insertscheduleSc",vo);
 
+	}
+	public int checkannualmonth(HashMap<String, String> list) {
+		return 	sqlSession.selectOne("AnnualMapper.checkannualmonth",list);
 	}
 }

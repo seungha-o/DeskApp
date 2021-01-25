@@ -129,9 +129,9 @@
 		p.id
 		where p.payment_id in (select pc.payment_id
 		from payment_confirm pc
-		where pc.S_MEMBER_ID0 = #{id}
-		or pc.S_MEMBER_ID1 =#{id} or
-		pc.S_MEMBER_ID2 =#{id}
+		where pc.S_MEMBER_ID0 = #{name}
+		or pc.S_MEMBER_ID1 =#{name} or
+		pc.S_MEMBER_ID2 =#{name}
 		)
 	</select>
 	<insert id="paymentInsert" parameterType="Payment"
@@ -162,6 +162,10 @@
 		on a.annual_id = p.annual_id
 		left outer join payment_confirm pc
 		on pc.payment_id = p.payment_id
+		left outer join member m
+		on
+		m.id =
+		p.id
 		where p.payment_id = #{payment_id}
 	</select>
 
@@ -182,13 +186,13 @@
 		#{id} and payment_id=#{payment_id}
 		union all
 		select
-		(count(S_MEMBER_ID1)*2)
+		(count(S_MEMBER_ID1))
 		from payment_confirm where s_member_id1 =
 		#{id}
 		and payment_id=#{payment_id}
 		union all
 		select
-		(count(S_MEMBER_ID2)*4)
+		(count(S_MEMBER_ID2))
 		from payment_confirm where
 		s_member_id2 =
 		#{id} and
@@ -200,7 +204,7 @@
 		statementType="PREPARED">
 
 		update payment set payment_status = (select case when
-		confirm >= 7 then '승인'
+		confirm >= 6 then '승인'
 		else '진행중' end
 		from (select confirm from
 		payment_confirm

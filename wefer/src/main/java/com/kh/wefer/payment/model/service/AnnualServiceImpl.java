@@ -44,5 +44,11 @@ public class AnnualServiceImpl implements AnnualService {
 		else
 			return 0;
 	}
+	@Override
+	public void deleteAnnual(String hcid) {
+		
+		aDao.deleteAnnual(hcid);
+		
+	}
 
 }

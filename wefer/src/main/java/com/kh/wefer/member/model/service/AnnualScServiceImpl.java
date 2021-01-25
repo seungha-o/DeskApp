@@ -1,5 +1,6 @@
 package com.kh.wefer.member.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,14 @@ public class AnnualScServiceImpl implements AnnualScService {
 	}
 	@Override
 	public void updatescheduleSc(AnnualSc vo) {
-aScDao.updatescheduleSc(vo);		
+		aScDao.updatescheduleSc(vo);		
 	}
 	public void insertscheduleSc(AnnualSc vo) {
 		// TODO Auto-generated method stub
 		aScDao.insertscheduleSc(vo);		
+	}
+	public int checkannualmonth(HashMap<String, String> list) {
+		return aScDao.checkannualmonth(list);
 	}
 
 }

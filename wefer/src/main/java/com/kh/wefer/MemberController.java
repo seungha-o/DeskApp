@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -108,7 +109,6 @@ public class MemberController {
 			 @RequestParam(name="password") String password, HttpServletResponse response, HttpSession session)	 {	
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
 		 String sessionId = (String) session.getAttribute("loginId");
 		 System.out.println(sessionId);
 		 System.out.println(passwordck);
@@ -238,6 +238,31 @@ public class MemberController {
 		System.out.println(a);
 		return a;
 	}
+
+	
+	@RequestMapping(value = "/checkannualmonth.do")
+	@ResponseBody
+	public int checkannualmonth(@RequestParam(name="mm")String mm,HttpSession session) {
+		
+		HashMap<String,String>list = new HashMap<String, String>();
+		list.put("id",(String)session.getAttribute("loginId"));
+		list.put("mm",mm);
+		
+		
+		int result =0;
+		
+		try {
+			
+			System.out.println("sadasdsadasd"+mm);
+			result=aScService.checkannualmonth(list);
+			
+		}catch(Exception e) {
+			result = 0;
+		}
+		System.out.println(result);
+		return result;
+	}
+	
 	
 	@RequestMapping("/logout.do")
 	public ModelAndView logout(ModelAndView mv, HttpSession session) {
@@ -290,7 +315,6 @@ public class MemberController {
 		List<AnnualSc>list = aScService.selectAnnualList(id);
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-ddhh:mm:ss");
 		System.out.println(list.size());
-		System.out.println(list.get(0).toString());
 		Date date =null;
 		try {
 			for(int i=0;i<list.size();i++) {
