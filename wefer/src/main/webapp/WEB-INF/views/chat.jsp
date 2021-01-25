@@ -47,7 +47,7 @@
 </script>
 <style>
 #scroll{
-	height : 480px;
+	height : 520px;
     overflow-y: scroll;
     
 }
@@ -135,8 +135,8 @@
 												role="button" data-toggle="dropdown"> Setting </a>
 											<div class="dropdown-menu dropdown-menu-right">
 												<a class="dropdown-item" href="#" onclick="closeSocket();">대화방 나가기</a>
-												  <a class="dropdown-item text-light-orange" href="#" onclick="closeChat()" >창 닫기</a>
-											</div>
+											<!-- 	  <a class="dropdown-item text-light-orange" href="#" onclick="closeChat()" >창 닫기 대화방 나가기</a>
+											 --></div>
 										</div>
 									</div>
 								</div>
@@ -213,12 +213,13 @@
 				};
 
 				ws.onclose = function(event) {
-					messages.innerHTML +=  // 왼쪽
-						"<li class=\"clearfix \"><span class=\"chat-img\">\r\n" + 
-		        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
-		        		"</span>\r\n" + 
-		        		"<div class=\"chat-body clearfix\"><p>"+ "상대방이 대화를 종료했습니다." +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
-					
+					console.log("끊김?");
+					writeResponse("상대방이 대화를 종료했습니다.");
+					 function clearText(){
+				            console.log(messages.parentNode);
+				            messages.parentNode.removeChild(messages)
+				      	}
+//상대방이 대화끝내면 나한테 끊겼다고 알려주기		
 				}
 
 			}
@@ -288,6 +289,10 @@
 				if (c){
 					$('#yes').css('display', 'none');
 					$('#no').css('display', 'block');
+					
+					
+					ws.onclose();
+					
 				}
 		}
 		</script>
@@ -305,23 +310,23 @@
 								if (data[i].dept_name == '인사팀') {
 									if ($('.1').length == 0) {
 										$('.chatMember').append(
-												'<ul class="1"><span>'
+												'<ul class="1"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</span></ul>');
+														+ '</h4></span></ul>');
 									}
 								} else if (data[i].dept_name == '경영팀') {
 									if ($('.2').length == 0) {
 										$('.chatMember').append(
-												'<ul class="2"><span><h3 class="clearfix">'
+												'<ul class="2"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</h3></span></ul>');
+														+ '</h4></span></ul>');
 									}
 								} else if (data[i].dept_name == '개발팀') {
 									if ($('.3').length == 0) {
 										$('.chatMember').append(
-												'<ul class="3"><span>'
+												'<ul class="3"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</span></ul>');
+														+ '</h4></span></ul>');
 									}
 								}
 							}
@@ -334,7 +339,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+																+ ')</a></li>');
 									} else if (data[i].status == '출근') {
 										$('.1')
 												.append(
@@ -342,7 +347,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+																+ ')</a></li>');
 									}
 
 								} else if (data[i].dept_name == '경영팀') {
@@ -353,7 +358,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+																+ ')</a></li>');
 									} else if (data[i].status == '출근') {
 										$('.2')
 												.append(
@@ -361,7 +366,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+																+ ')</a></li>');
 									}
 								} else if (data[i].dept_name == '개발팀') {
 									if (data[i].status == '퇴근') {
@@ -371,7 +376,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+																+ ')</a></li>');
 									} else if (data[i].status == '출근') {
 									
 										$('.3')                                                          
@@ -380,7 +385,7 @@
 																+ data[i].name
 																+ '('
 																+ data[i].position
-																+ ')<div style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
+																+ ')</a></li>');
 									}
 								}
 							}

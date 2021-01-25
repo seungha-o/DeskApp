@@ -1,6 +1,6 @@
 package com.kh.wefer.payment.model.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -22,10 +22,10 @@ public class Payment extends Conference implements java.io.Serializable {
 	private String annual_id;
 	private String annual_content;
 	private String annual_kind;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date annual_stddate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date annual_enddate; 
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private java.sql.Date  annual_stddate;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private java.sql.Date  annual_enddate; 
 	private java.sql.Date write_date;
 	private String name;
 	private Payment_confirm Payment_confirm;

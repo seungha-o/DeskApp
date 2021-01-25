@@ -86,7 +86,9 @@ public class PaymentController {
 	@RequestMapping(value = "/confirm.do", method = RequestMethod.GET)
 	public String apprForm(Payment p, HttpSession session) {
 		try {
-			p.setId((String) session.getAttribute("loginId"));
+
+			p.setName((String) session.getAttribute("loginName"));
+	
 			pmService.confirmCnt(p);
 			pmService.status(p);
 			System.out.println("cnt:"+pmService.confirmCnt(p));

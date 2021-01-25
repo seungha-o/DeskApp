@@ -1,6 +1,6 @@
 package com.kh.wefer.payment.model.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -13,9 +13,9 @@ public class Annual implements java.io.Serializable {
 	private String annual_content;
 	private String annual_kind;
 	private String id;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_stddate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date annual_enddate;
 	
 	public Annual(Date write_date, String annual_id, String annual_content, String annual_kind, String id,

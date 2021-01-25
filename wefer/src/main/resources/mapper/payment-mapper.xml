@@ -183,19 +183,19 @@
 		from
 		(select
 		(count(S_MEMBER_ID0)) as a from payment_confirm where s_member_id0 =
-		#{id} and payment_id=#{payment_id}
+		#{name} and payment_id=#{payment_id}
 		union all
 		select
 		(count(S_MEMBER_ID1))
 		from payment_confirm where s_member_id1 =
-		#{id}
+		#{name}
 		and payment_id=#{payment_id}
 		union all
 		select
 		(count(S_MEMBER_ID2))
 		from payment_confirm where
 		s_member_id2 =
-		#{id} and
+		#{name} and
 		payment_id=#{payment_id}))where
 		payment_id=#{payment_id}
 

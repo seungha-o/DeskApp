@@ -194,6 +194,14 @@ padding: 2px !important;
 								<div class="container">
 									<h6 class="weight-400 d-flex">
 										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+										[${payment_id.annual_stddate}] - [${payment_id.annual_enddate}] 
+									</h6>
+								</div>
+							</li>
+							<li class="list-group-item pt-20 pb-20">
+								<div class="container">
+									<h6 class="weight-400 d-flex">
+										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
 										첨부파일
 									</h6>
 								</div>
@@ -205,7 +213,7 @@ padding: 2px !important;
 										<c:if test="${payment_id.conference.conference_title != null}">
 										${payment_id.conference.conference_title}
 										</c:if>
-									</h6>
+									
 									<c:choose>
 										<c:when
 											test="${payment_id.conference.conference_contents == null}">
@@ -215,13 +223,14 @@ padding: 2px !important;
 											<td>${payment_id.conference.conference_contents}</td>
 										</c:otherwise>
 									</c:choose>
+									</h6>
 								</div>
 							</li>
 							</ul>
 						</form>
 					</div>
 				</div>
-			<div class="card">
+<%-- 			<div class="card">
 							<div class="card-header">
 								<button class="btn btn-block" data-toggle="collapse" data-target="#faq1" aria-expanded="true">
 									COMMENTS
@@ -248,7 +257,7 @@ padding: 2px !important;
 									</form>
 								</div>
 							</div>
-						</div>	
+						</div>	 --%>
 			</div>
 		</div>
 	</div>
