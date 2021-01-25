@@ -11,7 +11,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.kh.wefer.member.model.domain.Member;
 
 public class ReplyEchoHandler extends TextWebSocketHandler {
 	//모든 사용자
@@ -47,8 +46,6 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 //				sess.sendMessage(new TextMessage(senderId+ ":"+message));
 //			}
 			// protocol :cmd, 로그인해서 휴가계 올리는 사람 (로그인한사람), 참조할사람, paymeny_id ) (reply, test1, test5, 510)
-			
-			
 			// 특정 유저에게 보내기
 			String msg = message.getPayload();
 			//log("msg: "+ msg);
@@ -62,12 +59,18 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 					
 					String cmd = strs[0];
 					String target = strs[1]; // m_id 저장
+					log(cmd);
+					log(target);
 					//String content = strs[2];
 					//String url = strs[3];
 					//log("strs.length 3: " + strs.length);
 					
 					for(WebSocketSession sess : sessions){
-						sess.sendMessage(new TextMessage( "<li><a href='./approval.do' style = \"color: blue;\" >"+sender+"님이 전자결재를 등록했습니다</a></li>"));
+						if (cmd.equals("전자결재")) {
+							sess.sendMessage(new TextMessage( "<li><a href='./approval.do' style = \"color: blue;\" >"+sender+"님이 "+cmd+"를 등록했습니다</a></li>"));
+						}else {
+							sess.sendMessage(new TextMessage( "<li><a href='./projectlist.do' style = \"color: blue;\" >"+sender+"님이 "+cmd+"를 등록했습니다</a></li>"));
+						}
 					}
 					
 //					WebSocketSession targetSession = users.get(target);  // 수신을 받을 세션 조회

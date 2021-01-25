@@ -46,6 +46,13 @@
 	gtag('config', 'UA-119386393-1');
 </script>
 <style>
+#scroll{
+    overflow-y: auto;
+}
+#scroll::-webkit-scrollbar {
+    display: none; 
+}
+
 .btn {
 	height: !important 0px;
 }
@@ -121,10 +128,10 @@
 									</div>
 								</div>
 								<div class="chat-box">
-									<div class="chat-desc customscroll">
+									<div class="chat-desc customscroll" >
 									
 										<p style="text-align: center">--------------------------대화가 시작되었습니다.--------------------------</p>
-										<div>
+										<div id = "div_chat">
 											<ul id="messages">
 												
 											</ul>
@@ -158,9 +165,12 @@
 			var ws;
 			var messages = document.getElementById("messages");
 			var flag = true;
-			
-			
+				  var isScrollUp = false;
+				  var divChat = document.getElementById('div_chat');
+
 			function openSocket(name, photo ) {
+			 //   $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+			 //   console.log("1"+$("#scroll")[0].scrollHeight);
 				$('#yes').css('display', 'block');
 				$('#no').css('display', 'none');
 				alert(name+"님과 채팅을 시작합니다.");
@@ -200,6 +210,7 @@
 
 			}
 			function enterkey() {
+			   
 		        if (window.event.keyCode == 13) {
 		        	sent()
 		        }
@@ -222,6 +233,12 @@
 	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
 	        		flag = false;
 				}
+				 // 기본적으로 스크롤 최하단으로 이동 (애니메이션 적용)
+			    if (!isScrollUp) {
+			      $('#div_chat').animate({
+			        scrollTop: divChat.scrollHeight - divChat.clientHeight
+			      }, 100);
+			    }
 				
 			}
 			function writeResponse(text) {
@@ -232,7 +249,6 @@
 				console.log(sender);
 				console.log("writeResponse에 들어오면 보내는거 받는거 다 들어감  " + text);
 				if (sessionid == sender && flag == true){
-					
 					messages.innerHTML +=  // 왼쪽
 						"<li class=\"clearfix \"><span class=\"chat-img\">\r\n" + 
 		        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
@@ -243,14 +259,12 @@
 			
 			function closeSocket() {
 				var c = confirm("채팅창을 닫겠습니까?");
-		   
 				$('.photo').empty();
 				$('.name').empty();
 				if (c){
 					$('#yes').css('display', 'none');
 					$('#no').css('display', 'block');
 				}
-				//ws.onclose();
 		}
 		</script>
 		<!-- 멤버리스트 js -->

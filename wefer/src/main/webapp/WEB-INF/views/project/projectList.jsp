@@ -418,6 +418,33 @@
 </body>
 
 <script>
+//프로젝트 참여자에게 메세지 전송
+$('#prj-add-project').on('click', function(evt) {
+	console.log('참여자 클릭하면');
+	var member_list = $(".setting-name").get();
+	console.log("member_list.length:" + member_list.length);
+	var members_id = $(
+	"input[name=members_id][type=hidden]")
+	.get();
+	console.log("members_id.length:" + members_id.length);
+	for (var i = 0; i < member_list.length; i++) {
+		console.log("$(member_list[i]).val(): " + $(member_list[i]).val());
+		var memberId = $(members_id[i]).val();
+		console.log("memberId" + memberId);
+		if (socket) {
+			// websocket에 보내기!! (reply,댓글작성자)
+			let socketMsg = "새로운 프로젝트," + memberId;
+			//+ "," + gBoardWriter + "," + gBno;
+			console.log("pppppppppppsmsg>>", socketMsg)
+			socket.send(socketMsg);
+		}
+	 else {
+		console.log("Error on editReply>>", res);
+	}
+	
+};
+});
+
 /* 사원추가 */
  $(document).ready(function() {
 	 $("#prj-add-member").click(function() {
@@ -705,15 +732,15 @@
 				alert('인원은 세명까지 고를 수 있습니다.');
 			}else{
 				if($('.prj-member-list').length < 3){
-						var member_list = $(".setting-name").get();
-						var member_id = $("input[name=members_id][type=hidden]").get();
+						var member_list = $(".setting-name").get();						
+						var members_id = $("input[name=members_id][type=hidden]").get();
 						console.log($('.prj-member-list').length);
 					$('#set-name').empty();
 					for(var i = 0; i < member_list.length; i++){
 						var member_name = $(member_list[i]).text();
-						var members_id = $(member_id[i]).val();
-						console.log(members_id);
-					$('.fa-hover').append('<div class="prj-member-list" style="width:600px; margin-top:15px; margin-left:10px;">'+member_name+'<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="prj_member_id" value="'+members_id+'"><div>');						
+						var member_id = $(members_id[i]).val();
+						console.log(member_id);
+						$('.fa-hover').append('<div class="prj-member-list" style="width:600px; margin-top:15px; margin-left:10px;">'+member_name+'<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="prj_member_id" value="'+member_id+'"><div>');						
 					}
 					$('#Medium-modal').modal('toggle');
 					$('.modal-backdrop').remove(); 
