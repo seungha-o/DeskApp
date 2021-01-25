@@ -55,6 +55,23 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
+</script>
+<style type="text/css">
+#main_c{
+	padding-bottom: 10px;
+}
+.lower_bar{
+	display: inline-block;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	font-size: 1em;
+	font-weight: bold ;
+}
+#lower_main{
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+</style>
 </head>
 <body>
 
@@ -93,10 +110,25 @@
 
 				</div>
 			</div>
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				DeskApp - Bootstrap 4 Admin Template By <a
-					href="https://github.com/dropways" target="_blank">Ankit
-					Hingarajiya</a>
+			
+			<div class="footer-wrap pd-20 mb-20 card-box" id="lower_main">
+				<c:if test="${not empty avgString }">
+					<div class="lower_bar">이번달 근무시간 : ${avgString} 시간</div>
+				</c:if>
+				<c:if test="${ empty avgString }">
+					
+				</c:if>
+				<c:forEach items="${today}" var="today">
+					<div class="lower_bar">오늘 출근시간 : ${today.attend_gotowork}</div>
+					<div class="lower_bar">오늘 퇴근시간 : ${today.attend_gotohome}</div>
+				</c:forEach>
+				<c:if test="${not empty worktime }">
+					<div class="lower_bar">오늘 근무시간 : ${worktime}</div>
+				</c:if>	
+				<c:if test="${empty worktime }">
+					<div class="lower_bar">출근 또는 퇴근되지 않았습니다.</div>
+				</c:if>	
+			
 			</div>
 		</div>
 	</div>
