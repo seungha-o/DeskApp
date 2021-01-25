@@ -12,12 +12,11 @@
 		<result property="profile" column="profile" />
 		<result property="status" column="status" />
 		<result property="annual" column="annual" />
-		<result property="signiture" column="signiture" />
 		<result property="employ_date" column="employ_date" />
 		<result property="dept_no" column="dept_no" />
 		<result property="birth" column="birth" />
-		<result property="manage" column="manage" />
 		<result property="dept_name" column="dept_name" />
+		<result property="address" column="address" />
 	</resultMap>
 	<!-- 	<resultMap type="Dept" id="resultDept"> type = "xml의 별칭"
 		property에는vo의 필드명, column에는 db table의 컬럼명
@@ -50,13 +49,12 @@
 			profile,
 			status,
 			annual,
-			signiture,
 			dept_no,
-			manage,
-			employ_date)
+			employ_date,
+			address)
     	values(
-    		#{id},
-    		#{password},
+    		'WE'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(WEFER_MEMBER_SEQ.NEXTVAL,2,#{dept_no}),
+    		1234,
     		#{name},
     		#{birth},
     		#{phone},
@@ -65,10 +63,9 @@
     		#{profile},
     		'퇴근',
     		'12',
-    		'a',
     		#{dept_no},
-    		#{manage},
-    		SYSDATE)
+    		SYSDATE,
+    		#{address})
 	</insert>
 	
 	<select id="login" resultType="Member"
@@ -145,9 +142,18 @@
 	where id=#{id} 
 	and password=#{password}
 	</select>
+	
+	
 	<select id="checkuserid" parameterType="string" resultType="arraylist" resultMap="resultMember">
 		select position,dept_no from member where id=#{id}
 	</select>
+	
+	
+		<!-- 회원가입 이메일 중복검사 -->
+	<select id="emailChk" parameterType="Member" resultType="arraylist" resultMap="resultMember">
+		select email from member where email = #{email} 
+	</select>
+	
 	
 	<select id="gotoid" parameterType="string" resultType="String">
 		select id from member where email=#{email}

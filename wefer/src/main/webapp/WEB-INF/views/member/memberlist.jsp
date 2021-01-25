@@ -95,7 +95,7 @@
 									<th class="datatable-nosort">매뉴</th>
 								</tr>
 							</thead>
-							<tbody class="result">
+							<tbody class="results">
 					
 								
 								
@@ -134,7 +134,7 @@
 			data : {'dept' : deptno},
 			dataType : 'json',
 			success : function(data){
-				$(".result").empty();
+				$(".results").empty();
 				for(var i=0; i<data.length; i++ ){
 					var dept_name = data[i].dept_no;
 					if(dept_name == 1){
@@ -146,7 +146,7 @@
 						}
 					console.log(dept_name);
 					
-					$(".result").append('<tr><td>'+ data[i].name +'</td>'+				
+					$(".results").append('<tr><td>'+ data[i].name +'</td>'+				
 							'<td>'+dept_name+'</td>'+	
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+
@@ -170,7 +170,7 @@
 			data : {'dept' : deptno},
 			dataType : 'json',
 			success : function(data){
-				$(".result").empty();
+				$(".results").empty();
 				for(var i=0; i<data.length; i++ ){
 					var dept_name = data[i].dept_no;
 					if(dept_name == 1){
@@ -182,7 +182,7 @@
 						}
 					console.log(dept_name);
 					
-					$(".result").append('<tr><td>'+ data[i].name +'</td>'+				
+					$(".results").append('<tr><td>'+ data[i].name +'</td>'+				
 							'<td>'+dept_name+'</td>'+	
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+
@@ -205,7 +205,7 @@
 			data : {'keyword' : keyword},
 			dataType : 'json',
 			success : function(data){
-				$(".result").empty();
+				$(".results").empty();
 				for(var i=0; i<data.length; i++ ){
 					var dept_name = data[i].dept_no;
 					if(dept_name == 1){
@@ -217,7 +217,7 @@
 						}
 					console.log(dept_name);
 					
-					$(".result").append('<tr><td>'+ data[i].name +'</td>'+				
+					$(".results").append('<tr><td>'+ data[i].name +'</td>'+				
 							'<td>'+dept_name+'</td>'+	
 							'<td>'+data[i].position+'</td>'+
 							'<td>'+data[i].phone+'</td>'+

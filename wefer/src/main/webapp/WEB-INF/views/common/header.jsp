@@ -525,3 +525,4 @@ $('#gowork').click(function() {
 <script src="./resources/vendors/scripts/script.min.js"></script>
 <script src="./resources/vendors/scripts/process.js"></script>
 <script src="./resources/vendors/scripts/layout-settings.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
