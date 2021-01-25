@@ -10,7 +10,7 @@
 
 <!-- Basic Page Info -->
 <meta charset="utf-8">
-<title>wefer</title>
+<title>DeskApp</title>
 <style>
 .fc-event-time {
 	display: none;
@@ -55,7 +55,7 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
-</script>
+
 <style type="text/css">
 #main_c{
 	padding-bottom: 10px;
@@ -77,6 +77,35 @@
 
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<div class="main-container">
+		<div class="footer-wrap pd-20 mb-20 card-box" id="lower_main" style="height: 5px;">
+				<c:if test="${not empty avgString }">
+					<div class="lower_bar">이번달 근무시간 : ${avgString} 시간</div>
+				</c:if>
+				<c:if test="${ empty avgString }">
+					
+				</c:if>
+				<c:if test="${not empty today}">
+				<c:forEach items="${today}" var="today">
+					<div class="lower_bar">오늘 출근시간 : ${today.attend_gotowork}</div>
+					<div class="lower_bar">오늘 퇴근시간 : ${today.attend_gotohome}</div>
+				</c:forEach>
+				</c:if>
+				<c:if test="${empty today}">
+				
+					<div class="lower_bar">오늘 출근시간 : </div>
+					<div class="lower_bar">오늘 퇴근시간 : </div>
+				
+				</c:if>
+				<c:if test="${not empty worktime }">
+					<div class="lower_bar">오늘 근무시간 : ${worktime}</div>
+				</c:if>	
+				<c:if test="${empty worktime }">
+					<div class="lower_bar">오늘 근무시간 : </div>
+				</c:if>	
+			
+			</div>
+		
+		
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				
@@ -86,25 +115,7 @@
 				</div>
 			</div>
 			
-			<div class="footer-wrap pd-20 mb-20 card-box" id="lower_main">
-				<c:if test="${not empty avgString }">
-					<div class="lower_bar">이번달 근무시간 : ${avgString} 시간</div>
-				</c:if>
-				<c:if test="${ empty avgString }">
-					
-				</c:if>
-				<c:forEach items="${today}" var="today">
-					<div class="lower_bar">오늘 출근시간 : ${today.attend_gotowork}</div>
-					<div class="lower_bar">오늘 퇴근시간 : ${today.attend_gotohome}</div>
-				</c:forEach>
-				<c:if test="${not empty worktime }">
-					<div class="lower_bar">오늘 근무시간 : ${worktime}</div>
-				</c:if>	
-				<c:if test="${empty worktime }">
-					<div class="lower_bar">출근 또는 퇴근되지 않았습니다.</div>
-				</c:if>	
 			
-			</div>
 		</div>
 	</div>
 	<!-- js -->

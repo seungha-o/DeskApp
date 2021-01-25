@@ -102,7 +102,7 @@
 	<!-- 주소록 의 사원 연락처 조회 -->
 	<select id="personerProfileList" resultType="Member"
 		parameterType="string">
-		select name, email, phone, address from member where id=#{id}
+		select name, email, phone, profile, address from member where id=#{id}
 	</select>
 	
 	

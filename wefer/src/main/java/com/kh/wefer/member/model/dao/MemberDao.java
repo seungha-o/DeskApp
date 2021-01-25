@@ -87,5 +87,8 @@ public class MemberDao {
 		
 		return sqlSession.selectOne("Member.gotopw",parameters);
 	}
+	public List<Member> emailChk(Member m) {
+		return sqlSession.selectList("Member.emailChk",m);
+	}
 	
 }

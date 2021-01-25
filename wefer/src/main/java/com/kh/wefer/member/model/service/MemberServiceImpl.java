@@ -99,6 +99,11 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.gotopw(email,id);
 	}
 
+	@Override
+	public List<Member> emailChk(Member m) {
+		return mDao.emailChk(m);
+	}
+
 
 	
 }

@@ -38,6 +38,8 @@ public interface MemberService {
 
 	String gotopw(String email, String id);
 
+	List<Member> emailChk(Member m);
+
 	
 
 }

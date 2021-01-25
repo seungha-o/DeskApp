@@ -91,7 +91,7 @@
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button"
 					data-toggle="dropdown"> <span class="user-icon"> <img
-						src="./resources/vendors/images/photo1.jpg" alt="">
+						src="${pageContext.request.contextPath}/resources/profileImg/${sessionScope.loginProfile }" style="width: 52px; height: 52px; border-radius: 50%" alt="">
 				</span> <span class="user-name">${sessionScope.loginName}</span>
 				</a>
 				<div
@@ -411,7 +411,7 @@
                         $('.insa').append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                          	+ '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position
@@ -420,7 +420,7 @@
                         $('.insa').append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                          + '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position
@@ -432,7 +432,7 @@
                         $('.gyeonyoung').append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+					  + '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position
@@ -442,7 +442,7 @@
                               .append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                       	  + '\'"><img src="<img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position
@@ -454,7 +454,7 @@
                               .append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                          + '\'"><img <img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position
@@ -464,7 +464,7 @@
                               .append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
-                                          + '\'"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                          + '\'"><img <img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
                                           + data[i].name
                                           + '('
                                           + data[i].position

@@ -48,7 +48,7 @@ public class ProjectController {
 	private ProjectService pService;
 	
 	
-	private static final String FILE_SERVER_PATH = "C:/spring_java/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/wefer/resources/projectFiles";
+	private static final String FILE_SERVER_PATH = "../../.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/wefer/resources/projectFiles";
 	//프로젝트 리스트 출력
 	@RequestMapping(value = "/projectlist.do", method = RequestMethod.GET)
 	public ModelAndView projectList(HttpServletRequest request, ModelAndView mv, ProjectMember pm, ProjectSub ps, Project p,HttpSession session) {

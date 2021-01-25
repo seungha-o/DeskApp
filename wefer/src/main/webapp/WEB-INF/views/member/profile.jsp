@@ -126,9 +126,9 @@ $(function(){
 				<div class="row">
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 						<div class="pd-20 card-box height-100-p">
-							<div class="profile-photo">
+							<div class="profile-photo" style="margin-bottom: 80px;">
 							
-								<img src="${pageContext.request.contextPath}/resources/profileImg/${profileList.profile}" alt="" class="avatar-photo">
+								<img src="${pageContext.request.contextPath}/resources/profileImg/${profileList.profile}" alt="" >
 								<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
@@ -146,7 +146,6 @@ $(function(){
 								</div>
 							</div>
 							<h5 class="text-center h5 mb-0">${profileList.name}</h5>
-							<p class="text-center text-muted font-14">Lorem ipsum dolor sit amet</p>
 							<div class="profile-info">
 								<h5 class="mb-20 h5 text-blue">연락처 정보</h5>
 								<ul>

@@ -163,7 +163,19 @@ public class MemberController {
 //			return job.toJSONString(); //전달된 데이터 /리턴은 string 타입
 //			}
 //		}
-	
+	 @RequestMapping(value = "/emailChk.do", method = RequestMethod.POST)
+		@ResponseBody
+		public Object emailChk(HttpServletResponse response, HttpServletRequest request, Member m) {
+			List<Member> mlist = new ArrayList<Member>();
+			int result = 0;
+			mlist = mService.emailChk(m);
+			System.out.println("호출");
+			System.out.println(mlist.size());
+			if(mlist.size() > 0) {
+				result = 1;
+			}
+			return result;
+		}
 	@RequestMapping("/insertmember")
 	public ModelAndView goinsert(ModelAndView mv, HttpSession session) {
 		String dept_no = (String) session.getAttribute("dept_no");
@@ -227,6 +239,7 @@ public class MemberController {
 				a = "1";
 			}else {
 				session.setAttribute("loginId", result.getId());
+				session.setAttribute("loginProfile", result.getProfile());
 				session.setAttribute("loginName", result.getName());
 				session.setAttribute("dept_no", result.getDept_no());
 				session.setAttribute("position",result.getPosition());
