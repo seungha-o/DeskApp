@@ -34,7 +34,7 @@ public class WebSocketChat {
         logger.info("Open session id:"+session.getId());
         try {
             final Basic basic=session.getBasicRemote();
-            basic.sendText("----채팅시작함111111111----");
+            basic.sendText(null);
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -46,12 +46,12 @@ public class WebSocketChat {
      * @param sender
      * @param message
      */
-    private void sendAllSessionToMessage(Session self, String sender, String message) {
+    private void sendAllSessionToMessage(Session self,  String message) {
     	
         try {
             for(Session session : WebSocketChat.sessionList) {
                 if(!self.getId().equals(session.getId())) {
-                    session.getBasicRemote().sendText(sender+" : "+message);
+                    session.getBasicRemote().sendText(message);
                 }
             }
         }catch (Exception e) {
@@ -67,17 +67,18 @@ public class WebSocketChat {
     public void onMessage(String message,Session session) {
     	System.out.println(message);
     	System.out.println("소켓컨트롤러 ");
-    	String sender = message.split(",")[1];
+    //	String sender = message.split(",")[1];
     	message = message.split(",")[0];
     	
-        logger.info("Message From "+sender + ": "+message);
+        logger.info("Message From  "+message);
         try {
             final Basic basic=session.getBasicRemote();
-            basic.sendText("내가보낸거 : "+message);
+            basic.sendText(message);
+            
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        sendAllSessionToMessage(session, sender, message);
+        sendAllSessionToMessage(session, message);
     }
     
     @OnError
@@ -88,6 +89,10 @@ public class WebSocketChat {
     @OnClose
     public void onClose(Session session) {
         logger.info("Session "+session.getId()+" has ended");
+		/*
+		 * try { Basic basic=session.getBasicRemote(); basic.sendText(message); }catch
+		 * (Exception e) { System.out.println(e.getMessage()); }
+		 */
         sessionList.remove(session);
     }
 }

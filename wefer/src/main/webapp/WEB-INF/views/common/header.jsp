@@ -71,9 +71,10 @@
 				<div id="msgStack"></div>
 				<a class="dropdown-toggle no-arrow" href="#" role="button"
 					data-toggle="dropdown"> <i class="icon-copy dw dw-notification"></i>
-					<span class="badge notification-active"></span>
+					
+					<span id = "dot" class="badge notification-active" style = "display:none"></span>
 				</a>
-				<div class="dropdown-menu dropdown-menu-right">
+				<div class="dropdown-menu dropdown-menu-right"  onchange ="dot();">
 					<div class="notification-list mx-h-350 customscroll">
 						   <ul id="socketAlert">
 						   		<li>
@@ -92,7 +93,7 @@
 				<a class="dropdown-toggle" href="#" role="button"
 					data-toggle="dropdown"> <span class="user-icon"> <img
 						src="./resources/vendors/images/photo1.jpg" alt="">
-				</span> <span class="user-name">${sessionScope.loginId}</span>
+				</span> <span class="user-name">${sessionScope.loginName}</span>
 				</a>
 				<div
 					class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
@@ -305,8 +306,8 @@
 		</div>
 	</div>
 </div>
-<div class="mobile-menu-overlay"></div>
-
+<div class="mobile-menu-overlay"></div><!-- 
+<div id="socketMessage" class="alert alert-success" role="alert" style="display:none;"></div> -->
 <script>
 	var socket = null;
 	$(document).ready(function() {
@@ -342,14 +343,17 @@
 
 		ws.onmessage = function(event) {
 			console.log("ReceiveMessage:", event.data + '\n');
-
+	/* 		var $socketMessage = $('div#socketMessage'); */
 			var $socketAlert = $('ul#socketAlert');
+/* 			$socketMessage.html(event.data); */
 			$socketAlert.html(event.data);
+/* 			$socketMessage.css('display', 'block'); */
 			$socketAlert.css('display', 'block');
+			$('#dot').css('display','block');
 
-			/*     setTimeout( function() {
-			       $socketAlert.css('display', 'none');
-			    }, 3000); */
+		/* 	     setTimeout( function() {
+			       $socketMessage.css('display', 'none');
+			    }, 3000);  */
 		};
 
 		ws.onclose = function(event) {

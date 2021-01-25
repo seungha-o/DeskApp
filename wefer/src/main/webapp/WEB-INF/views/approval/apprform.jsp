@@ -204,7 +204,7 @@
 				console.log("memberId" + memberId);
 				if (socket) {
 					// websocket에 보내기!! (reply,댓글작성자)
-					let socketMsg = "전자_결재," + memberId;
+					let socketMsg = "전자결재," + memberId;
 					//+ "," + gBoardWriter + "," + gBno;
 					console.log("sssssssmsg>>", socketMsg)
 					socket.send(socketMsg);

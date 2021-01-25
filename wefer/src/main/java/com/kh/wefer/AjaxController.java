@@ -45,6 +45,14 @@ public class AjaxController {
 		return arrList;
 	}
 	@ResponseBody
+	@PostMapping("/SessionmemeberList")
+	public Object SessionMemberController(Member my_name,  HttpSession session ) {
+		List<Member> arrList = new ArrayList<Member>();
+		arrList= mService.memberList();
+		my_name.setName((String) session.getAttribute("loginName"));
+		return arrList;
+	}
+	@ResponseBody
 	@RequestMapping(value="/deptmemberlist.do")
 	public Object deptlist(@RequestParam(name="dept" ,defaultValue = "") String dept_no) {
 		List<Member> list = new ArrayList<Member>();
