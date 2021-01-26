@@ -82,9 +82,6 @@ public class PaymentController {
 			e.printStackTrace();
 		}
 		
-		
-		
-		
 		return "redirect:approval.do";
 	}
 	@RequestMapping(value="/deleteannual.do")

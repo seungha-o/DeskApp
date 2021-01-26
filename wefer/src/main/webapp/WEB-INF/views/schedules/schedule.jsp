@@ -135,12 +135,13 @@
 										<h4 class="text-blue h4 mb-10">일정수정</h4>
 										<input type="hidden" name="schedules_id" id="scid"> <input
 											type="hidden" name="id" value="test1">
-										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
+									<input type="hidden" name="id" value="${loginId }">
 										<!-- <input type="text" name="schedules_status" value="회사"> -->
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
 												name="schedules_name" id="schedules_name">
 										</div>
+										<input type="hidden" name="dept_no" value="${dept_no }">
 										<div class="form-group">
 											<label>시작일</label> <input type='text'
 												class="datetimepicker form-control" id="schedules_std_date"
@@ -186,9 +187,7 @@
 								<form action="add_schedule.do" id="add_schedule" method="post">
 									<div class="modal-body">
 										<h4 class="text-blue h4 mb-10">일정추가</h4>
-										<input type="hidden" name="schedules_id" value="0"> <input
-											type="hidden" name="id" class="rid" value="test1">
-										<!--나중에쓰세요 <input type="hidden" name="id" value="${userID }">-->
+										 <input type="hidden" name="id" value="${loginId }">
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
 												name="schedules_name">
@@ -243,7 +242,7 @@
 	
 	$(function(){
 	
-		$("#dept").val("${dept_no}");
+		$(".dept_nos").val("${dept_no}");
 		
 	})
 	$(function() {

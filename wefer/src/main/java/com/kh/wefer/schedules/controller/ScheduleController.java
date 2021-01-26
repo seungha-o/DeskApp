@@ -106,10 +106,9 @@ public class ScheduleController {
 	public ModelAndView submitsc2(ModelAndView mv, Schedules schd) {
 		System.out.println(schd.getSchedules_std_date()+"+"+schd.getSchedules_end_date());
 		String color = schd.getDept_no();
-
+System.out.println(color);
 		if (color.equals("1")) {
 			schd.setSchedules_color("#FF0000");
-			
 		} else if (color.equals("2")) {
 			schd.setSchedules_color("#33cc59");
 			
