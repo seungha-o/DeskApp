@@ -263,6 +263,11 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#savebutton").click(function() {
+				
+				if($("#payment_item").val()=='반차'){
+				$("#datepicker2").val($("#datepicker1").val());
+				
+			}
 				$("#frm").submit();
 			});
 		})

@@ -1,5 +1,9 @@
 package com.kh.wefer.payment.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,21 +57,34 @@ public class PaymentController {
 	}
 
 	@RequestMapping("/aInsert.do")
-	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, HttpServletRequest request,
-			@RequestParam(name = "annual_enddate", required = false) String end) {
+	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, HttpServletRequest request) {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			a.setId((String) session.getAttribute("loginId"));
 			if(a.getAnnual_kind().equals("반차")) {
 				a.setAnnual_enddate(a.getAnnual_stddate());
 			}
+			Date to = (Date) fm.parse(String.valueOf(a.getAnnual_enddate()));;
+			Date date =	(Date) fm.parse(String.valueOf(a.getAnnual_enddate()));;
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DATE,1);
+			System.out.println("시간"+date);
+			System.out.println("시간"+cal.getTime());
+			//a.setAnnual_enddate((Date) fm.parse(String.valueOf(fm.format(cal.getTime()))));	
+			java.util.Date utilDate = (Date)fm.parse(String.valueOf(fm.format(cal.getTime())));
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			System.out.println("저장시간"+sqlDate);
+			a.setAnnual_enddate(sqlDate);
 			b.setId((String) session.getAttribute("loginId"));
-			System.out.println(pc.getS_member_id0());
-			System.out.println(pc.getS_member_id1());
-			System.out.println(pc.getS_member_id2());
 			aService.insertAnnualPayment(a, b);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 		return "redirect:approval.do";
 	}
 	@RequestMapping(value="/deleteannual.do")
