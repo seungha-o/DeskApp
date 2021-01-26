@@ -207,7 +207,7 @@
 											<textarea class="form-control" name="schedules_content"></textarea>
 										</div>
 										<div class="form-group">
-											<input type="hidden" name="dept_no" id="dept">
+										<input type="hidden" name="dept_no" value="${dept_no }">
 										</div>
 										<div class="form-group">
 											<input type="hidden" value="color" name="schedules_color">
