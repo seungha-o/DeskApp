@@ -143,7 +143,7 @@
 								<div class="chat-box">
 									<div class="chat-desc" id = scroll >
 									
-										<p style="text-align: center">--------------------------대화가 시작되었습니다.--------------------------</p>
+										<p style="text-align: center">----------------대화가 시작되었습니다.----------------</p>
 									<!-- 	<div id = "scroll" > -->
 											<ul id="messages">
 												
@@ -175,22 +175,25 @@
 </div>
 		<!-- 웹소켓 js -->
 		<script type="text/javascript">
+		
 			var ws;
 			var messages = document.getElementById("messages");
 			var flag = true;
 			
 
 			function openSocket(name, photo) {
-				
-			 //   $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
-			 //   console.log("1"+$("#scroll")[0].scrollHeight);
+			
 				$('#yes').css('display', 'block');
 				$('#no').css('display', 'none');
-				alert(name+"님과 채팅을 시작합니다.");
-				$('.name').append('<h3>'+name+'</h3>');
-				$('.photo').append('<img src="./resources/image/memberImage/'+photo+'" style="width:50px; height:50px;">'); 
-			
+				var c = confirm(name+"님과 채팅을 시작하시겠습니까?");
+				var chatM = $('.name').append('<h3 id = "name">'+name+'</h3>');
+				console.log(name);
 				
+					$('.photo').append('<img src="${pageContext.request.contextPath}/resources/profileImg/'+photo+'" style="width:50px; height:50px;">'); 
+					let chatmem = "대화에 초대," + "[" +name+ "]";
+					//+ "," + gBoardWriter + "," + gBno;
+					console.log("chhhhhhhhhhasmsg>>", chatmem)
+					socket.send(chatmem);
 				
 				
 				if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
@@ -230,7 +233,7 @@
 		        }
 		}
 			function sent() { // 보내는 사람만 들어감 
-				
+				var today = new Date();  
 
 			  
 				var text = document.getElementById("messageinput").value 
@@ -244,9 +247,9 @@
 				if (flag == true){
 					messages.innerHTML +=  // 오른쪽에 나와야함 
 					"<li class=\"clearfix admin_chat\" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
-	        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
+	        		"<img src=\"vendors/images/chat-img2.jpg\" style = \"display: none;\" alt=\"\">\r\n" + 
 	        		"</span>\r\n" + 
-	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
+	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
 	        		flag = false;
 	        		
 					console.log($("#scroll").scrollTop());
@@ -261,19 +264,19 @@
 				
 			}
 			function writeResponse(text) {
-			
+				var today = new Date();   
 				var sessionid = "${loginName}";  // 로그인한 사람
 				var sender =  document.getElementById("sender").value; // 지금 글 보낸 사람 
 				console.log(sessionid);
 				console.log(sender);
 				console.log("writeResponse에 들어오면 보내는거 받는거 다 들어감  " + text);
 				if (sessionid == sender && flag == true){
-					
+				console.log(today.toLocaleTimeString());	
 					messages.innerHTML +=  // 왼쪽
 						"<li class=\"clearfix \" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
-		        		"<img src=\"vendors/images/chat-img2.jpg\" alt=\"\">\r\n" + 
+		        		"<img src=\"vendors/images/chat-img2.jpg\" style = \"display: none;\" alt=\"\">\r\n" + 
 		        		"</span>\r\n" + 
-		        		"<div class=\"chat-body clearfix\"><p style = \"display: inline-block;\">"+ text +"</p><div class=\"chat_time\">09:40PM</div>\r\n" + "</div></li>"
+		        		"<div class=\"chat-body clearfix\"><p style = \"display: inline-block;\">"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
 
 						  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
 				}flag = true;
@@ -312,21 +315,21 @@
 										$('.chatMember').append(
 												'<ul class="1"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</h4></span></ul>');
+														+ '</h4></span></ul><hr>');
 									}
 								} else if (data[i].dept_name == '경영팀') {
 									if ($('.2').length == 0) {
 										$('.chatMember').append(
 												'<ul class="2"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</h4></span></ul>');
+														+ '</h4></span></ul><hr>');
 									}
 								} else if (data[i].dept_name == '개발팀') {
 									if ($('.3').length == 0) {
 										$('.chatMember').append(
 												'<ul class="3"><span><h4 class="clearfix">'
 														+ data[i].dept_name
-														+ '</h4></span></ul>');
+														+ '</h4></span></ul><hr>');
 									}
 								}
 							}
@@ -335,7 +338,7 @@
 									if (data[i].status == '퇴근') {
 										$('.1')
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position
@@ -343,7 +346,7 @@
 									} else if (data[i].status == '출근') {
 										$('.1')
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position
@@ -354,7 +357,7 @@
 									if (data[i].status == '퇴근') {
 										$('.2')
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position
@@ -362,7 +365,7 @@
 									} else if (data[i].status == '출근') {
 										$('.2')
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><iimg src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position
@@ -372,7 +375,7 @@
 									if (data[i].status == '퇴근') {
 										$('.3')
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position
@@ -381,7 +384,7 @@
 									
 										$('.3')                                                          
 												.append(
-														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="./resources/image/memberImage/'+data[i].profile+'" style="width:30px; height:30px;"> '
+														'<li value = "' + data[i].name + '" ><a href="#"  onclick="openSocket(\''+data[i].name+'\',\''+data[i].profile+'\');"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; height:30px;"> '
 																+ data[i].name
 																+ '('
 																+ data[i].position

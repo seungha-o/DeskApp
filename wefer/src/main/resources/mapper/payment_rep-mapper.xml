@@ -12,11 +12,11 @@
 
 	<select id="commentList"
 		resultType="com.kh.wefer.payment.model.domain.Payment_rep">
-		 SELECT * FROM payment_comment pc left join payment p	
+		 SELECT * FROM payment_comment pc left outer join payment p	
 		on p.payment_id =  #{payment_id}
 	</select>
 
-	<insert id="commentInsert"
+	 <insert id="commentInsert"
 		parameterType="com.kh.wefer.payment.model.domain.Payment_rep">
 		<selectKey resultType="string" keyProperty="payment_id"
 			order="BEFORE">
@@ -32,7 +32,7 @@
 		#{payment_id},
 		#{contents},
 		#{id},#{comment_date})
-	</insert>
+	</insert> 
 
 	<update id="commentUpdate"
 		parameterType="com.kh.wefer.payment.model.domain.Payment_rep">

@@ -338,7 +338,7 @@
 		ws.onmessage = function(event) {
 			console.log("ReceiveMessage:", event.data + '\n');
 		//console.log ( event.data + '\n');
-		if ((event.data + '\n').length <= 8){
+		if ((event.data + '\n').length <= 9){
 			console.log(event.data + '\n');
          var login_status_name = "#login_status_"+event.data;
          console.log("지금 로그인중인사람" +login_status_name);
@@ -346,7 +346,8 @@
          $(login_status_name).css('background-color','green');
          // 아니면 원래 색인 빨강 그대로 유지
 	
-		}else {
+		}
+		else {
 			var $socketAlert = $('ul#socketAlert');
 			$socketAlert.html(event.data);
 
@@ -361,11 +362,8 @@
 			       $socketMessage.css('display', 'none');
 			    }, 3000);  
 		};
-			
 
 		}
-			
-
 		ws.onclose = function(event) {
 			console.log('Info: connection closed.');
 		};

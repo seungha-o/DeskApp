@@ -71,16 +71,14 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 				// log("strs.length 3: " + strs.length);
 
 				for (WebSocketSession sess : sessions) {
-//					if (cmd.equals("전자결재")) {
-//						sess.sendMessage(new TextMessage("<li><a href='./approval.do' style = \"color: blue;\" >"
-//								+ sender + "님이 " + cmd + "를 등록했습니다</a></li>"));
-//					} else {
-//						sess.sendMessage(new TextMessage("<li><a href='./projectlist.do' style = \"color: blue;\" >"
-//								+ sender + "님이 " + cmd + "를 등록했습니다</a></li>"));
-//					}
+					if (cmd.equals("대화에 초대")) {
+						sess.sendMessage(new TextMessage("<li><a href='./chat.do' style = \"color: blue;\" >"
+								+ sender + "님이 " + cmd + "했습니다</a></li>"));
+					}
+						
+					
 
 					WebSocketSession targetSession = users.get(target); // 수신을 받을 세션 조회
-					
 					log("strs.length 4: " + strs.length);
 					// 실시간 접속시
 					if (targetSession != null) {

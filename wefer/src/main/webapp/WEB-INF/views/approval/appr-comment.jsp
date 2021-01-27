@@ -62,25 +62,31 @@ $(document).ready(function() {
 					success : function(data) {
 						console.log("수신자나왔나?");
 						var a = '';
+						console.log(data.name);
 						console.log(data.id);
-						if (data.id == "${payment_id.s_member_id0}"){
+						console.log(data);
+						console.log("${payment_id.s_member_id0}");
+						console.log("${payment_id.id}");
+						
+				
+						if (data.name == "${payment_id.s_member_id0}"){
 							a += '<div class="card card-box check" id = "${payment_id.s_member_id0}" style="visibility: visible;">'
-							a += '<div class="card-header name">'
-							a += '${payment_id.s_member_id0}</div>'
+/* 							a += '<div class="card-header name">'
+							a += '${payment_id.s_member_id0}</div>' */
 							a +=	'<div class="card-body body">'
 							a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
 							a += '</div>'
-						}else if (data.id == "${payment_id.s_member_id1}"){
+						}else if (data.name == "${payment_id.s_member_id1}"){
 							a += '<div class="card card-box check" id = "${payment_id.s_member_id1}" style="visibility: visible;">'
-								a += '<div class="card-header name">'
-								a += '${payment_id.s_member_id1}</div>'
+							/* 	a += '<div class="card-header name">'
+								a += '${payment_id.s_member_id1}</div>' */
 								a +=	'<div class="card-body body">'
 								a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
 								a += '</div>'
 						}else {
 							a += '<div class="card card-box check" id = "${payment_id.s_member_id2}" style="visibility: visible;">'
-								a += '<div class="card-header name">'
-								a += '${payment_id.s_member_id2}</div>'
+								/* a += '<div class="card-header name">'
+								a += '${payment_id.s_member_id2}</div>' */
 								a +=	'<div class="card-body body">'
 								a += '<input type="submit" class="btn btn-outline-primary confbutton" style="float: right;" value="승인하기" />'
 								a += '</div>'

@@ -77,6 +77,9 @@ public class PaymentController {
 			System.out.println("저장시간"+sqlDate);
 			a.setAnnual_enddate(sqlDate);
 			b.setId((String) session.getAttribute("loginId"));
+			System.out.println(pc.getS_member_id0());
+			System.out.println(pc.getS_member_id1());
+			System.out.println(pc.getS_member_id2());
 			aService.insertAnnualPayment(a, b);
 		} catch (Exception e) {
 			e.printStackTrace();

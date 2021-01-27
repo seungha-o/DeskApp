@@ -448,57 +448,76 @@ $('#prj-add-project').on('click', function(evt) {
 /* 사원추가 */
  $(document).ready(function() {
 	 $("#prj-add-member").click(function() {
-			$.ajax({
-			    url : "${pageContext.request.contextPath}/memeberList",
-			    type : "POST",
-			    contentType : "application/json; charset=utf-8;",
-			    dataType : "json",
-			    success : function(data) {
-			    	
-			       for (var i = 0; i < data.length; i++) {
-			    	   if(data[i].dept_name == '인사팀'){
-			    		 if($('.insa1').length == 0){
-				      	 $('.ref').append('<ul id="insa" class="insa1"><span>'+data[i].dept_name+'</span></ul>');		       			 
-			    		 }
-			    	   }else if(data[i].dept_name == '경영팀'){
-			    		   if($('.gyeonyoung1').length == 0){
-				      	 		$('.ref').append('<ul id="gyeonyoung" class="gyeonyoung1"><span>'+data[i].dept_name+'</span></ul>');		       			   
-			    		   }
-			    	   }else if(data[i].dept_name == '개발팀'){
-			    		   if($('.geabal1').length == 0){
-				      	 		$('.ref').append('<ul id="geabal" class="geabal1"><span>'+data[i].dept_name+'</span></ul>');		       			   
-			   		   }	   
-			    	   }
-			       }
-			       for (var i = 0; i < data.length; i++) {
-			    	   if(data[i].position == '사장'){
-			      			  continue; 
-			      		}else{
-			      			if(data[i].dept_name == '인사팀'){
-				    	      	 $('.insa1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-				        	   }else if(data[i].dept_name == '경영팀'){
-				    	      	 $('.gyeonyoung1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']'  + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-				        	   }else if(data[i].dept_name == '개발팀'){
-				    	      	 $('.geabal1').append('<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['+data[i].dept_name+']' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-				        	   }	
-			      		}
-			      	   
-			      	   
-			      	/*  if(data[i].dept_name == '인사팀'){
-		    	      	 $('.insa1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-		        	   }else if(data[i].dept_name == '경영팀'){
-		    	      	 $('.gyeonyoung1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-		        	   }else if(data[i].dept_name == '개발팀'){
-		    	      	 $('.geabal1').append('<li onclick = "choose(\'['+data[i].dept_name+']'+data[i].name+'('+data[i].position+')\')" class="add-person1" value = "' + data[i].name + '" ><a href="#"> ' + data[i].name + '('+data[i].position+')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].id+'"></li>');		   
-		        	   } */
-			         }
-			       
-			       
-			    },
-			    error : function() {
-			       alert("restController err");  
-			    }
-			 });
+		 $.ajax({
+				url : "${pageContext.request.contextPath}/memeberList",
+				type : "POST",
+				contentType : "application/json; charset=utf-8;",
+				dataType : "json",
+				success : function(data) {
+
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].dept_name == '인사팀') {
+							if ($('.insa1').length == 0) {
+								$('.ref').append(
+										'<ul id="insa" class="insa1"><span>'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						} else if (data[i].dept_name == '경영팀') {
+							if ($('.gyeonyoung1').length == 0) {
+								$('.ref').append(
+										'<ul id="gyeonyoung" class="gyeonyoung1"><span>'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						} else if (data[i].dept_name == '개발팀') {
+							if ($('.geabal1').length == 0) {
+								$('.ref').append(
+										'<ul id="geabal" class="geabal1"><span>'
+												+ data[i].dept_name
+												+ '</span></ul>');
+							}
+						}
+					}
+					for (var i = 0; i < data.length; i++) {
+
+						if (data[i].dept_name == '인사팀') {
+							$('.insa1')
+									.append(
+											'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+													+ data[i].dept_name
+													+ ']'
+													+ data[i].name
+													+ '('
+													+ data[i].position
+													+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
+						} else if (data[i].dept_name == '경영팀') {
+							$('.gyeonyoung1')
+									.append(
+											'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+													+ data[i].dept_name
+													+ ']'
+													+ data[i].name
+													+ '('
+													+ data[i].position
+													+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
+						} else if (data[i].dept_name == '개발팀') {
+							$('.geabal1')
+									.append(
+											'<li class="add-person1" value = "' + data[i].name + '" ><a href="#"> ['
+													+ data[i].dept_name
+													+ ']'
+													+ data[i].name
+													+ '('
+													+ data[i].position
+													+ ')</a><input class="member_id" type="hidden" name="member_id" value="'+data[i].name+'"></li>');
+						}
+					}
+				},
+				error : function() {
+					alert("restController err");
+				}
+			});
 			
 		});
 		
