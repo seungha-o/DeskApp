@@ -139,23 +139,23 @@
 										<!-- <input type="text" name="schedules_status" value="회사"> -->
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
-												name="schedules_name" id="schedules_name">
+												name="schedules_name" id="schedules_name" required="required">
 										</div>
 										<input type="hidden" name="dept_no" value="${dept_no }">
 										<div class="form-group">
 											<label>시작일</label> <input type='text'
 												class="datetimepicker form-control" id="schedules_std_date"
-												name="schedules_std_date" autocomplete="off">
+												name="schedules_std_date" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text'
 												class="datetimepicker form-control" id="schedules_end_date"
-												name="schedules_end_date" autocomplete="off">
+												name="schedules_end_date" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>설명</label>
 											<textarea class="form-control" name="schedules_content"
-												id="schedules_content"></textarea>
+												id="schedules_content" required="required"></textarea>
 										</div>
 										<div class="form-group">
 											<label>일정 구분</label> <select class="form-control"
@@ -190,21 +190,21 @@
 										 <input type="hidden" name="id" value="${loginId }">
 										<div class="form-group">
 											<label>일정명</label> <input type="text" class="form-control"
-												name="schedules_name">
+												name="schedules_name" required="required">
 										</div>
 										<div class="form-group">
 											<label>시작일</label> <input type='text'
 												class="datetimepicker form-control" id="schedules_std_date1"
-												name="schedules_std_date" autocomplete="off">
+												name="schedules_std_date" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>종료일</label> <input type='text'
 												class="datetimepicker form-control" id="schedules_end_date1"
-												name="schedules_end_date" autocomplete="off">
+												name="schedules_end_date" autocomplete="off" required="required">
 										</div>
 										<div class="form-group">
 											<label>설명</label>
-											<textarea class="form-control" name="schedules_content"></textarea>
+											<textarea class="form-control" name="schedules_content" required="required"></textarea>
 										</div>
 										<div class="form-group">
 										<input type="hidden" name="dept_no" value="${dept_no }">
