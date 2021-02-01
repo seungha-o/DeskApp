@@ -425,4 +425,263 @@ apprform.jsp
   ```
  주고받는 메세지를 출력하는 소스입니다. 핸들러를 통해 writeResponse함수안으로 들어오는 모든 메세지는 한꺼번에 출력되어,
  받은 메세지와 보낸 메세지를 구별하는 것이 어려웠습니다. 따라서 flag를 사용해 flag가 flase인경우에는 writeResponse에 메세지가 들어오더라도 출력이 되지 않도록 구현했습니다.
- 
+##DB 
+ ![Display_3](https://user-images.githubusercontent.com/69295153/106435685-8bf75600-64b6-11eb-81c4-ad88c39d3b55.png)
+ payment_confirm테이블과 payment_comment테이블은 payment테이블의 payment_id가 외래키로 있으며 해당 게시글을 들어갔을때 출력되는 테이블입니다. 
+ annual테이블과 conference테이블은 작성자 id로 외래키가 걸려있으며, 작성자 id는 멤버테이블의 컬럼입니다. 
+ anuual테이블 혹은 conference테이블에서 글을 작성했을시 작성자 id가 payment테이블의 id에 등록되며, 자동으로 payment_id시퀀스가 증가합니다. 
+ payment를 작성했을시 결재를 참조해줄 참조자 3인이 payment_confirm테이블의 S_member에 각각 들어가며, 한명이 승인을 해줄때마다 confrim의 값이 +2가되어 confirm 컬럼의 값이 6이되면
+ payment의 status가 진행중에서 승인으로 update됩니다.  
+```jsx
+<select id="paymentList" resultType="arraylist"
+		parameterType="string" resultMap="resultPayment">
+		select c.conference_title, p.id,
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id, p.payment_id, p.write_date,m.name
+		from payment p
+		left outer
+		join conference c
+		on
+		c.conference_id = p.conference_id
+		left outer join
+		annual a
+		on
+		a.annual_id = p.annual_id
+		left outer join member m
+		on
+		m.id =
+		p.id
+		where exists (select 1
+		from member
+		where member.id = p.id
+		and
+		member.id =
+		#{id}
+		)
+	</select>
+
+	<select id="receive-paymentList" resultType="arraylist"
+		parameterType="string" resultMap="resultPayment">
+		select c.conference_title, p.id,
+		p.payment_item,
+		p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id,
+		p.payment_id, p.write_date,m.name
+		from payment p
+		left outer
+		join
+		conference c
+		on
+		c.conference_id = p.conference_id
+		left outer join
+		annual
+		a
+		on
+		a.annual_id = p.annual_id
+		left outer join member m
+		on
+		m.id =
+		p.id
+		where p.payment_id in (select pc.payment_id
+		from payment_confirm pc
+		where pc.S_MEMBER_ID0 = #{name}
+		or pc.S_MEMBER_ID1 =#{name} or
+		pc.S_MEMBER_ID2 =#{name}
+		)
+	</select>
+```
+로그인한 사용자가 작성하거나, 수신받은 결재리스트를 뽑아오는 쿼리문입니다. paymentList에서는 현재 로그인한 사용자가 발신한 모든 결재를 출력하며, receive-paymentList에서는 payment-confirm테이블에 로그인한 사용자의 이름이 하나라도 있는 경우 출력하는 쿼리문입니다. 
+```jsx
+
+	<update id="confirmCnt" parameterType="Payment"
+		statementType="PREPARED">
+		update
+		payment_confirm set payment_confirm.confirm =
+		payment_confirm.confirm+(
+		SELECT sum (a)
+		from
+		(select
+		(count(S_MEMBER_ID0)) as a from payment_confirm where s_member_id0 =
+		#{name} and payment_id=#{payment_id}
+		union all
+		select
+		(count(S_MEMBER_ID1))
+		from payment_confirm where s_member_id1 =
+		#{name}
+		and payment_id=#{payment_id}
+		union all
+		select
+		(count(S_MEMBER_ID2))
+		from payment_confirm where
+		s_member_id2 =
+		#{name} and
+		payment_id=#{payment_id}))where
+		payment_id=#{payment_id}
+
+	</update>
+	
+	<update id="status" parameterType="Payment"
+		statementType="PREPARED">
+
+		update payment set payment_status = (select case when
+		confirm >= 6 then '승인'
+		else '진행중' end
+		from (select confirm from
+		payment_confirm
+		where payment_id=#{payment_id} )) where
+		payment_id=#{payment_id}
+	</update>
+```
+결재 승인여부를 확인하고 상태를 변경하는 쿼리문입니다. S_member가 한명씩 승인할때마다 2씩카운트를하며 전체의 총합이 6이되면 진행중에서 승인으로 변경되도록 했습니다. 
+```jsx
+<insert id = "annualInsert" parameterType="Annual"
+		flushCache="true" statementType="PREPARED">
+      <selectKey resultType="string" keyProperty="id" order="BEFORE">
+         select id from member where id = #{id}
+      </selectKey>
+		insert into annual (annual_id, annual_content, annual_stddate, annual_enddate, annual_kind,id)
+		values (#{annual_id},
+		#{annual_content},
+		#{annual_stddate},
+		#{annual_enddate},
+		#{annual_kind},
+		#{id})
+	</insert>
+
+	<select id = "seqAnnualPayment" resultType="string">
+		select SEQ_PAYMENT_ANNUAL.nextval from dual
+	</select>
+```
+annual인서트시, 로그인한 사용자의 아이디 값과, 외래키로 적용되어있는 payment_id를 모두 파라메터로 들고가야하는 애로사항이 있었습니다. 
+따라서 insert시 SEQ_PAYMENT_ANNUAL 시퀀스만을 select한후 아래와 같이 DAO와 Sevice에서 적용시켰습니다. 
+AnnualDao.java
+```jsx
+	public String seqAnnualPayment() {
+		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
+		return seqAnnualPayment;
+	}
+```
+AnnualService.java
+```jsx
+public int insertAnnualPayment(Annual a, Payment b) {
+		String seq = aDao.seqAnnualPayment();
+		a.setAnnual_id(seq);
+		b.setAnnual_id(seq);
+		
+		String seqc = pmDao.seqPayment();
+		b.setPayment_id(seqc);
+		
+		int resultA = aDao.insertAnnual(a);
+		int resultB= pmDao.insertPayment(b);
+		int resultC= pcDao.insertPaymentConfirm(b);
+		
+		if(resultA==1 || resultB==1 || resultC==1)
+			return 1;
+		else
+			return 0;
+	}
+```
+EchoHandler.java
+```jsx
+public class ReplyEchoHandler extends TextWebSocketHandler {
+	// 모든 사용자
+	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+
+	// 로그인중인 개별유저
+	Map<String, WebSocketSession> users = new ConcurrentHashMap<String, WebSocketSession>();
+
+	// 클라이언트가 서버로 연결시
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		System.out.println("커넥션됐니  :" + session);
+		sessions.add(session); // 로그인한 세션아이디가 들어감
+		log(session.getId() + "연결됨 / 알림소켓 ");
+		String senderId = getMemberId(session); 
+		if (senderId != null) { // 로그인 값이 있는 경우만
+			log(senderId + " 연결 됨");
+			users.put(senderId, session); // 로그인중인 유저 저장
+			for (WebSocketSession sess : sessions) {
+					sess.sendMessage(new TextMessage(senderId));
+			}
+		}
+	}
+
+	// 클라이언트가 Data 전송 시
+	@Override
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("핸들러 텍스트 메세지 :" + session + ":" + message.getPayload());
+		String sender = getMemberId(session);
+
+		String msg = message.getPayload();
+
+		if (msg != null) {
+			String[] strs = msg.split(",");
+
+			if (strs != null && strs.length == 2) {
+
+
+				String cmd = strs[0];
+				String target = strs[1]; // m_id 저장
+				log(cmd);
+				log(target);
+
+				for (WebSocketSession sess : sessions) {
+					if (cmd.equals("대화에 초대")) {
+						sess.sendMessage(new TextMessage("<li><a href='./chat.do' style = \"color: blue;\" >"
+								+ sender + "님이 " + cmd + "했습니다</a></li>"));
+					}
+
+					WebSocketSession targetSession = users.get(target); // 수신을 받을 세션 
+					// 실시간 접속
+					if (targetSession != null) {
+						System.out.println("실시간 접속했나");						
+						if (true) {
+							if (cmd.equals("전자결재")) {
+								TextMessage tmpMsg = new TextMessage("<li><a href='./approval.do' style = \"color: blue;\" >"
+										+ sender + "님이 " + cmd + "를 등록했습니다</a></li>");
+								targetSession.sendMessage(tmpMsg);
+								
+							}else {
+								TextMessage tmpMsg = new TextMessage("<li><a href='./projectlist.do' style = \"color: blue;\" >"
+										+ sender + "님이 " + cmd + "를 등록했습니다</a></li>");
+								targetSession.sendMessage(tmpMsg);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// 연결 해제될 때
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+
+		sessions.remove(session);
+
+	}
+
+	// 에러 발생시
+	@Override
+	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+		log(session.getId() + " 익셉션 발생: " + exception.getMessage());
+
+	}
+
+	// 로그 메시지
+	private void log(String logmsg) {
+		System.out.println(new Date() + " : " + logmsg);
+	}
+
+	// 웹소켓에 id 가져오기
+	// 접속한 유저의 http세션을 조회하여 id가져오기
+	private String getMemberId(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		String m_name = (String) httpSession.get("loginName"); // 세션에 저장된 m_id 기준 조회
+		if (m_name == null)
+			log("m_name가 왜 널이냐@@@@@@@@@@@@@@@@@@@@@@@");
+		return m_name == null ? null : m_name;
+
+	}
+```
+사용자가 접속했다면 모든 사용자에게 접속중임을 알리며, 수신 참조자로 선택됐을시에는 해당 사용자에게만 알림을 보내는 소스 코드입니다. 
