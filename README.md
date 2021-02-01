@@ -31,8 +31,6 @@
 | Apache commons Fileupload      | **4.1.5**  |
 | Naver Smart editer             | 2.2        |
 
-## :octocat: Member 
-
 ## 👩‍💻 Member
 
 #### 오승하
