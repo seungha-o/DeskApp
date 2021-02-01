@@ -308,5 +308,121 @@ apprform.jsp
  ```
  전자결재를 승인해 줄 승인 참조자에게 알림을 보내기 위해 소켓을 사용한 코드입니다. 
  
- 
+ chat.jsp
+  ```jsx
+  		<!-- 웹소켓 js -->
+		<script type="text/javascript">
+		
+			var ws;
+			var messages = document.getElementById("messages");
+			var flag = true;
+			
+
+			function openSocket(name, photo) {
+			
+				$('#yes').css('display', 'block');
+				$('#no').css('display', 'none');
+				var c = confirm(name+"님과 채팅을 시작하시겠습니까?");
+				var chatM = $('.name').append('<h3 id = "name">'+name+'</h3>');
+				console.log(name);
+				
+					$('.photo').append('<img src="${pageContext.request.contextPath}/resources/profileImg/'+photo+'" style="width:50px; height:50px;">'); 
+					var chatmem = "대화에 초대," + "[" +name+ "]";
+					console.log("chhhhhhhhhhasmsg>>", chatmem)
+					socket.send(chatmem);
+				
+				
+				if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
+					writeResponse("대화는 한명씩만 가능합니다. 대화를 먼저 종료해주세요.");
+					return;
+				}
+				//웹소켓 객체
+				ws = new WebSocket("ws://localhost:8090/wefer/wecho.do");
+
+				ws.onopen = function(event) {
+					if (event.data === undefined) {
+						return;
+					}
+					writeResponse(event.data);
+				};
+
+				ws.onmessage = function(event) {
+					console.log(event.data)
+					writeResponse(event.data);
+				};
+
+				ws.onclose = function(event) {
+					writeResponse("상대방이 대화를 종료했습니다.");
+					 function clearText(){
+				            console.log(messages.parentNode);
+				            messages.parentNode.removeChild(messages)
+				      	}
+		
+				}
+
+			}
+			function enterkey() {
+			   
+		        if (window.event.keyCode == 13) {
+		        	sent()
+		        }
+		}
+			function sent() { // 보내는 사람만 들어감 
+				var today = new Date();  
+
+			  
+				var text = document.getElementById("messageinput").value 
+				ws.send(text);
+				
+				document.getElementById("messageinput").value = "";
+				console.log("sent에 들어오면 보내는거 받는사람은 안들어옴 " + text);
+				
+				if (flag == true){
+					messages.innerHTML +=  // 오른쪽에 나와야함 
+					"<li class=\"clearfix admin_chat\" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
+	        		"<img src=\"vendors/images/chat-img2.jpg\" style = \"display: none;\" alt=\"\">\r\n" + 
+	        		"</span>\r\n" + 
+	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
+	        		flag = false;
+	        		
+					  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+					  console.log($("#scroll")[0].scrollHeight);
+				}
+				
+			}
+			function writeResponse(text) {
+				var today = new Date();   
+				var sessionid = "${loginName}";  // 로그인한 사람
+				var sender =  document.getElementById("sender").value; // 지금 글 보낸 사람 
+				console.log(sessionid);
+				console.log(sender);
+				console.log("writeResponse에 들어오면 보내는거 받는거 다 들어감  " + text);
+				if (sessionid == sender && flag == true){
+				console.log(today.toLocaleTimeString());	
+					messages.innerHTML +=  // 왼쪽
+						"<li class=\"clearfix \" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
+		        		"<img src=\"vendors/images/chat-img2.jpg\" style = \"display: none;\" alt=\"\">\r\n" + 
+		        		"</span>\r\n" + 
+		        		"<div class=\"chat-body clearfix\"><p style = \"display: inline-block;\">"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
+
+						  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+				}flag = true;
+			}
+			
+			function closeSocket() {
+				var c = confirm("채팅창을 닫겠습니까?");
+		   
+				$('.photo').empty();
+				$('.name').empty();
+				if (c){
+					$('#yes').css('display', 'none');
+					$('#no').css('display', 'block');
+					
+					ws.onclose();
+				}
+		}
+		</script>
+  ```
+ 주고받는 메세지를 출력하는 소스입니다. 핸들러를 통해 writeResponse함수안으로 들어오는 모든 메세지는 한꺼번에 출력되어,
+ 받은 메세지와 보낸 메세지를 구별하는 것이 어려웠습니다. 따라서 flag를 사용해 flag가 flase인경우에는 writeResponse에 메세지가 들어오더라도 출력이 되지 않도록 구현했습니다.
  
