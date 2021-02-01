@@ -64,14 +64,11 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
 		var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
 		console.log("qqqqqqqqqqq 연결됨")
 		socket = ws;
-
 		ws.onopen = function() {
 			console.log('Info: connection opened.');
 		};
-
 		ws.onmessage = function(event) {
 			console.log("ReceiveMessage:", event.data + '\n');
-		//console.log ( event.data + '\n');
 		if ((event.data + '\n').length <= 9){
 			console.log(event.data + '\n');
          var login_status_name = "#login_status_"+event.data;
@@ -79,24 +76,18 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
          // 주소록에서 로그인 된 사람 이름을 녹색
          $(login_status_name).css('background-color','green');
          // 아니면 원래 색인 빨강 그대로 유지
-	
-		}
-		else {
+		}else {
 			var $socketAlert = $('ul#socketAlert');
 			$socketAlert.html(event.data);
-
 			$('#dot').css('display','block');
 			$socketAlert.css('display', 'block');
-			
  		var $socketMessage = $('div#socketMessage'); 
 			$socketMessage.html(event.data); 
  			$socketMessage.css('display', 'block'); 
-
 		     setTimeout( function() {
 			       $socketMessage.css('display', 'none');
 			    }, 3000);  
 		};
-
 		}
 		ws.onclose = function(event) {
 			console.log('Info: connection closed.');
@@ -120,115 +111,60 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
                for (var i = 0; i < data.length; i++) {   // 주소록
                   if (data[i].dept_name == '인사팀') {
                      if ($('.insa').length == 0) {
-                        $('.result').append(
-                              '<ul class="insa"><span  style="color:white;">'
-                                    + data[i].dept_name
-                                    + '</span></ul>');
+                        $('.result').append( '<ul class="insa"><span  style="color:white;">'  + data[i].dept_name  + '</span></ul>');
                      }
                   } else if (data[i].dept_name == '경영팀') {
                      if ($('.gyeonyoung').length == 0) {
-                        $('.result').append(
-                              '<ul class="gyeonyoung"><span style="color:white;">'
-                                    + data[i].dept_name
-                                    + '</span></ul>');
+                        $('.result').append( '<ul class="gyeonyoung"><span style="color:white;">'  + data[i].dept_name + '</span></ul>');
                      }
                   } else if (data[i].dept_name == '개발팀') {
                      if ($('.geabal').length == 0) {
-                        $('.result').append(
-                              '<ul class="geabal"><span style="color:white;">'
-                                    + data[i].dept_name
-                                    + '</span></ul>');
+                        $('.result').append( '<ul class="geabal"><span style="color:white;">'  + data[i].dept_name  + '</span></ul>');
                      }
                   }
                }
                for (var i = 0; i < data.length; i++) {
                   if (data[i].dept_name == '인사팀') {
                      if (data[i].status == '퇴근') {
-                        $('.insa').append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-                                          	+ '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
+                        $('.insa').append( '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+                                          + data[i].id + '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> ' + data[i].name  + '('  + data[i].position + ')<div id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
                      } else if (data[i].status == '출근') {
-                        $('.insa').append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
+                        $('.insa').append( '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].i
                                          -----생략----
-
 				},
 				error : function() {
 					alert("restController err");
 				}
 			});
-
  ```
  ajax로 모든 사용자들의 주소록을 불러왔습니다. 소켓이 연결된 사용자인지 구별하여 온/오프라인 상태를 css를 통해 색을 다르게 지정하였습니다. 
  
- ```jsx
-<script src="./resources/vendors/scripts/core.js"></script>
-<script src="./resources/vendors/scripts/script.min.js"></script>
-<script src="./resources/vendors/scripts/process.js"></script>
-<script src="./resources/vendors/scripts/layout-settings.js"></script>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
- ```
-
- ```jsx
-  <!-- Jquery CDN -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<!-- Site favicon -->
-<link rel="apple-touch-icon" sizes="180x180"
-	href="./resources/vendors/images/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32"
-	href="./resources/vendors/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16"
-	href="./resources/vendors/images/favicon-16x16.png">
-<script
-	src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<!-- Mobile Specific Metas -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-	rel="stylesheet">
-<!-- CSS -->
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/core.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/icon-font.min.css">
-<link rel="stylesheet" type="text/css"
-	href="./resources/vendors/styles/style.css">
- ```
-헤더에 들어간 외부 js입니다. 
 
 #### apprdetail.jsp
  ```jsx
 <div class="container">
-									<h6 class="weight-400 d-flex">
-										<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
-										<c:if test="${payment_id.conference.conference_title != null}">
-										${payment_id.conference.conference_title}
-										</c:if>
+		<h6 class="weight-400 d-flex">
+		<i class="icon-copy dw dw-checked mr-2" data-color="#1b00ff"></i>
+		<c:if test="${payment_id.conference.conference_title != null}">
+		${payment_id.conference.conference_title}
+</c:if>
 									
-									<c:choose>
-										<c:when
-											test="${payment_id.conference.conference_contents == null}">
-											<td>${payment_id.annual_content}</td>
-										</c:when>
-										<c:otherwise>
-											<td>${payment_id.conference.conference_contents}</td>
-										</c:otherwise>
-									</c:choose>
-									</h6>
-								</div> 
+<c:choose>
+	<c:when
+	test="${payment_id.conference.conference_contents == null}">
+	<td>${payment_id.annual_content}</td>
+	</c:when>
+	<c:otherwise>
+		<td>${payment_id.conference.conference_contents}</td>
+	</c:otherwise>
+        </c:choose>
+	</h6>
+</div> 
  ```
  jstl 사용하여 view에 출력하였습니다. 또한 if문에 해당하는 c태그를 사용하여 값 제어를 했습니다.  
  
-apprform.jsp
+#### apprform.jsp
  ```jsx
 		$('#prj-add-project').on('click', function(evt) {
 			console.log('수신자 클릭하면');
@@ -261,71 +197,53 @@ apprform.jsp
   ```jsx
   		<!-- 웹소켓 js -->
 		<script type="text/javascript">
-		
 			var ws;
 			var messages = document.getElementById("messages");
 			var flag = true;
-			
-
 			function openSocket(name, photo) {
-			
 				$('#yes').css('display', 'block');
 				$('#no').css('display', 'none');
 				var c = confirm(name+"님과 채팅을 시작하시겠습니까?");
 				var chatM = $('.name').append('<h3 id = "name">'+name+'</h3>');
-				console.log(name);
-				
 					$('.photo').append('<img src="${pageContext.request.contextPath}/resources/profileImg/'+photo+'" style="width:50px; height:50px;">'); 
 					var chatmem = "대화에 초대," + "[" +name+ "]";
 					console.log("chhhhhhhhhhasmsg>>", chatmem)
 					socket.send(chatmem);
-				
-				
 				if (ws !== undefined && ws.readyState !== WebSocket.CLOSED) {
 					writeResponse("대화는 한명씩만 가능합니다. 대화를 먼저 종료해주세요.");
 					return;
 				}
 				//웹소켓 객체
 				ws = new WebSocket("ws://localhost:8090/wefer/wecho.do");
-
 				ws.onopen = function(event) {
 					if (event.data === undefined) {
 						return;
 					}
 					writeResponse(event.data);
 				};
-
 				ws.onmessage = function(event) {
 					console.log(event.data)
 					writeResponse(event.data);
 				};
-
 				ws.onclose = function(event) {
 					writeResponse("상대방이 대화를 종료했습니다.");
 					 function clearText(){
 				            console.log(messages.parentNode);
 				            messages.parentNode.removeChild(messages)
 				      	}
-		
 				}
-
 			}
 			function enterkey() {
-			   
 		        if (window.event.keyCode == 13) {
 		        	sent()
 		        }
 		}
 			function sent() { // 보내는 사람만 들어감 
 				var today = new Date();  
-
-			  
 				var text = document.getElementById("messageinput").value 
 				ws.send(text);
-				
 				document.getElementById("messageinput").value = "";
 				console.log("sent에 들어오면 보내는거 받는사람은 안들어옴 " + text);
-				
 				if (flag == true){
 					messages.innerHTML +=  // 오른쪽에 나와야함 
 					"<li class=\"clearfix admin_chat\" style = \"list-style: none;\"><span class=\"chat-img\">\r\n" + 
@@ -333,19 +251,14 @@ apprform.jsp
 	        		"</span>\r\n" + 
 	        		"<div class=\"chat-body clearfix\"><p>"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
 	        		flag = false;
-	        		
 					  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
 					  console.log($("#scroll")[0].scrollHeight);
 				}
-				
 			}
 			function writeResponse(text) {
 				var today = new Date();   
 				var sessionid = "${loginName}";  // 로그인한 사람
 				var sender =  document.getElementById("sender").value; // 지금 글 보낸 사람 
-				console.log(sessionid);
-				console.log(sender);
-				console.log("writeResponse에 들어오면 보내는거 받는거 다 들어감  " + text);
 				if (sessionid == sender && flag == true){
 				console.log(today.toLocaleTimeString());	
 					messages.innerHTML +=  // 왼쪽
@@ -353,11 +266,9 @@ apprform.jsp
 		        		"<img src=\"vendors/images/chat-img2.jpg\" style = \"display: none;\" alt=\"\">\r\n" + 
 		        		"</span>\r\n" + 
 		        		"<div class=\"chat-body clearfix\"><p style = \"display: inline-block;\">"+ text +"</p><div class=\"chat_time\">"+today.toLocaleTimeString()+"</div>\r\n" + "</div></li>"
-
 						  $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
 				}flag = true;
 			}
-			
 			function closeSocket() {
 				var c = confirm("채팅창을 닫겠습니까?");
 		   
@@ -374,6 +285,8 @@ apprform.jsp
   ```
  주고받는 메세지를 출력하는 소스입니다. 핸들러를 통해 writeResponse함수안으로 들어오는 모든 메세지는 한꺼번에 출력되어,
  받은 메세지와 보낸 메세지를 구별하는 것이 어려웠습니다. 따라서 flag를 사용해 flag가 flase인경우에는 writeResponse에 메세지가 들어오더라도 출력이 되지 않도록 구현했습니다.
+ 또한 Date()객체를 사용해 현재시간을 출력하였습니다. 
+ 
 #### DB 
  ![Display_3](https://user-images.githubusercontent.com/69295153/106435685-8bf75600-64b6-11eb-81c4-ad88c39d3b55.png)
  payment_confirm테이블과 payment_comment테이블은 payment테이블의 payment_id가 외래키로 있으며 해당 게시글을 들어갔을때 출력되는 테이블입니다. 
@@ -381,12 +294,12 @@ apprform.jsp
  anuual테이블 혹은 conference테이블에서 글을 작성했을시 작성자 id가 payment테이블의 id에 등록되며, 자동으로 payment_id시퀀스가 증가합니다. 
  payment를 작성했을시 결재를 참조해줄 참조자 3인이 payment_confirm테이블의 S_member에 각각 들어가며, 한명이 승인을 해줄때마다 confrim의 값이 +2가되어 confirm 컬럼의 값이 6이되면
  payment의 status가 진행중에서 승인으로 update됩니다.  
+ 
 ```jsx
 <select id="paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
 		select c.conference_title, p.id,
-		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
-		p.annual_id, p.payment_id, p.write_date,m.name
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id, p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
 		left outer
 		join conference c
@@ -398,39 +311,29 @@ apprform.jsp
 		a.annual_id = p.annual_id
 		left outer join member m
 		on
-		m.id =
-		p.id
+		m.id = p.id
 		where exists (select 1
 		from member
 		where member.id = p.id
-		and
-		member.id =
-		#{id}
-		)
+		and member.id = #{id})
 	</select>
 
 	<select id="receive-paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
 		select c.conference_title, p.id,
-		p.payment_item,
-		p.payment_status,c.conference_date, p.conference_id,
-		p.annual_id,
-		p.payment_id, p.write_date,m.name
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id, p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
-		left outer
-		join
+		left outer join
 		conference c
 		on
 		c.conference_id = p.conference_id
 		left outer join
-		annual
-		a
+		annual a
 		on
 		a.annual_id = p.annual_id
 		left outer join member m
 		on
-		m.id =
-		p.id
+		m.id = p.id
 		where p.payment_id in (select pc.payment_id
 		from payment_confirm pc
 		where pc.S_MEMBER_ID0 = #{name}
@@ -561,26 +464,19 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("핸들러 텍스트 메세지 :" + session + ":" + message.getPayload());
 		String sender = getMemberId(session);
-
 		String msg = message.getPayload();
-
 		if (msg != null) {
 			String[] strs = msg.split(",");
-
 			if (strs != null && strs.length == 2) {
-
-
 				String cmd = strs[0];
 				String target = strs[1]; // m_id 저장
 				log(cmd);
 				log(target);
-
 				for (WebSocketSession sess : sessions) {
 					if (cmd.equals("대화에 초대")) {
 						sess.sendMessage(new TextMessage("<li><a href='./chat.do' style = \"color: blue;\" >"
 								+ sender + "님이 " + cmd + "했습니다</a></li>"));
 					}
-
 					WebSocketSession targetSession = users.get(target); // 수신을 받을 세션 
 					// 실시간 접속
 					if (targetSession != null) {
@@ -602,36 +498,13 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			}
 		}
 	}
-
-	// 연결 해제될 때
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
-		sessions.remove(session);
-
-	}
-
-	// 에러 발생시
-	@Override
-	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		log(session.getId() + " 익셉션 발생: " + exception.getMessage());
-
-	}
-
-	// 로그 메시지
-	private void log(String logmsg) {
-		System.out.println(new Date() + " : " + logmsg);
-	}
-
 	// 웹소켓에 id 가져오기
 	// 접속한 유저의 http세션을 조회하여 id가져오기
 	private String getMemberId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
 		String m_name = (String) httpSession.get("loginName"); // 세션에 저장된 m_id 기준 조회
 		if (m_name == null)
-			log("m_name가 왜 널이냐@@@@@@@@@@@@@@@@@@@@@@@");
 		return m_name == null ? null : m_name;
-
 	}
 ```
 사용자가 접속했다면 모든 사용자에게 접속중임을 알리며, 수신 참조자로 선택됐을시에는 해당 사용자에게만 알림을 보내는 소스 코드입니다. 
