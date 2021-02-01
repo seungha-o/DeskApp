@@ -155,30 +155,7 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
                      } else if (data[i].status == '출근') {
                         $('.insa').append(
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-                                          + '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
-                     }
-
-                  } else if (data[i].dept_name == '경영팀') {
-                     if (data[i].status == '퇴근') {
-                        $('.gyeonyoung').append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-					  + '\'"><img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div  id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
-                     } else if (data[i].status == '출근') {
-                        $('.gyeonyoung')
-                              .append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-                                       	  + '\'"><img src="<img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
+                                          + data[i].i
                                          -----생략----
 
 				},
