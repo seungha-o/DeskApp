@@ -31,4 +31,13 @@
 | Apache commons Fileupload      | **4.1.5**  |
 | Naver Smart editer             | 2.2        |
 
+## :octocat: Member 
+
+## 👩‍💻 Member
+
+#### 오승하
+- 전자결재 기능 전체 (결재 작성, 결재 승인, 결재 분류)
+- 스프링 웹소켓을 활용한 기능 전체 ( 프로젝트 추가 알림보내기, 수신 받은 결재 알림보내기, 채팅 알림보내기 )
+- ajax를 활용하여 DB에 있는 멤버테이블 주소록 전체 불러오기 
+
 ## 🔧 Web Socket 설정 파일들
