@@ -39,7 +39,7 @@
 - 스프링 웹소켓을 활용한 기능 전체 ( 프로젝트 추가 알림보내기, 수신 받은 결재 알림보내기, 채팅 알림보내기 )
 - ajax를 활용하여 DB에 있는 멤버테이블 주소록 전체 불러오기 
 
-## 🔧설정 파일들
+## 🔧설정 파일
 
 #### header.js
  ```jsx
@@ -179,35 +179,7 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
                                     '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
                                           + data[i].id
                                        	  + '\'"><img src="<img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div  id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
-                     }
-                  } else if (data[i].dept_name == '개발팀') {
-                     if (data[i].status == '퇴근') {
-                        $('.geabal')
-                              .append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-                                          + '\'"><img <img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div  id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:red;"></div></a></li>');
-                     } else if (data[i].status == '출근') {
-                        $('.geabal')
-                              .append(
-                                    '<li value = "' + data[i].name + '" ><a href="#" onclick="location.href=\'/wefer\/personerProfileList.do?addrMemberId='
-                                          + data[i].id
-                                          + '\'"><img <img src="${pageContext.request.contextPath}/resources/profileImg/'+data[i].profile+'" style="width:30px; heigh:30px;"> '
-                                          + data[i].name
-                                          + '('
-                                          + data[i].position
-                                          + ')<div  id="login_status_'+data[i].name+'" style="width:7px; height:7px; border-radius:50%; background-color:green;"></div></a></li>');
-                     }
-                  }
-               }
+                                         -----생략----
 
 				},
 				error : function() {
