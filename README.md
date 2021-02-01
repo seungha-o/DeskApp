@@ -205,7 +205,7 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
  ```
 헤더에 들어간 외부 js입니다. 
 
-apprdetail.jsp
+#### apprdetail.jsp
  ```jsx
 <div class="container">
 									<h6 class="weight-400 d-flex">
@@ -257,7 +257,7 @@ apprform.jsp
  ```
  전자결재를 승인해 줄 승인 참조자에게 알림을 보내기 위해 소켓을 사용한 코드입니다. 
  
- chat.jsp
+ #### chat.jsp
   ```jsx
   		<!-- 웹소켓 js -->
 		<script type="text/javascript">
@@ -374,7 +374,7 @@ apprform.jsp
   ```
  주고받는 메세지를 출력하는 소스입니다. 핸들러를 통해 writeResponse함수안으로 들어오는 모든 메세지는 한꺼번에 출력되어,
  받은 메세지와 보낸 메세지를 구별하는 것이 어려웠습니다. 따라서 flag를 사용해 flag가 flase인경우에는 writeResponse에 메세지가 들어오더라도 출력이 되지 않도록 구현했습니다.
-##DB 
+#### DB 
  ![Display_3](https://user-images.githubusercontent.com/69295153/106435685-8bf75600-64b6-11eb-81c4-ad88c39d3b55.png)
  payment_confirm테이블과 payment_comment테이블은 payment테이블의 payment_id가 외래키로 있으며 해당 게시글을 들어갔을때 출력되는 테이블입니다. 
  annual테이블과 conference테이블은 작성자 id로 외래키가 걸려있으며, 작성자 id는 멤버테이블의 컬럼입니다. 
@@ -440,6 +440,7 @@ apprform.jsp
 	</select>
 ```
 로그인한 사용자가 작성하거나, 수신받은 결재리스트를 뽑아오는 쿼리문입니다. paymentList에서는 현재 로그인한 사용자가 발신한 모든 결재를 출력하며, receive-paymentList에서는 payment-confirm테이블에 로그인한 사용자의 이름이 하나라도 있는 경우 출력하는 쿼리문입니다. 
+
 ```jsx
 
 	<update id="confirmCnt" parameterType="Payment"
@@ -503,7 +504,7 @@ apprform.jsp
 ```
 annual인서트시, 로그인한 사용자의 아이디 값과, 외래키로 적용되어있는 payment_id를 모두 파라메터로 들고가야하는 애로사항이 있었습니다. 
 따라서 insert시 SEQ_PAYMENT_ANNUAL 시퀀스만을 select한후 아래와 같이 DAO와 Sevice에서 적용시켰습니다. 
-AnnualDao.java
+#### AnnualDao.java
 ```jsx
 	public String seqAnnualPayment() {
 		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
@@ -530,7 +531,7 @@ public int insertAnnualPayment(Annual a, Payment b) {
 			return 0;
 	}
 ```
-EchoHandler.java
+#### EchoHandler.java
 ```jsx
 public class ReplyEchoHandler extends TextWebSocketHandler {
 	// 모든 사용자
