@@ -304,20 +304,15 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
 <select id="paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
 		select c.conference_title, p.id,
-		p.payment_item, p.payment_status,c.conference_date, p.conference_id, p.annual_id, p.payment_id, p.write_date,m.name
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
 		left outer
-		join conference c
-		on
-		c.conference_id = p.conference_id
+		join conference c on c.conference_id = p.conference_id
 		left outer join
-		annual a
-		on
-		a.annual_id = p.annual_id
-		left outer join member m
-		on
-		m.id = p.id
-		where exists (select 1
+		annual a on a.annual_id = p.annual_id
+		left outer join member m on
+		m.id = p.id where exists (select 1
 		from member
 		where member.id = p.id
 		and member.id = #{id})
@@ -326,19 +321,14 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
 	<select id="receive-paymentList" resultType="arraylist"
 		parameterType="string" resultMap="resultPayment">
 		select c.conference_title, p.id,
-		p.payment_item, p.payment_status,c.conference_date, p.conference_id, p.annual_id, p.payment_id, p.write_date,m.name
+		p.payment_item, p.payment_status,c.conference_date, p.conference_id,
+		p.annual_id, p.payment_id, p.write_date,m.name
 		from payment p
 		left outer join
-		conference c
-		on
-		c.conference_id = p.conference_id
+		conference c on c.conference_id = p.conference_id
 		left outer join
-		annual a
-		on
-		a.annual_id = p.annual_id
-		left outer join member m
-		on
-		m.id = p.id
+		annual a on a.annual_id = p.annual_id
+		left outer join member m on m.id = p.id
 		where p.payment_id in (select pc.payment_id
 		from payment_confirm pc
 		where pc.S_MEMBER_ID0 = #{name}
