@@ -1,4 +1,14 @@
+#### AnnualDao.java
 ```jsx
+	public String seqAnnualPayment() {
+		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
+		return seqAnnualPayment;
+	}
+
+	public int insertAnnual(Annual a) {
+		return sqlSession.insert("AnnualMapper.annualInsert", a);
+	}
+	
 <script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
