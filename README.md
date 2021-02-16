@@ -1,6 +1,7 @@
-```
-	@RequestMapping("/aInsert.do")
-	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, @RequestParam(name = "annual_file", required = false) MultipartFile report,
+```jsx
+@RequestMapping("/aInsert.do")
+	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, 
+	@RequestParam(name = "annual_file", required = false) MultipartFile report,
 			HttpServletRequest request) {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -30,10 +31,8 @@
 			e.printStackTrace();
 		}
 		return "redirect:approval.do";
-	}
-	```
-	2
-	```
+	}	
+```
 	<script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
@@ -508,14 +507,8 @@ gtag로 화면 전환시 로딩 페이지를 보여주었습니다.
 ```
 annual인서트시, 로그인한 사용자의 아이디 값과, 외래키로 적용되어있는 payment_id를 모두 파라메터로 들고가야하는 애로사항이 있었습니다. 
 따라서 insert시 SEQ_PAYMENT_ANNUAL 시퀀스만을 select한후 아래와 같이 DAO와 Sevice에서 적용시켰습니다. 
-#### AnnualDao.java
-```jsx
-	public String seqAnnualPayment() {
-		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
-		return seqAnnualPayment;
-	}
-```
-AnnualService.java
+
+#### AnnualService.java
 ```jsx
 public int insertAnnualPayment(Annual a, Payment b) {
 		String seq = aDao.seqAnnualPayment();
@@ -534,6 +527,68 @@ public int insertAnnualPayment(Annual a, Payment b) {
 		else
 			return 0;
 	}
+```
+#### AnnualDao.java
+```jsx
+	public String seqAnnualPayment() {
+		String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
+		return seqAnnualPayment;
+	}
+```
+#### PaymentDao.java
+```jsx
+	
+	public int insertPayment(Payment b) {
+		return sqlSession.insert("PaymentMapper.paymentInsert", b);
+	}
+	public String seqPayment() {
+		String seqPayment = sqlSession.selectOne("PaymentMapper.seqPayment");
+		return seqPayment;
+	}
+```
+#### Anuual-mapper.xml
+```jsx
+	<insert id = "annualInsert" parameterType="Annual"
+		flushCache="true" statementType="PREPARED">
+      <selectKey resultType="string" keyProperty="id" order="BEFORE">
+         select id from member where id = #{id}
+      </selectKey>
+		insert into annual (annual_file, annual_id, annual_content, 
+		annual_stddate, annual_enddate, annual_kind,id)
+		values (
+		#{annual_file},
+		#{annual_id},
+		#{annual_content},
+		#{annual_stddate},
+		#{annual_enddate},
+		#{annual_kind},
+		#{id})
+	</insert>
+
+	<select id = "seqAnnualPayment" resultType="string">
+		select SEQ_PAYMENT_ANNUAL.nextval from dual
+	</select>
+```
+#### Payment-mapper.xml
+```jsx
+	<insert id="paymentInsert" parameterType="Payment"
+		flushCache="true" statementType="PREPARED">
+		<selectKey resultType="string" keyProperty="id"
+			order="BEFORE">
+			select id from member where id = #{id}
+		</selectKey>
+		insert into payment (payment_id, payment_members_count, id,
+		conference_id, annual_id)
+		values (#{payment_id},
+		#{payment_members_count},
+		#{id},
+		#{conference_id},
+		#{annual_id})
+	</insert>
+
+	<select id="seqPayment" resultType="string">
+		select SEQ_PAYMENT.nextval from dual
+	</select>
 ```
 #### EchoHandler.java
 ```jsx
