@@ -1,39 +1,5 @@
 ```jsx
-@RequestMapping("/aInsert.do")
-	public String annualInsert(Annual a, Payment b, HttpSession session, 
-	@RequestParam(name = "annual_file", required = false) MultipartFile report,
-			HttpServletRequest request) {
-		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			a.setId((String) session.getAttribute("loginId"));
-			if (a.getAnnual_kind().equals("반차")) {
-				a.setAnnual_enddate(a.getAnnual_stddate());
-			}
-			Date to = (Date) fm.parse(String.valueOf(a.getAnnual_enddate()));
-			Date date = (Date) fm.parse(String.valueOf(a.getAnnual_enddate()));
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(date);
-			cal.add(Calendar.DATE, 1);
-			System.out.println("시간" + date);
-			System.out.println("시간" + cal.getTime());
-			java.util.Date utilDate = (Date) fm.parse(String.valueOf(fm.format(cal.getTime())));
-			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-			System.out.println("저장시간" + sqlDate);
-			 
-			saveFile(report, request);
-			a.setAnnual_enddate(sqlDate);
-			b.setId((String) session.getAttribute("loginId"));
-			System.out.println(pc.getS_member_id0());
-			System.out.println(pc.getS_member_id1());   
-			System.out.println(pc.getS_member_id2());
-			aService.insertAnnualPayment(a, b);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:approval.do";
-	}	
-```
-	<script type="text/javascript">
+<script type="text/javascript">
 		var oEditors = [];
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors,
@@ -55,6 +21,10 @@
 					});
 		})
 	</script>
+
+
+```
+
 $(document).on("click",".add-person1", function() {
 							console.log($(this).children(".member_id").val());
 							var member_id = $(this).children(".member_id").val();
