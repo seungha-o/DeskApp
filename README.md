@@ -1,4 +1,107 @@
-
+```
+	@RequestMapping("/aInsert.do")
+	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, @RequestParam(name = "annual_file", required = false) MultipartFile report,
+			HttpServletRequest request) {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			a.setId((String) session.getAttribute("loginId"));
+			if (a.getAnnual_kind().equals("반차")) {
+				a.setAnnual_enddate(a.getAnnual_stddate());
+			}
+			Date to = (Date) fm.parse(String.valueOf(a.getAnnual_enddate()));
+			Date date = (Date) fm.parse(String.valueOf(a.getAnnual_enddate()));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DATE, 1);
+			System.out.println("시간" + date);
+			System.out.println("시간" + cal.getTime());
+			java.util.Date utilDate = (Date) fm.parse(String.valueOf(fm.format(cal.getTime())));
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			System.out.println("저장시간" + sqlDate);
+			 
+			saveFile(report, request);
+			a.setAnnual_enddate(sqlDate);
+			b.setId((String) session.getAttribute("loginId"));
+			System.out.println(pc.getS_member_id0());
+			System.out.println(pc.getS_member_id1());   
+			System.out.println(pc.getS_member_id2());
+			aService.insertAnnualPayment(a, b);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:approval.do";
+	}
+	
+	<script type="text/javascript">
+		var oEditors = [];
+		nhn.husky.EZCreator.createInIFrame({
+			oAppRef : oEditors,
+			elPlaceHolder : "smartEditor",
+			sSkinURI : "./resources/src/se/SmartEditor2Skin.html",
+			fCreator : "createSEditor2",
+			htParams : {
+				bUseToolbar : true,
+				bUseVerticalResizer : false,
+				bUseModeChanger : false
+			}
+		});
+		$(function() {
+			$("#savebutton").click(
+					function() {
+						oEditors.getById["smartEditor"].exec(
+								"UPDATE_CONTENTS_FIELD", []);
+						$("#frm").submit();
+					});
+		})
+	</script>
+$(document).on("click",".add-person1", function() {
+							console.log($(this).children(".member_id").val());
+							var member_id = $(this).children(".member_id").val();
+							var member_name = $(this).text();
+							$('#set-name').append('<div class="setting-name" style="display:block; left=10px; margin-right:10px;">'
+													+ member_name
+													+ '&nbsp;&nbsp;<input type="hidden" name="members_id" value="'+member_id+'"></div>');
+						})
+		$('#clear-set-name').click(function() {
+			$("#set-name").empty();
+		});
+		$(document).on("click", ".del-person", function() {
+			$(this).parent().remove();
+		})
+		$(document).on("click", ".del-sub-group", function() {
+			$(this).parent().remove();
+		})
+		$('#prj-add-project')
+				.click(function() {
+							if ($('.setting-name').length == 0) {
+								alert('인원을 한명 이상 골라주세요');
+							} else if ($('.setting-name').length > 3) {
+								alert('인원은 세명까지 고를 수 있습니다.');
+							} else {
+								if ($('.prj-member-list').length < 3) {
+									var member_list = $(".setting-name").get();
+									var members_id = $("input[name=members_id][type=hidden]").get();
+									console.log($('.prj-member-list').length);
+									$('#set-name').empty();
+									for (var i = 0; i < member_list.length; i++) {
+										var member_name = $(member_list[i]).text();
+										var member_id = $(members_id[i]).val();
+										console.log(member_id);
+										$('.fa-hover').append('<div class="prj-member-list" style="line-height: 2; margin-right:10px; float: left;">'
+																+ member_name
+																+ '<a class="del-person" href="javascript:void(0);">x</a><input type="hidden" name="s_member_id'+i+'" value="'+member_id+'"><div>');
+									}
+									$('#Medium-modal').modal('toggle');
+									$('.modal-backdrop').remove();
+								} else {
+									$('#set-name').empty();
+									alert('인원은 세명까지 고를 수 있습니다.');
+									$('#Medium-modal').modal('toggle');
+									$('.modal-backdrop').remove();
+								}
+							}
+						});
+```
 ###### made by 오승하
 ## :pushpin: DESK APP :pushpin:
 협업을 위한 그룹웨어
