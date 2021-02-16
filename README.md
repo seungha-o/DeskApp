@@ -1,6 +1,6 @@
 ```jsx
 @RequestMapping("/aInsert.do")
-	public String annualInsert(Annual a, Payment b, Payment_confirm pc, HttpSession session, 
+	public String annualInsert(Annual a, Payment b, HttpSession session, 
 	@RequestParam(name = "annual_file", required = false) MultipartFile report,
 			HttpServletRequest request) {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
