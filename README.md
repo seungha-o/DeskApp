@@ -1,8 +1,32 @@
-#### PaymentDao.java
+#### Payment-mapper.xml
 ```jsx
-public List<Payment> paymentReciveList(Payment mymy_name){ 
-		return sqlSession.selectList("PaymentMapper.receive-paymentList",mymy_name);
-	}
+<update id="confirmCnt" parameterType="Payment"
+		statementType="PREPARED">
+		update
+		payment_confirm set payment_confirm.confirm =
+		payment_confirm.confirm+(
+		SELECT sum (a)
+		from
+		(select
+		(count(S_MEMBER_ID0)) as a from payment_confirm where s_member_id0 =
+		#{name} and payment_id=#{payment_id}
+		union all
+		select
+		(count(S_MEMBER_ID1))
+		from payment_confirm where s_member_id1 =
+		#{name}
+		and payment_id=#{payment_id}
+		union all
+		select
+		(count(S_MEMBER_ID2))
+		from
+		payment_confirm where
+		s_member_id2 =
+		#{name} and
+		payment_id=#{payment_id}))where
+		payment_id=#{payment_id}
+	</update>
+
 ```
 #### PaymentServiceImpl.java
 ```jsx	
