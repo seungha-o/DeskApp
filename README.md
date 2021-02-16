@@ -1,32 +1,15 @@
 #### Payment-mapper.xml
 ```jsx
-<update id="confirmCnt" parameterType="Payment"
+<update id="status" parameterType="Payment"
 		statementType="PREPARED">
-		update
-		payment_confirm set payment_confirm.confirm =
-		payment_confirm.confirm+(
-		SELECT sum (a)
-		from
-		(select
-		(count(S_MEMBER_ID0)) as a from payment_confirm where s_member_id0 =
-		#{name} and payment_id=#{payment_id}
-		union all
-		select
-		(count(S_MEMBER_ID1))
-		from payment_confirm where s_member_id1 =
-		#{name}
-		and payment_id=#{payment_id}
-		union all
-		select
-		(count(S_MEMBER_ID2))
-		from
-		payment_confirm where
-		s_member_id2 =
-		#{name} and
-		payment_id=#{payment_id}))where
+		update payment set payment_status = (select case when
+		confirm >= 6 then '승인'
+		else '진행중' end
+		from (select confirm from
+		payment_confirm
+		where payment_id=#{payment_id} )) where
 		payment_id=#{payment_id}
 	</update>
-
 ```
 #### PaymentServiceImpl.java
 ```jsx	
