@@ -1,23 +1,88 @@
 #### header.jsp
 ```jsx
-function connectWS() {
-		console.log("tttttttttttttt")
-		var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
-		console.log("tttttttttttttt 연결됨")
-		socket = ws;
-		ws.onopen = function() {
-			console.log('open');
-		};
-		ws.onmessage = function(event) {
-			console.log("ReceiveMessage:", event.data + '\n');
-		if ((event.data + '\n').length <= 9){
-			console.log(event.data + '\n');
-         var login_status_name = "#login_status_"+event.data;
-         console.log("지금 로그인중인사람" +login_status_name);
-         // 주소록에서 로그인 된 사람 이름을 녹색
-         $(login_status_name).css('background-color','green');
-         // 아니면 원래 색인 빨강 그대로 유지	
+public class EchoHandler extends TextWebSocketHandler {
+	// 모든 사용자
+	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+	// 로그인중인 개별유저
+	Map<String, WebSocketSession> users = new ConcurrentHashMap<String, WebSocketSession>();
+	// 클라이언트가 서버로 연결시
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		System.out.println("커넥션됐니  :" + session);
+		sessions.add(session); // 로그인한 세션아이디가 들어감
+		// 세션값을 불러온 0번째 중괄호에 session.getId()를 넣으라는 뜻임.
+		log(session.getId() + "연결됨 / 로그인 소켓 ");
+		String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
+		if (senderId != null) { // 로그인 값이 있는 경우만
+			log(senderId + " 연결 됨");
+			users.put(senderId, session); // 로그인중인 유저 저장
+			for (WebSocketSession sess : sessions) {
+					sess.sendMessage(new TextMessage(senderId));
+			}
 		}
+	}
+	// 클라이언트가 Data 전송 시
+	@Override
+	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("핸들러 텍스트 메세지 :" + session + ":" + message.getPayload());
+		String sender = getMemberId(session);
+		String msg = message.getPayload();
+		if (msg != null) {
+			String[] strs = msg.split(",");
+			if (strs != null && strs.length == 2) {
+				String cmd = strs[0];
+				String target = strs[1]; // m_id 저장
+				for (WebSocketSession sess : sessions) {
+					if (cmd.equals("대화에 초대")) {
+					sess.sendMessage(new TextMessage("<li><a href='./chat.do' style = \"color: blue;\" >"
+					+ sender + "님이 " + cmd + "했습니다</a></li>"));
+					}
+					WebSocketSession targetSession = users.get(target); // 수신을 받을 세션 
+					// 실시간 접속
+					if (targetSession != null) {
+					System.out.println("실시간 접속했나");
+						if (true) {
+							log("strs.length 5: " + strs.length);
+							log(strs.toString());
+							if (cmd.equals("전자결재")) {
+							TextMessage tmpMsg = new TextMessage("<li><a href='./approval.do' style = \"color: blue;\" >"
+								+ sender + "님이 " + cmd + "를 등록했습니다</a></li>");
+							targetSession.sendMessage(tmpMsg);
+							}else {
+							TextMessage tmpMsg = new TextMessage("<li><a href='./projectlist.do' style = \"color: blue;\" >"
+								+ sender + "님이 " + cmd + "를 등록했습니다</a></li>");
+							targetSession.sendMessage(tmpMsg);
+						}
+					}
+				}
+				}
+			}
+		}
+	}
+	// 연결 해제될 때
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		sessions.remove(session);
+	}
+	// 에러 발생시
+	@Override
+	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+		log(session.getId() + " 익셉션 발생: " + exception.getMessage());
+	}
+	// 로그 메시지
+	private void log(String logmsg) {
+		System.out.println(new Date() + " : " + logmsg);
+	}
+	// 웹소켓에 id 가져오기
+	// 접속한 유저의 http세션을 조회하여 id가져오기
+	private String getMemberId(WebSocketSession session) {
+		Map<String, Object> httpSession = session.getAttributes();
+		String m_name = (String) httpSession.get("loginName"); // 세션에 저장된 m_id 기준 조회
+		if (m_name == null)
+			log("m_name가 null");
+		return m_name == null ? null : m_name;
+	}
+}
 ```
 #### PaymentServiceImpl.java
 ```jsx	
