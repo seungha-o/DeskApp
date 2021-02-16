@@ -1,9 +1,9 @@
 #### header.jsp
 ```jsx
 function connectWS() {
-		console.log("QQQQQQQQ")
+		console.log("tttttttttttttt")
 		var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
-		console.log("QQQQQQQQ 연결됨")
+		console.log("tttttttttttttt 연결됨")
 		socket = ws;
 		ws.onopen = function() {
 			console.log('open');
