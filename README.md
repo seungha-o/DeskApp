@@ -1,5 +1,16 @@
-#### AnnualDao.java
+#### PaymentDao.java
 ```jsx
+public List<Payment> paymentReciveList(Payment mymy_name){ 
+		return sqlSession.selectList("PaymentMapper.receive-paymentList",mymy_name);
+	}
+```
+#### PaymentServiceImpl.java
+```jsx	
+@Override
+public List<Payment> paymentReciveList(Payment mymy_name) {
+		return pmDao.paymentReciveList(mymy_name);
+	}
+	
 @RequestMapping(value = "/approval.do", method = RequestMethod.GET)
 	public ModelAndView apprlist(Payment my_name, Payment mymy_name, Locale locale, ModelAndView mv,
 			HttpSession session, HttpServletRequest request) {
