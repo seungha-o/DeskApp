@@ -517,13 +517,8 @@ public int insertAnnualPayment(Annual a, Payment b) {
 ```
 #### PaymentDao.java
 ```jsx
-	
 	public int insertPayment(Payment b) {
 		return sqlSession.insert("PaymentMapper.paymentInsert", b);
-	}
-	public String seqPayment() {
-		String seqPayment = sqlSession.selectOne("PaymentMapper.seqPayment");
-		return seqPayment;
 	}
 ```
 #### Anuual-mapper.xml
