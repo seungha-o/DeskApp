@@ -1,5 +1,16 @@
 #### AnnualDao.java
 ```jsx
+@RequestMapping(value = "/approval.do", method = RequestMethod.GET)
+	public ModelAndView apprlist(Payment my_name, Payment mymy_name, Locale locale, ModelAndView mv,
+			HttpSession session, HttpServletRequest request) {
+		my_name.setId((String) session.getAttribute("loginId"));
+		mymy_name.setName((String) session.getAttribute("loginName"));
+		mv.addObject("pmlist", pmService.paymentList(my_name));
+		mv.addObject("pmrclist", pmService.paymentReciveList(mymy_name));
+		mv.setViewName("approval/apprlist");
+		return mv;
+	}
+
 public String seqAnnualPayment() {
 	String seqAnnualPayment = sqlSession.selectOne("AnnualMapper.seqAnnualPayment");
 	return seqAnnualPayment;
