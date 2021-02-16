@@ -1,15 +1,23 @@
-#### Payment-mapper.xml
+#### header.jsp
 ```jsx
-<update id="status" parameterType="Payment"
-		statementType="PREPARED">
-		update payment set payment_status = (select case when
-		confirm >= 6 then '승인'
-		else '진행중' end
-		from (select confirm from
-		payment_confirm
-		where payment_id=#{payment_id} )) where
-		payment_id=#{payment_id}
-	</update>
+function connectWS() {
+		console.log("QQQQQQQQ")
+		var ws = new WebSocket("ws://localhost:8090/wefer/replyEcho");
+		console.log("QQQQQQQQ 연결됨")
+		socket = ws;
+		ws.onopen = function() {
+			console.log('open');
+		};
+		ws.onmessage = function(event) {
+			console.log("ReceiveMessage:", event.data + '\n');
+		if ((event.data + '\n').length <= 9){
+			console.log(event.data + '\n');
+         var login_status_name = "#login_status_"+event.data;
+         console.log("지금 로그인중인사람" +login_status_name);
+         // 주소록에서 로그인 된 사람 이름을 녹색
+         $(login_status_name).css('background-color','green');
+         // 아니면 원래 색인 빨강 그대로 유지	
+		}
 ```
 #### PaymentServiceImpl.java
 ```jsx	
