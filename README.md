@@ -1,4 +1,17 @@
-
+```jsx
+function openSocket(name, photo) {
+		$('#yes').css('display', 'block');
+		$('#no').css('display', 'none');
+		var c = confirm(name+"님과 채팅을 시작하시겠습니까?");
+		var chatM = $('.name').append('<h3 id = "name">'+name+'</h3>');
+		console.log(name);
+			$('.photo').append('<img src="${pageContext.request.contextPath}/resources/profileImg/'+photo+'" 
+					style="width:50px; height:50px;">'); 
+			let chatmem = "대화에 초대," + "[" +name+ "]";
+			//+ "," + gBoardWriter + "," + gBno;
+			console.log("chhhhhhhhhhasmsg>>", chatmem)
+			socket.send(chatmem);
+```
 ###### made by 오승하
 ## :pushpin: DESK APP :pushpin:
 협업을 위한 그룹웨어
