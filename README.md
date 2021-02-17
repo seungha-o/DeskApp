@@ -1,12 +1,4 @@
-```jsx
-<tr>
-  <th colspan="5">
-    <c:if test="${memberLev eq 3 }">	
-	<a href="noticeFixCount.do">글작성</a>
-    </c:if>
-  </th>
-</tr>
-```
+
 ###### made by 오승하
 ## :pushpin: DESK APP :pushpin:
 협업을 위한 그룹웨어
