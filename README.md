@@ -1,16 +1,60 @@
 ```jsx
-function openSocket(name, photo) {
-		$('#yes').css('display', 'block');
-		$('#no').css('display', 'none');
-		var c = confirm(name+"님과 채팅을 시작하시겠습니까?");
-		var chatM = $('.name').append('<h3 id = "name">'+name+'</h3>');
-		console.log(name);
-			$('.photo').append('<img src="${pageContext.request.contextPath}/resources/profileImg/'+photo+'" 
-					style="width:50px; height:50px;">'); 
-			let chatmem = "대화에 초대," + "[" +name+ "]";
-			//+ "," + gBoardWriter + "," + gBno;
-			console.log("chhhhhhhhhhasmsg>>", chatmem)
-			socket.send(chatmem);
+@Controller
+@ServerEndpoint(value="/wecho.do")
+public class WebSocketChat {
+    
+    private static final List<Session> sessionList=new ArrayList<Session>();;
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketChat.class);
+    public WebSocketChat() {
+        System.out.println("---소켓이 연결됐는지 확인---");
+    } 
+    @OnOpen
+    public void onOpen(Session session) {
+        logger.info("아이디:"+session.getId());
+        try {
+            final Basic basic=session.getBasicRemote();
+            basic.sendText(null);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        sessionList.add(session);
+    }
+    private void sendAllSessionToMessage(Session self,  String message) {   	
+        try {
+            for(Session session : WebSocketChat.sessionList) {
+                if(!self.getId().equals(session.getId())) {
+                    session.getBasicRemote().sendText(message);
+                }
+            }
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    @OnMessage
+    public void onMessage(String message,Session session) {
+    	System.out.println(message);
+    	System.out.println("소켓컨트롤러 ");
+    //	String sender = message.split(",")[1];
+    	message = message.split(",")[0];   	
+        logger.info("Message From  "+message);
+        try {
+            final Basic basic=session.getBasicRemote();
+            basic.sendText(message);       
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        sendAllSessionToMessage(session, message);
+    }   
+    @OnError
+    public void onError(Throwable e,Session session) {
+        System.out.println("에러나서 채팅 종료됨");
+    }   
+    @OnClose
+    public void onClose(Session session) {
+        logger.info("Session "+session.getId()+" has ended");
+        sessionList.remove(session);
+    }
+}
 ```
 ###### made by 오승하
 ## :pushpin: DESK APP :pushpin:
